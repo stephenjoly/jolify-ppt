@@ -14,7 +14,7 @@
   <Description DefaultValue="Shape positioning, alignment, formatting, and text tools for PowerPoint." />
   <IconUrl DefaultValue="https://localhost:3300/assets/icon-32.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3300/assets/icon-64.png" />
-  <SupportUrl DefaultValue="https://github.com/stephenjoly/custom-ppt-addin" />
+  <SupportUrl DefaultValue="https://github.com/stephenjoly/jolify-ppt" />
 
   <AppDomains>
     <AppDomain>https://stephenjoly.github.io</AppDomain>

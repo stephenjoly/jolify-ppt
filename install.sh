@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MANIFEST_URL="https://stephenjoly.github.io/custom-ppt-addin/manifest.xml"
+MANIFEST_URL="https://stephenjoly.github.io/jolify-ppt/manifest.xml"
 MANIFEST_NAME="jolify-manifest.xml"
 
 # Possible WEF folder locations on macOS

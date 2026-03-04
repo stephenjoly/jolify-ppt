@@ -53,8 +53,8 @@ The add-in is a static site (HTML + JS) served by Nginx in a Docker container, s
 Pushing to `main` triggers a GitHub Action that builds the Docker image and publishes it to GHCR:
 
 ```
-ghcr.io/stephenjoly/custom-ppt-addin/ppt-addin:latest
-ghcr.io/stephenjoly/custom-ppt-addin/ppt-addin:<commit-sha>
+ghcr.io/stephenjoly/jolify-ppt/ppt-addin:latest
+ghcr.io/stephenjoly/jolify-ppt/ppt-addin:<commit-sha>
 ```
 
 Required GitHub secret: `CR_PAT` — a personal access token with `write:packages` scope.

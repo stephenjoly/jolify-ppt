@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const urlDev = "https://localhost:3300/";
-const urlProd = "https://stephenjoly.github.io/custom-ppt-addin/";
+const urlProd = "https://stephenjoly.github.io/jolify-ppt/";
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
