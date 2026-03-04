@@ -62,9 +62,9 @@
                     <Description resid="Btn.CopyPositionAndSize.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.copyPositionAndSize.16" />
+                    <bt:Image size="32" resid="Icon.copyPositionAndSize.32" />
+                    <bt:Image size="80" resid="Icon.copyPositionAndSize.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copyPositionAndSize</FunctionName>
@@ -78,9 +78,9 @@
                     <Description resid="Btn.PastePositionAndSize.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.pastePositionAndSize.16" />
+                    <bt:Image size="32" resid="Icon.pastePositionAndSize.32" />
+                    <bt:Image size="80" resid="Icon.pastePositionAndSize.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>pastePositionAndSize</FunctionName>
@@ -94,9 +94,9 @@
                     <Description resid="Btn.CopyPositionOnly.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.copyPositionOnly.16" />
+                    <bt:Image size="32" resid="Icon.copyPositionOnly.32" />
+                    <bt:Image size="80" resid="Icon.copyPositionOnly.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copyPositionOnly</FunctionName>
@@ -110,9 +110,9 @@
                     <Description resid="Btn.PastePositionOnly.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.pastePositionOnly.16" />
+                    <bt:Image size="32" resid="Icon.pastePositionOnly.32" />
+                    <bt:Image size="80" resid="Icon.pastePositionOnly.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>pastePositionOnly</FunctionName>
@@ -126,9 +126,9 @@
                     <Description resid="Btn.CopySizeOnly.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.copySizeOnly.16" />
+                    <bt:Image size="32" resid="Icon.copySizeOnly.32" />
+                    <bt:Image size="80" resid="Icon.copySizeOnly.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copySizeOnly</FunctionName>
@@ -142,9 +142,9 @@
                     <Description resid="Btn.PasteSizeOnly.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.pasteSizeOnly.16" />
+                    <bt:Image size="32" resid="Icon.pasteSizeOnly.32" />
+                    <bt:Image size="80" resid="Icon.pasteSizeOnly.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>pasteSizeOnly</FunctionName>
@@ -158,9 +158,9 @@
                     <Description resid="Btn.SwapPositions.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.swapPositions.16" />
+                    <bt:Image size="32" resid="Icon.swapPositions.32" />
+                    <bt:Image size="80" resid="Icon.swapPositions.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>swapPositions</FunctionName>
@@ -184,9 +184,9 @@
                     <Description resid="Btn.CopyOutlineStyle.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.copyOutlineStyle.16" />
+                    <bt:Image size="32" resid="Icon.copyOutlineStyle.32" />
+                    <bt:Image size="80" resid="Icon.copyOutlineStyle.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copyOutlineStyle</FunctionName>
@@ -200,9 +200,9 @@
                     <Description resid="Btn.CopyFillStyle.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.copyFillStyle.16" />
+                    <bt:Image size="32" resid="Icon.copyFillStyle.32" />
+                    <bt:Image size="80" resid="Icon.copyFillStyle.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copyFillStyle</FunctionName>
@@ -216,9 +216,9 @@
                     <Description resid="Btn.MatchHeight.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.matchHeight.16" />
+                    <bt:Image size="32" resid="Icon.matchHeight.32" />
+                    <bt:Image size="80" resid="Icon.matchHeight.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>matchHeight</FunctionName>
@@ -232,9 +232,9 @@
                     <Description resid="Btn.MatchWidth.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.matchWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchWidth.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>matchWidth</FunctionName>
@@ -248,9 +248,9 @@
                     <Description resid="Btn.MatchHeightAndWidth.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>matchHeightAndWidth</FunctionName>
@@ -274,9 +274,9 @@
                     <Description resid="Btn.AlignLeft.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignLeft.16" />
+                    <bt:Image size="32" resid="Icon.alignLeft.32" />
+                    <bt:Image size="80" resid="Icon.alignLeft.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignLeft</FunctionName>
@@ -290,9 +290,9 @@
                     <Description resid="Btn.AlignCenterH.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignCenterH.16" />
+                    <bt:Image size="32" resid="Icon.alignCenterH.32" />
+                    <bt:Image size="80" resid="Icon.alignCenterH.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignCenterH</FunctionName>
@@ -306,9 +306,9 @@
                     <Description resid="Btn.AlignRight.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignRight.16" />
+                    <bt:Image size="32" resid="Icon.alignRight.32" />
+                    <bt:Image size="80" resid="Icon.alignRight.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignRight</FunctionName>
@@ -322,9 +322,9 @@
                     <Description resid="Btn.AlignTop.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignTop.16" />
+                    <bt:Image size="32" resid="Icon.alignTop.32" />
+                    <bt:Image size="80" resid="Icon.alignTop.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignTop</FunctionName>
@@ -338,9 +338,9 @@
                     <Description resid="Btn.AlignMiddleV.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignMiddleV.16" />
+                    <bt:Image size="32" resid="Icon.alignMiddleV.32" />
+                    <bt:Image size="80" resid="Icon.alignMiddleV.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignMiddleV</FunctionName>
@@ -354,9 +354,9 @@
                     <Description resid="Btn.AlignBottom.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.alignBottom.16" />
+                    <bt:Image size="32" resid="Icon.alignBottom.32" />
+                    <bt:Image size="80" resid="Icon.alignBottom.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>alignBottom</FunctionName>
@@ -370,9 +370,9 @@
                     <Description resid="Btn.DistributeH.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.distributeH.16" />
+                    <bt:Image size="32" resid="Icon.distributeH.32" />
+                    <bt:Image size="80" resid="Icon.distributeH.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>distributeH</FunctionName>
@@ -386,9 +386,9 @@
                     <Description resid="Btn.DistributeV.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.distributeV.16" />
+                    <bt:Image size="32" resid="Icon.distributeV.32" />
+                    <bt:Image size="80" resid="Icon.distributeV.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>distributeV</FunctionName>
@@ -412,9 +412,9 @@
                     <Description resid="Btn.SplitTextBoxByLines.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.splitTextBoxByLines.16" />
+                    <bt:Image size="32" resid="Icon.splitTextBoxByLines.32" />
+                    <bt:Image size="80" resid="Icon.splitTextBoxByLines.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>splitTextBoxByLines</FunctionName>
@@ -438,9 +438,9 @@
                     <Description resid="Btn.AddDraftSticker.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.addDraftSticker.16" />
+                    <bt:Image size="32" resid="Icon.addDraftSticker.32" />
+                    <bt:Image size="80" resid="Icon.addDraftSticker.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>addDraftSticker</FunctionName>
@@ -454,9 +454,9 @@
                     <Description resid="Btn.RemoveDraftSticker.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.removeDraftSticker.16" />
+                    <bt:Image size="32" resid="Icon.removeDraftSticker.32" />
+                    <bt:Image size="80" resid="Icon.removeDraftSticker.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>removeDraftSticker</FunctionName>
@@ -473,9 +473,80 @@
 
     <Resources>
       <bt:Images>
+        <!-- Fallback / group icons -->
         <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3300/assets/icon-16.png" />
         <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3300/assets/icon-32.png" />
         <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3300/assets/icon-80.png" />
+        <!-- Per-button icons -->
+        <bt:Image id="Icon.copyPositionAndSize.16" DefaultValue="https://localhost:3300/assets/icons/copyPositionAndSize_16.png" />
+        <bt:Image id="Icon.copyPositionAndSize.32" DefaultValue="https://localhost:3300/assets/icons/copyPositionAndSize_32.png" />
+        <bt:Image id="Icon.copyPositionAndSize.80" DefaultValue="https://localhost:3300/assets/icons/copyPositionAndSize_80.png" />
+        <bt:Image id="Icon.pastePositionAndSize.16" DefaultValue="https://localhost:3300/assets/icons/pastePositionAndSize_16.png" />
+        <bt:Image id="Icon.pastePositionAndSize.32" DefaultValue="https://localhost:3300/assets/icons/pastePositionAndSize_32.png" />
+        <bt:Image id="Icon.pastePositionAndSize.80" DefaultValue="https://localhost:3300/assets/icons/pastePositionAndSize_80.png" />
+        <bt:Image id="Icon.copyPositionOnly.16" DefaultValue="https://localhost:3300/assets/icons/copyPositionOnly_16.png" />
+        <bt:Image id="Icon.copyPositionOnly.32" DefaultValue="https://localhost:3300/assets/icons/copyPositionOnly_32.png" />
+        <bt:Image id="Icon.copyPositionOnly.80" DefaultValue="https://localhost:3300/assets/icons/copyPositionOnly_80.png" />
+        <bt:Image id="Icon.pastePositionOnly.16" DefaultValue="https://localhost:3300/assets/icons/pastePositionOnly_16.png" />
+        <bt:Image id="Icon.pastePositionOnly.32" DefaultValue="https://localhost:3300/assets/icons/pastePositionOnly_32.png" />
+        <bt:Image id="Icon.pastePositionOnly.80" DefaultValue="https://localhost:3300/assets/icons/pastePositionOnly_80.png" />
+        <bt:Image id="Icon.copySizeOnly.16" DefaultValue="https://localhost:3300/assets/icons/copySizeOnly_16.png" />
+        <bt:Image id="Icon.copySizeOnly.32" DefaultValue="https://localhost:3300/assets/icons/copySizeOnly_32.png" />
+        <bt:Image id="Icon.copySizeOnly.80" DefaultValue="https://localhost:3300/assets/icons/copySizeOnly_80.png" />
+        <bt:Image id="Icon.pasteSizeOnly.16" DefaultValue="https://localhost:3300/assets/icons/pasteSizeOnly_16.png" />
+        <bt:Image id="Icon.pasteSizeOnly.32" DefaultValue="https://localhost:3300/assets/icons/pasteSizeOnly_32.png" />
+        <bt:Image id="Icon.pasteSizeOnly.80" DefaultValue="https://localhost:3300/assets/icons/pasteSizeOnly_80.png" />
+        <bt:Image id="Icon.swapPositions.16" DefaultValue="https://localhost:3300/assets/icons/swapPositions_16.png" />
+        <bt:Image id="Icon.swapPositions.32" DefaultValue="https://localhost:3300/assets/icons/swapPositions_32.png" />
+        <bt:Image id="Icon.swapPositions.80" DefaultValue="https://localhost:3300/assets/icons/swapPositions_80.png" />
+        <bt:Image id="Icon.copyOutlineStyle.16" DefaultValue="https://localhost:3300/assets/icons/copyOutlineStyle_16.png" />
+        <bt:Image id="Icon.copyOutlineStyle.32" DefaultValue="https://localhost:3300/assets/icons/copyOutlineStyle_32.png" />
+        <bt:Image id="Icon.copyOutlineStyle.80" DefaultValue="https://localhost:3300/assets/icons/copyOutlineStyle_80.png" />
+        <bt:Image id="Icon.copyFillStyle.16" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_16.png" />
+        <bt:Image id="Icon.copyFillStyle.32" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_32.png" />
+        <bt:Image id="Icon.copyFillStyle.80" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_80.png" />
+        <bt:Image id="Icon.matchHeight.16" DefaultValue="https://localhost:3300/assets/icons/matchHeight_16.png" />
+        <bt:Image id="Icon.matchHeight.32" DefaultValue="https://localhost:3300/assets/icons/matchHeight_32.png" />
+        <bt:Image id="Icon.matchHeight.80" DefaultValue="https://localhost:3300/assets/icons/matchHeight_80.png" />
+        <bt:Image id="Icon.matchWidth.16" DefaultValue="https://localhost:3300/assets/icons/matchWidth_16.png" />
+        <bt:Image id="Icon.matchWidth.32" DefaultValue="https://localhost:3300/assets/icons/matchWidth_32.png" />
+        <bt:Image id="Icon.matchWidth.80" DefaultValue="https://localhost:3300/assets/icons/matchWidth_80.png" />
+        <bt:Image id="Icon.matchHeightAndWidth.16" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_16.png" />
+        <bt:Image id="Icon.matchHeightAndWidth.32" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_32.png" />
+        <bt:Image id="Icon.matchHeightAndWidth.80" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_80.png" />
+        <bt:Image id="Icon.alignLeft.16" DefaultValue="https://localhost:3300/assets/icons/alignLeft_16.png" />
+        <bt:Image id="Icon.alignLeft.32" DefaultValue="https://localhost:3300/assets/icons/alignLeft_32.png" />
+        <bt:Image id="Icon.alignLeft.80" DefaultValue="https://localhost:3300/assets/icons/alignLeft_80.png" />
+        <bt:Image id="Icon.alignCenterH.16" DefaultValue="https://localhost:3300/assets/icons/alignCenterH_16.png" />
+        <bt:Image id="Icon.alignCenterH.32" DefaultValue="https://localhost:3300/assets/icons/alignCenterH_32.png" />
+        <bt:Image id="Icon.alignCenterH.80" DefaultValue="https://localhost:3300/assets/icons/alignCenterH_80.png" />
+        <bt:Image id="Icon.alignRight.16" DefaultValue="https://localhost:3300/assets/icons/alignRight_16.png" />
+        <bt:Image id="Icon.alignRight.32" DefaultValue="https://localhost:3300/assets/icons/alignRight_32.png" />
+        <bt:Image id="Icon.alignRight.80" DefaultValue="https://localhost:3300/assets/icons/alignRight_80.png" />
+        <bt:Image id="Icon.alignTop.16" DefaultValue="https://localhost:3300/assets/icons/alignTop_16.png" />
+        <bt:Image id="Icon.alignTop.32" DefaultValue="https://localhost:3300/assets/icons/alignTop_32.png" />
+        <bt:Image id="Icon.alignTop.80" DefaultValue="https://localhost:3300/assets/icons/alignTop_80.png" />
+        <bt:Image id="Icon.alignMiddleV.16" DefaultValue="https://localhost:3300/assets/icons/alignMiddleV_16.png" />
+        <bt:Image id="Icon.alignMiddleV.32" DefaultValue="https://localhost:3300/assets/icons/alignMiddleV_32.png" />
+        <bt:Image id="Icon.alignMiddleV.80" DefaultValue="https://localhost:3300/assets/icons/alignMiddleV_80.png" />
+        <bt:Image id="Icon.alignBottom.16" DefaultValue="https://localhost:3300/assets/icons/alignBottom_16.png" />
+        <bt:Image id="Icon.alignBottom.32" DefaultValue="https://localhost:3300/assets/icons/alignBottom_32.png" />
+        <bt:Image id="Icon.alignBottom.80" DefaultValue="https://localhost:3300/assets/icons/alignBottom_80.png" />
+        <bt:Image id="Icon.distributeH.16" DefaultValue="https://localhost:3300/assets/icons/distributeH_16.png" />
+        <bt:Image id="Icon.distributeH.32" DefaultValue="https://localhost:3300/assets/icons/distributeH_32.png" />
+        <bt:Image id="Icon.distributeH.80" DefaultValue="https://localhost:3300/assets/icons/distributeH_80.png" />
+        <bt:Image id="Icon.distributeV.16" DefaultValue="https://localhost:3300/assets/icons/distributeV_16.png" />
+        <bt:Image id="Icon.distributeV.32" DefaultValue="https://localhost:3300/assets/icons/distributeV_32.png" />
+        <bt:Image id="Icon.distributeV.80" DefaultValue="https://localhost:3300/assets/icons/distributeV_80.png" />
+        <bt:Image id="Icon.splitTextBoxByLines.16" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_16.png" />
+        <bt:Image id="Icon.splitTextBoxByLines.32" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_32.png" />
+        <bt:Image id="Icon.splitTextBoxByLines.80" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_80.png" />
+        <bt:Image id="Icon.addDraftSticker.16" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_16.png" />
+        <bt:Image id="Icon.addDraftSticker.32" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_32.png" />
+        <bt:Image id="Icon.addDraftSticker.80" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_80.png" />
+        <bt:Image id="Icon.removeDraftSticker.16" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_16.png" />
+        <bt:Image id="Icon.removeDraftSticker.32" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_32.png" />
+        <bt:Image id="Icon.removeDraftSticker.80" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_80.png" />
       </bt:Images>
 
       <bt:Urls>
