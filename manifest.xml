@@ -10,14 +10,14 @@
   <Version>1.0.0.0</Version>
   <ProviderName>stephenjoly</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="agetnoon tools" />
+  <DisplayName DefaultValue="Jolify" />
   <Description DefaultValue="Shape positioning, alignment, formatting, and text tools for PowerPoint." />
   <IconUrl DefaultValue="https://localhost:3300/assets/icon-32.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3300/assets/icon-64.png" />
   <SupportUrl DefaultValue="https://github.com/stephenjoly/custom-ppt-addin" />
 
   <AppDomains>
-    <AppDomain>https://ppt-addon.stephenjoly.net</AppDomain>
+    <AppDomain>https://stephenjoly.github.io</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -31,13 +31,442 @@
   <Permissions>ReadWriteDocument</Permissions>
 
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
-    xsi:type="VersionOverridesV1_1">
+    xsi:type="VersionOverridesV1_0">
     <Hosts>
       <Host xsi:type="Presentation">
         <DesktopFormFactor>
+
+          <FunctionFile resid="Commands.Url" />
+
           <ExtensionPoint xsi:type="Taskpane">
             <SourceLocation resid="taskpanePage" />
           </ExtensionPoint>
+
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <CustomTab id="jolify.Tab">
+              <Label resid="Tab.Label" />
+
+              <!-- Position group -->
+              <Group id="jolify.Position">
+                <Label resid="Group.Position.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.copyPositionAndSize">
+                  <Label resid="Btn.CopyPositionAndSize.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyPositionAndSize.Label" />
+                    <Description resid="Btn.CopyPositionAndSize.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyPositionAndSize</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.pastePositionAndSize">
+                  <Label resid="Btn.PastePositionAndSize.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PastePositionAndSize.Label" />
+                    <Description resid="Btn.PastePositionAndSize.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pastePositionAndSize</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.copyPositionOnly">
+                  <Label resid="Btn.CopyPositionOnly.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyPositionOnly.Label" />
+                    <Description resid="Btn.CopyPositionOnly.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyPositionOnly</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.pastePositionOnly">
+                  <Label resid="Btn.PastePositionOnly.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PastePositionOnly.Label" />
+                    <Description resid="Btn.PastePositionOnly.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pastePositionOnly</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.copySizeOnly">
+                  <Label resid="Btn.CopySizeOnly.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopySizeOnly.Label" />
+                    <Description resid="Btn.CopySizeOnly.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copySizeOnly</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.pasteSizeOnly">
+                  <Label resid="Btn.PasteSizeOnly.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PasteSizeOnly.Label" />
+                    <Description resid="Btn.PasteSizeOnly.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pasteSizeOnly</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.swapPositions">
+                  <Label resid="Btn.SwapPositions.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SwapPositions.Label" />
+                    <Description resid="Btn.SwapPositions.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>swapPositions</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <!-- Match group -->
+              <Group id="jolify.Match">
+                <Label resid="Group.Match.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.copyOutlineStyle">
+                  <Label resid="Btn.CopyOutlineStyle.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyOutlineStyle.Label" />
+                    <Description resid="Btn.CopyOutlineStyle.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyOutlineStyle</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.copyFillStyle">
+                  <Label resid="Btn.CopyFillStyle.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyFillStyle.Label" />
+                    <Description resid="Btn.CopyFillStyle.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyFillStyle</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.matchHeight">
+                  <Label resid="Btn.MatchHeight.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeight.Label" />
+                    <Description resid="Btn.MatchHeight.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeight</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.matchWidth">
+                  <Label resid="Btn.MatchWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchWidth.Label" />
+                    <Description resid="Btn.MatchWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchWidth</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
+                  <Label resid="Btn.MatchHeightAndWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeightAndWidth.Label" />
+                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeightAndWidth</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <!-- Align group -->
+              <Group id="jolify.Align">
+                <Label resid="Group.Align.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.alignLeft">
+                  <Label resid="Btn.AlignLeft.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignLeft.Label" />
+                    <Description resid="Btn.AlignLeft.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignLeft</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignCenterH">
+                  <Label resid="Btn.AlignCenterH.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignCenterH.Label" />
+                    <Description resid="Btn.AlignCenterH.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignCenterH</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignRight">
+                  <Label resid="Btn.AlignRight.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignRight.Label" />
+                    <Description resid="Btn.AlignRight.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignRight</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignTop">
+                  <Label resid="Btn.AlignTop.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignTop.Label" />
+                    <Description resid="Btn.AlignTop.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignTop</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignMiddleV">
+                  <Label resid="Btn.AlignMiddleV.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignMiddleV.Label" />
+                    <Description resid="Btn.AlignMiddleV.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignMiddleV</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignBottom">
+                  <Label resid="Btn.AlignBottom.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignBottom.Label" />
+                    <Description resid="Btn.AlignBottom.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignBottom</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.distributeH">
+                  <Label resid="Btn.DistributeH.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DistributeH.Label" />
+                    <Description resid="Btn.DistributeH.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>distributeH</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.distributeV">
+                  <Label resid="Btn.DistributeV.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DistributeV.Label" />
+                    <Description resid="Btn.DistributeV.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>distributeV</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <!-- Text group -->
+              <Group id="jolify.Text">
+                <Label resid="Group.Text.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.splitTextBoxByLines">
+                  <Label resid="Btn.SplitTextBoxByLines.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SplitTextBoxByLines.Label" />
+                    <Description resid="Btn.SplitTextBoxByLines.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>splitTextBoxByLines</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <!-- Branding group -->
+              <Group id="jolify.Branding">
+                <Label resid="Group.Branding.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.addDraftSticker">
+                  <Label resid="Btn.AddDraftSticker.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AddDraftSticker.Label" />
+                    <Description resid="Btn.AddDraftSticker.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>addDraftSticker</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.removeDraftSticker">
+                  <Label resid="Btn.RemoveDraftSticker.Label" />
+                  <Supertip>
+                    <Title resid="Btn.RemoveDraftSticker.Label" />
+                    <Description resid="Btn.RemoveDraftSticker.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>removeDraftSticker</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+            </CustomTab>
+          </ExtensionPoint>
+
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -46,11 +475,71 @@
       <bt:Images>
         <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3300/assets/icon-16.png" />
         <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3300/assets/icon-32.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3300/assets/icon-80.png" />
       </bt:Images>
 
       <bt:Urls>
         <bt:Url id="taskpanePage" DefaultValue="https://localhost:3300/taskpane.html" />
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3300/commands.html" />
       </bt:Urls>
+
+      <bt:ShortStrings>
+        <bt:String id="Tab.Label" DefaultValue="Jolify" />
+        <bt:String id="Group.Position.Label" DefaultValue="Position" />
+        <bt:String id="Group.Match.Label" DefaultValue="Match" />
+        <bt:String id="Group.Align.Label" DefaultValue="Align" />
+        <bt:String id="Group.Text.Label" DefaultValue="Text" />
+        <bt:String id="Group.Branding.Label" DefaultValue="Branding" />
+        <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Pos+Size" />
+        <bt:String id="Btn.PastePositionAndSize.Label" DefaultValue="Paste Pos+Size" />
+        <bt:String id="Btn.CopyPositionOnly.Label" DefaultValue="Copy Position" />
+        <bt:String id="Btn.PastePositionOnly.Label" DefaultValue="Paste Position" />
+        <bt:String id="Btn.CopySizeOnly.Label" DefaultValue="Copy Size" />
+        <bt:String id="Btn.PasteSizeOnly.Label" DefaultValue="Paste Size" />
+        <bt:String id="Btn.SwapPositions.Label" DefaultValue="Swap Positions" />
+        <bt:String id="Btn.CopyOutlineStyle.Label" DefaultValue="Copy Outline" />
+        <bt:String id="Btn.CopyFillStyle.Label" DefaultValue="Copy Fill" />
+        <bt:String id="Btn.MatchHeight.Label" DefaultValue="Match Height" />
+        <bt:String id="Btn.MatchWidth.Label" DefaultValue="Match Width" />
+        <bt:String id="Btn.MatchHeightAndWidth.Label" DefaultValue="Match H+W" />
+        <bt:String id="Btn.AlignLeft.Label" DefaultValue="Align Left" />
+        <bt:String id="Btn.AlignCenterH.Label" DefaultValue="Align Center" />
+        <bt:String id="Btn.AlignRight.Label" DefaultValue="Align Right" />
+        <bt:String id="Btn.AlignTop.Label" DefaultValue="Align Top" />
+        <bt:String id="Btn.AlignMiddleV.Label" DefaultValue="Align Middle" />
+        <bt:String id="Btn.AlignBottom.Label" DefaultValue="Align Bottom" />
+        <bt:String id="Btn.DistributeH.Label" DefaultValue="Distribute H" />
+        <bt:String id="Btn.DistributeV.Label" DefaultValue="Distribute V" />
+        <bt:String id="Btn.SplitTextBoxByLines.Label" DefaultValue="Split Text Box" />
+        <bt:String id="Btn.AddDraftSticker.Label" DefaultValue="Add Draft" />
+        <bt:String id="Btn.RemoveDraftSticker.Label" DefaultValue="Remove Draft" />
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="Btn.CopyPositionAndSize.Desc" DefaultValue="Copy position and size from the first selected shape." />
+        <bt:String id="Btn.PastePositionAndSize.Desc" DefaultValue="Paste saved position and size to all selected shapes." />
+        <bt:String id="Btn.CopyPositionOnly.Desc" DefaultValue="Copy position (left, top) from the first selected shape." />
+        <bt:String id="Btn.PastePositionOnly.Desc" DefaultValue="Paste saved position to all selected shapes." />
+        <bt:String id="Btn.CopySizeOnly.Desc" DefaultValue="Copy size (width, height) from the first selected shape." />
+        <bt:String id="Btn.PasteSizeOnly.Desc" DefaultValue="Paste saved size to all selected shapes." />
+        <bt:String id="Btn.SwapPositions.Desc" DefaultValue="Swap the positions of exactly two selected shapes." />
+        <bt:String id="Btn.CopyOutlineStyle.Desc" DefaultValue="Copy outline style from the first shape to the rest." />
+        <bt:String id="Btn.CopyFillStyle.Desc" DefaultValue="Copy fill style from the first shape to the rest." />
+        <bt:String id="Btn.MatchHeight.Desc" DefaultValue="Match height of selected shapes to the first shape." />
+        <bt:String id="Btn.MatchWidth.Desc" DefaultValue="Match width of selected shapes to the first shape." />
+        <bt:String id="Btn.MatchHeightAndWidth.Desc" DefaultValue="Match height and width of selected shapes to the first shape." />
+        <bt:String id="Btn.AlignLeft.Desc" DefaultValue="Align selected shapes to the leftmost edge." />
+        <bt:String id="Btn.AlignCenterH.Desc" DefaultValue="Center selected shapes horizontally." />
+        <bt:String id="Btn.AlignRight.Desc" DefaultValue="Align selected shapes to the rightmost edge." />
+        <bt:String id="Btn.AlignTop.Desc" DefaultValue="Align selected shapes to the topmost edge." />
+        <bt:String id="Btn.AlignMiddleV.Desc" DefaultValue="Center selected shapes vertically." />
+        <bt:String id="Btn.AlignBottom.Desc" DefaultValue="Align selected shapes to the bottommost edge." />
+        <bt:String id="Btn.DistributeH.Desc" DefaultValue="Distribute selected shapes evenly in horizontal space." />
+        <bt:String id="Btn.DistributeV.Desc" DefaultValue="Distribute selected shapes evenly in vertical space." />
+        <bt:String id="Btn.SplitTextBoxByLines.Desc" DefaultValue="Split a text box into one box per line." />
+        <bt:String id="Btn.AddDraftSticker.Desc" DefaultValue="Add a DRAFT watermark to the slide master." />
+        <bt:String id="Btn.RemoveDraftSticker.Desc" DefaultValue="Remove the DRAFT watermark from the slide master." />
+      </bt:LongStrings>
     </Resources>
   </VersionOverrides>
 </OfficeApp>

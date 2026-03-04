@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const urlDev = "https://localhost:3300/";
-const urlProd = "https://ppt-addon.stephenjoly.net/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+const urlProd = "https://stephenjoly.github.io/custom-ppt-addin/";
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
@@ -25,7 +25,7 @@ module.exports = async (env, options) => {
       clean: true,
       filename: "[name].js", // => commands.js, polyfill.js
       path: require("path").resolve(__dirname, "dist"),
-      publicPath: "/", // so /commands.js resolves correctly
+      publicPath: dev ? "/" : urlProd,
     },
     resolve: {
       extensions: [".ts", ".html", ".js"],
@@ -59,6 +59,14 @@ module.exports = async (env, options) => {
           {
             from: "assets/*",
             to: "assets/[name][ext][query]",
+          },
+          {
+            from: "index.html",
+            to: "index.html",
+          },
+          {
+            from: "install.sh",
+            to: "install.sh",
           },
           {
             from: "manifest*.xml",

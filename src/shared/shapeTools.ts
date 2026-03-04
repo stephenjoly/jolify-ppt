@@ -272,7 +272,7 @@ export function clearSavedSize(): void {
   savedSize = null;
 }
 
-const DRAFT_STICKER_NAME = "__agetnoon_draft_sticker__";
+const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
 const DRAFT_TEXT = "DRAFT";
 const DEFAULT_STICKER_WIDTH = 140;
 const DEFAULT_STICKER_HEIGHT = 40;

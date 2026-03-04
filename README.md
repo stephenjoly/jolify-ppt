@@ -1,4 +1,4 @@
-# agetnoon tools — PowerPoint Add-in
+# Jolify — PowerPoint Add-in
 
 A custom PowerPoint task pane add-in with shape positioning, alignment, formatting, and text utilities.
 

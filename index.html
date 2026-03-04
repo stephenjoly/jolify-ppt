@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jolify — PowerPoint Add-in</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #fafaf9;
+      color: #1a1a1a;
+      line-height: 1.75;
+      padding: 5rem 1.5rem 7rem;
+    }
+
+    .paper {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ──────────────────────────────── */
+    header {
+      text-align: center;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 3.5rem;
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: normal;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      font-style: italic;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+
+    .meta {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .meta span + span::before {
+      content: " · ";
+    }
+
+    /* ── Sections ────────────────────────────── */
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section + section {
+      padding-top: 3rem;
+      border-top: 1px solid #e6e6e4;
+    }
+
+    h2 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #999;
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      font-size: 0.975rem;
+      color: #333;
+      margin-bottom: 0.9rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    em { font-style: italic; }
+
+    /* ── Feature list ────────────────────────── */
+    .features {
+      list-style: none;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .feature-name {
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 0.2rem;
+    }
+
+    .feature-desc {
+      font-size: 0.93rem;
+      color: #555;
+    }
+
+    /* ── Install steps ───────────────────────── */
+    .steps {
+      list-style: none;
+      counter-reset: steps;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 2rem;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #bbb;
+      min-width: 1rem;
+      text-align: right;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.85em;
+      background: #f0efed;
+      padding: 0.1em 0.35em;
+      border-radius: 2px;
+      color: #333;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #1a1a1a;
+      color: #fafaf9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .download-btn:hover { background: #333; }
+
+    .download-note {
+      margin-top: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+
+    .divider {
+      margin: 1.75rem 0 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+
+    .code-block {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.82rem;
+      background: #f0efed;
+      color: #333;
+      padding: 0.85rem 1.1rem;
+      border-radius: 3px;
+      overflow-x: auto;
+      white-space: pre;
+      user-select: all;
+    }
+
+    /* ── Footer ──────────────────────────────── */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #ccc;
+      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #aaa;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    footer a { color: #888; text-decoration: none; }
+    footer a:hover { color: #1a1a1a; }
+    footer span + span::before { content: " · "; }
+  </style>
+</head>
+<body>
+  <div class="paper">
+
+    <header>
+      <h1 class="title">Jolify</h1>
+      <p class="tagline">A PowerPoint ribbon add-in for shape precision</p>
+      <p class="meta">
+        <span>Stephen Joly</span>
+        <span>PowerPoint for Mac</span>
+        <span>MIT License</span>
+      </p>
+    </header>
+
+    <section>
+      <h2>Abstract</h2>
+      <p>
+        Jolify is a native PowerPoint ribbon add-in that exposes shape positioning,
+        alignment, formatting, and text utilities as one-click buttons.
+        It was built to fill the gap in PowerPoint's built-in toolset for
+        teams that work intensively with slide decks.
+      </p>
+      <p>
+        Once installed, a <em>Jolify</em> tab appears permanently in the ribbon.
+        No task pane, no interruption — just the tools, exactly where you expect them.
+      </p>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul class="features">
+        <li>
+          <span class="feature-name">Position &amp; Size</span>
+          <span class="feature-desc">Copy, paste, and swap shape positions and dimensions across any selection of shapes.</span>
+        </li>
+        <li>
+          <span class="feature-name">Match</span>
+          <span class="feature-desc">Propagate outline style, fill color, height, width, or all of the above from one shape to the rest.</span>
+        </li>
+        <li>
+          <span class="feature-name">Align</span>
+          <span class="feature-desc">Align shapes to each other or to the slide. Distribute three or more shapes evenly in any direction.</span>
+        </li>
+        <li>
+          <span class="feature-name">Text</span>
+          <span class="feature-desc">Split a multi-line text box into individual boxes — one per line — preserving position and size.</span>
+        </li>
+        <li>
+          <span class="feature-name">Branding</span>
+          <span class="feature-desc">Add or remove a DRAFT watermark on the slide master in a single click.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Installation</h2>
+      <ol class="steps">
+        <li>Download the <code>manifest.xml</code> file below.</li>
+        <li>Open PowerPoint → Insert → Add-ins → Upload My Add-in.</li>
+        <li>Select the downloaded manifest file and confirm.</li>
+        <li>A <em>Jolify</em> tab appears in the ribbon. Done.</li>
+      </ol>
+      <a class="download-btn" href="manifest.xml" download>
+        ↓&nbsp;&nbsp;Download manifest.xml
+      </a>
+      <p class="download-note">
+        Requires PowerPoint for Mac (Microsoft 365). Re-installation is not needed for updates.
+      </p>
+
+      <div class="divider">or install via Terminal</div>
+
+      <pre class="code-block">curl -fsSL https://stephenjoly.github.io/custom-ppt-addin/install.sh | bash</pre>
+    </section>
+
+    <footer>
+      <span><a href="https://github.com/stephenjoly/custom-ppt-addin">GitHub</a></span>
+      <span>Stephen Joly</span>
+      <span>MIT License</span>
+    </footer>
+
+  </div>
+</body>
+</html>
