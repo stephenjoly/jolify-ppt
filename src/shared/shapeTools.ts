@@ -273,112 +273,108 @@ export function clearSavedSize(): void {
 }
 
 const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
-const DRAFT_TEXT = "DRAFT";
-const DEFAULT_STICKER_WIDTH = 140;
-const DEFAULT_STICKER_HEIGHT = 40;
-const DEFAULT_RIGHT_OFFSET = 40;
-const DEFAULT_TOP_OFFSET = 16;
 
-async function getPrimarySlideMaster(context: PowerPoint.RequestContext) {
-  const masters = context.presentation.slideMasters;
-  masters.load("items");
-  await context.sync();
-  return masters.items[0] ?? null;
-}
-
-async function loadShapeNames(shapes: PowerPoint.ShapeCollection) {
-  shapes.load("items");
-  await shapes.context.sync();
-  shapes.items.forEach((shape) => shape.load("name"));
-  await shapes.context.sync();
-}
+// Diagonal corner ribbon geometry (widescreen 960×540 slide assumed).
+// The ribbon is a rotated text box whose center sits at ~(885, 75),
+// creating a red diagonal band across the top-right corner.
+const RIBBON_LEFT     = 775;  // unrotated bounding box left
+const RIBBON_TOP      = 40;   // unrotated bounding box top
+const RIBBON_WIDTH    = 220;  // ribbon length (along diagonal)
+const RIBBON_HEIGHT   = 70;   // ribbon thickness
+const RIBBON_ROTATION = 45;   // clockwise degrees
+const RIBBON_COLOR    = "#c00000";
+const RIBBON_FONT_SIZE = 18;
 
 export async function addDraftSticker(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
-    const master = await getPrimarySlideMaster(context);
-    if (!master) {
-      return {
-        type: "warning",
-        message: "No slide master found; unable to add draft sticker.",
-      };
+    const slides = context.presentation.slides;
+    slides.load("items");
+    await context.sync();
+
+    if (slides.items.length === 0) {
+      return { type: "warning", message: "No slides found." };
     }
 
-    const shapes = master.shapes;
-    await loadShapeNames(shapes);
+    let added = 0;
+    let skipped = 0;
 
-    const existing = shapes.items.find((shape) => shape.name === DRAFT_STICKER_NAME);
-    if (existing) {
-      return {
-        type: "info",
-        message: "Draft sticker already present on the slide master.",
-      };
+    for (const slide of slides.items) {
+      const shapes = slide.shapes;
+      shapes.load("items");
+      await context.sync();
+      shapes.items.forEach((s) => s.load("name"));
+      await context.sync();
+
+      if (shapes.items.some((s) => s.name === DRAFT_STICKER_NAME)) {
+        skipped++;
+        continue;
+      }
+
+      const sticker = shapes.addTextBox("DRAFT", {
+        left: RIBBON_LEFT,
+        top: RIBBON_TOP,
+        width: RIBBON_WIDTH,
+        height: RIBBON_HEIGHT,
+      });
+
+      sticker.name = DRAFT_STICKER_NAME;
+      sticker.rotation = RIBBON_ROTATION;
+      sticker.fill.setSolidColor(RIBBON_COLOR);
+      sticker.lineFormat.visible = false;
+
+      const text = sticker.textFrame.textRange;
+      text.font.color = "#ffffff";
+      text.font.bold = true;
+      text.font.size = RIBBON_FONT_SIZE;
+      text.paragraphFormat.alignment = "Center";
+      sticker.textFrame.verticalAlignment = "middle";
+
+      added++;
     }
-
-    const sticker = shapes.addTextBox(DRAFT_TEXT, {
-      width: DEFAULT_STICKER_WIDTH,
-      height: DEFAULT_STICKER_HEIGHT,
-      top: DEFAULT_TOP_OFFSET,
-      left: DEFAULT_RIGHT_OFFSET,
-    });
-
-    sticker.name = DRAFT_STICKER_NAME;
-    sticker.textFrame.textRange.font.color = "#ffffff";
-    sticker.textFrame.textRange.font.bold = true;
-    sticker.textFrame.textRange.paragraphFormat.alignment = "Center";
-    sticker.width = DEFAULT_STICKER_WIDTH;
-    sticker.height = DEFAULT_STICKER_HEIGHT;
-    sticker.top = DEFAULT_TOP_OFFSET;
-    // Approximate the right edge by moving the sticker after width is set.
-    sticker.left = Math.max(DEFAULT_RIGHT_OFFSET, sticker.left);
-    sticker.fill.setSolidColor("#a4262c");
-    sticker.lineFormat.visible = false;
 
     await context.sync();
 
-    // Move sticker closer to the top-right corner using slide width heuristic (default 960 points).
-    // Without a direct API for slide dimensions, assume widescreen width and clamp to non-negative.
-    const assumedSlideWidth = 960;
-    sticker.left = Math.max(
-      0,
-      assumedSlideWidth - DEFAULT_RIGHT_OFFSET - sticker.width,
-    );
+    if (added === 0) {
+      return { type: "info", message: "All slides already have a DRAFT sticker." };
+    }
 
-    await context.sync();
-
+    const skippedNote = skipped > 0 ? ` (${skipped} already had it)` : "";
     return {
       type: "success",
-      message: "Draft sticker added to the slide master.",
+      message: `Added DRAFT sticker to ${added} slide${added !== 1 ? "s" : ""}.${skippedNote}`,
     };
   });
 }
 
 export async function removeDraftSticker(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
-    const master = await getPrimarySlideMaster(context);
-    if (!master) {
-      return {
-        type: "warning",
-        message: "No slide master found; nothing to remove.",
-      };
-    }
-
-    const shapes = master.shapes;
-    await loadShapeNames(shapes);
-
-    const matches = shapes.items.filter((shape) => shape.name === DRAFT_STICKER_NAME);
-    if (matches.length === 0) {
-      return {
-        type: "info",
-        message: "Draft sticker is already removed.",
-      };
-    }
-
-    matches.forEach((shape) => shape.delete());
+    const slides = context.presentation.slides;
+    slides.load("items");
     await context.sync();
+
+    let removed = 0;
+
+    for (const slide of slides.items) {
+      const shapes = slide.shapes;
+      shapes.load("items");
+      await context.sync();
+      shapes.items.forEach((s) => s.load("name"));
+      await context.sync();
+
+      shapes.items
+        .filter((s) => s.name === DRAFT_STICKER_NAME)
+        .forEach((s) => { s.delete(); removed++; });
+    }
+
+    await context.sync();
+
+    if (removed === 0) {
+      return { type: "info", message: "No DRAFT stickers found." };
+    }
 
     return {
       type: "success",
-      message: "Removed draft sticker from the slide master.",
+      message: `Removed DRAFT sticker from ${removed} slide${removed !== 1 ? "s" : ""}.`,
     };
   });
 }
