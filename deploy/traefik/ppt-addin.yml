@@ -1,0 +1,15 @@
+http:
+  routers:
+    ppt-addin:
+      rule: "Host(`ppt-addon.stephenjoly.net`)"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: ppt-addin
+
+  services:
+    ppt-addin:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:8080"

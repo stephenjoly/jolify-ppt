@@ -1,0 +1,50 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u stephenjoly --password-stdin
+
+      - name: Build and push Docker image (latest)
+        env:
+          REPO_OWNER: stephenjoly
+          REPO_NAME: ppt-addin
+          IMAGE_NAME: ppt-addin
+          IMAGE_TAG: latest
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            -f deploy/Dockerfile \
+            -t ghcr.io/${REPO_OWNER}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG} \
+            --push .
+
+      - name: Build and push Docker image (commit SHA)
+        env:
+          REPO_OWNER: stephenjoly
+          REPO_NAME: ppt-addin
+          IMAGE_NAME: ppt-addin
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            -f deploy/Dockerfile \
+            -t ghcr.io/${REPO_OWNER}/${REPO_NAME}/${IMAGE_NAME}:${IMAGE_TAG} \
+            --push .

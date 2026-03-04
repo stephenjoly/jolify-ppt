@@ -1,0 +1,6 @@
+services:
+  ppt_addin:
+    image: ghcr.io/stephenjoly/ppt-addin/ppt-addin:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped
