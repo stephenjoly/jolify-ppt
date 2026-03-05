@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grid Builder</title>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <style>
+      body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; background: #f3f2f1; }
+      h2 { font-size: 15px; margin: 0 0 16px; color: #201f1e; }
+      label { display: block; font-size: 13px; margin-bottom: 4px; color: #323130; }
+      input[type="number"], select {
+        width: 100%; padding: 6px 8px; border: 1px solid #c8c6c4;
+        border-radius: 4px; font-size: 13px; box-sizing: border-box; margin-bottom: 12px;
+      }
+      .row { display: flex; gap: 12px; }
+      .row > div { flex: 1; }
+      .hidden { display: none; }
+      button {
+        width: 100%; padding: 8px; border: none; border-radius: 4px;
+        font-size: 13px; font-weight: 600; cursor: pointer;
+        background: #0078d4; color: #fff; margin-top: 4px;
+      }
+      button:hover { background: #106ebe; }
+      .cancel { background: #fff; color: #323130; border: 1px solid #c8c6c4; margin-top: 8px; }
+      .cancel:hover { background: #edebe9; }
+    </style>
+  </head>
+  <body>
+    <h2 id="title">Grid Builder</h2>
+
+    <div id="rows-field">
+      <label for="rows">Rows</label>
+      <input type="number" id="rows" value="3" min="1" max="20" />
+    </div>
+
+    <div id="cols-field">
+      <label for="cols">Columns</label>
+      <input type="number" id="cols" value="3" min="1" max="20" />
+    </div>
+
+    <div id="count-field" class="hidden">
+      <label for="count" id="count-label">Count</label>
+      <input type="number" id="count" value="3" min="1" max="20" />
+    </div>
+
+    <label for="gap">Gap</label>
+    <select id="gap">
+      <option value="none">None</option>
+      <option value="small">Small (10pt)</option>
+      <option value="medium" selected>Medium (20pt)</option>
+      <option value="large">Large (36pt)</option>
+    </select>
+
+    <label for="size">Size</label>
+    <select id="size">
+      <option value="small">Small (20%)</option>
+      <option value="medium" selected>Medium (33%)</option>
+      <option value="large">Large (50%)</option>
+      <option value="full">Full (100%)</option>
+    </select>
+
+    <button id="submit">Create</button>
+    <button class="cancel" id="cancel">Cancel</button>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get("mode") || "grid";
+
+      const titleEl = document.getElementById("title");
+      const rowsField = document.getElementById("rows-field");
+      const colsField = document.getElementById("cols-field");
+      const countField = document.getElementById("count-field");
+      const countLabel = document.getElementById("count-label");
+
+      if (mode === "columns") {
+        titleEl.textContent = "Column Builder";
+        rowsField.classList.add("hidden");
+        colsField.classList.add("hidden");
+        countField.classList.remove("hidden");
+        countLabel.textContent = "Number of Columns";
+      } else if (mode === "rows") {
+        titleEl.textContent = "Row Builder";
+        rowsField.classList.add("hidden");
+        colsField.classList.add("hidden");
+        countField.classList.remove("hidden");
+        countLabel.textContent = "Number of Rows";
+      }
+
+      Office.onReady(() => {
+        document.getElementById("submit").addEventListener("click", () => {
+          const gap = document.getElementById("gap").value;
+          const size = document.getElementById("size").value;
+
+          let payload;
+          if (mode === "grid") {
+            payload = {
+              rows: parseInt(document.getElementById("rows").value, 10),
+              cols: parseInt(document.getElementById("cols").value, 10),
+              gapPreset: gap,
+              sizePreset: size,
+            };
+          } else {
+            payload = {
+              count: parseInt(document.getElementById("count").value, 10),
+              gapPreset: gap,
+              sizePreset: size,
+            };
+          }
+
+          Office.context.ui.messageParent(JSON.stringify(payload));
+        });
+
+        document.getElementById("cancel").addEventListener("click", () => {
+          Office.context.ui.messageParent(JSON.stringify(null));
+        });
+      });
+    </script>
+  </body>
+</html>

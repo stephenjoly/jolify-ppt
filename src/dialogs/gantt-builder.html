@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gantt Chart Builder</title>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 12px; background: #f3f2f1; font-size: 12px; color: #201f1e; }
+      h2 { font-size: 14px; margin: 0 0 10px; }
+
+      .section { background: #fff; border: 1px solid #e1dfdd; border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; }
+      .section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #605e5c; margin-bottom: 8px; }
+
+      .row { display: flex; gap: 8px; }
+      .row > * { flex: 1; }
+
+      label { display: block; font-size: 11px; color: #605e5c; margin-bottom: 2px; }
+      input[type="text"], input[type="date"], select {
+        width: 100%; padding: 4px 6px; border: 1px solid #c8c6c4;
+        border-radius: 3px; font-size: 12px;
+      }
+
+      /* Activity rows */
+      .activity-row { border: 1px solid #e1dfdd; border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; background: #faf9f8; }
+      .activity-header { display: flex; gap: 6px; margin-bottom: 6px; }
+      .activity-header input { flex: 1; }
+      .activity-header .team-input { flex: 0.6; }
+      .activity-note { margin-bottom: 6px; }
+
+      /* Task bars within a row */
+      .task-bars { margin-left: 0; }
+      .task-bar-row { display: flex; gap: 4px; margin-bottom: 4px; align-items: center; }
+      .task-bar-row input[type="text"]  { flex: 1.2; }
+      .task-bar-row input[type="date"]  { flex: 1; }
+      .task-bar-row select.color-pick   { flex: 0; width: 90px; }
+      .task-bar-row button.rm-task      { flex: 0; padding: 2px 6px; font-size: 11px; cursor: pointer; border: 1px solid #c8c6c4; border-radius: 3px; background: #fff; color: #a4262c; }
+      .task-bar-row button.rm-task:hover { background: #fde7e9; }
+
+      .btn-add-task { font-size: 11px; padding: 2px 8px; cursor: pointer; border: 1px solid #c8c6c4; border-radius: 3px; background: #fff; margin-top: 2px; }
+      .btn-add-task:hover { background: #edebe9; }
+
+      .btn-rm-row { font-size: 11px; padding: 2px 8px; cursor: pointer; border: 1px solid #d13438; border-radius: 3px; background: #fff; color: #a4262c; float: right; margin-left: 6px; }
+      .btn-rm-row:hover { background: #fde7e9; }
+
+      #btn-add-row { width: 100%; padding: 6px; border: 1px dashed #c8c6c4; border-radius: 5px; background: #fff; cursor: pointer; font-size: 12px; color: #605e5c; margin-bottom: 8px; }
+      #btn-add-row:hover { background: #edebe9; }
+
+      .actions { display: flex; gap: 6px; }
+      .actions button { flex: 1; padding: 7px; border: none; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+      #btn-submit { background: #0078d4; color: #fff; }
+      #btn-submit:hover { background: #106ebe; }
+      #btn-cancel { background: #fff; color: #323130; border: 1px solid #c8c6c4; }
+      #btn-cancel:hover { background: #edebe9; }
+
+      .color-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; }
+    </style>
+  </head>
+  <body>
+    <h2>Gantt Chart Builder</h2>
+
+    <div class="section">
+      <div class="section-title">Chart settings</div>
+      <div class="row" style="margin-bottom:6px">
+        <div>
+          <label>Title (optional)</label>
+          <input type="text" id="chart-title" placeholder="e.g. Project Plan" />
+        </div>
+        <div>
+          <label>Today's date (optional)</label>
+          <input type="date" id="today-date" />
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:6px">
+        <div>
+          <label>Project start</label>
+          <input type="date" id="proj-start" />
+        </div>
+        <div>
+          <label>Project end</label>
+          <input type="date" id="proj-end" />
+        </div>
+        <div>
+          <label>Columns</label>
+          <select id="granularity">
+            <option value="week">Weekly</option>
+            <option value="biweek">Bi-weekly</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Activity rows</div>
+      <div id="rows-container"></div>
+      <button id="btn-add-row">+ Add activity row</button>
+    </div>
+
+    <div class="actions">
+      <button id="btn-submit">Build Chart</button>
+      <button id="btn-cancel">Cancel</button>
+    </div>
+
+    <script>
+      const COLORS = [
+        { label: "Green (done)",     value: "#4A7C59" },
+        { label: "Green (progress)", value: "#6B9E6B" },
+        { label: "Gray (planned)",   value: "#A0A0A0" },
+        { label: "Amber (delayed)",  value: "#C8A040" },
+        { label: "Blue",             value: "#4472C4" },
+        { label: "Teal",             value: "#2D7B7B" },
+      ];
+
+      function colorSelect(selectedVal) {
+        const sel = document.createElement("select");
+        sel.className = "color-pick";
+        COLORS.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c.value;
+          opt.textContent = c.label;
+          if (c.value === (selectedVal || "#6B9E6B")) opt.selected = true;
+          sel.appendChild(opt);
+        });
+        return sel;
+      }
+
+      function makeTaskBarRow(task) {
+        const div = document.createElement("div");
+        div.className = "task-bar-row";
+
+        const label = document.createElement("input");
+        label.type = "text";
+        label.placeholder = "Task label";
+        label.value = task?.label || "";
+        label.className = "task-label";
+
+        const start = document.createElement("input");
+        start.type = "date";
+        start.value = task?.start || "";
+        start.className = "task-start";
+
+        const end = document.createElement("input");
+        end.type = "date";
+        end.value = task?.end || "";
+        end.className = "task-end";
+
+        const color = colorSelect(task?.color);
+        color.className += " task-color";
+
+        const rm = document.createElement("button");
+        rm.className = "rm-task";
+        rm.textContent = "✕";
+        rm.addEventListener("click", () => div.remove());
+
+        div.append(label, start, end, color, rm);
+        return div;
+      }
+
+      let rowCount = 0;
+      function makeActivityRow(data) {
+        rowCount++;
+        const wrapper = document.createElement("div");
+        wrapper.className = "activity-row";
+
+        // Header: activity name + team + remove button
+        const header = document.createElement("div");
+        header.className = "activity-header";
+
+        const actInput = document.createElement("input");
+        actInput.type = "text";
+        actInput.placeholder = "Activity name";
+        actInput.value = data?.activity || "";
+        actInput.className = "activity-name";
+
+        const teamInput = document.createElement("input");
+        teamInput.type = "text";
+        teamInput.placeholder = "(team)";
+        teamInput.value = data?.team || "";
+        teamInput.className = "team-input activity-team";
+
+        const rmRow = document.createElement("button");
+        rmRow.className = "btn-rm-row";
+        rmRow.textContent = "Remove row";
+        rmRow.addEventListener("click", () => wrapper.remove());
+
+        header.append(actInput, teamInput, rmRow);
+        wrapper.appendChild(header);
+
+        // Note field
+        const noteDiv = document.createElement("div");
+        noteDiv.className = "activity-note";
+        const noteInput = document.createElement("input");
+        noteInput.type = "text";
+        noteInput.placeholder = "Annotation / delay note (optional)";
+        noteInput.value = data?.note || "";
+        noteInput.className = "activity-note-input";
+        noteInput.style.width = "100%";
+        noteDiv.appendChild(noteInput);
+        wrapper.appendChild(noteDiv);
+
+        // Task bars
+        const taskBars = document.createElement("div");
+        taskBars.className = "task-bars";
+
+        const addTaskBtn = document.createElement("button");
+        addTaskBtn.className = "btn-add-task";
+        addTaskBtn.textContent = "+ Add task bar";
+        addTaskBtn.addEventListener("click", () => taskBars.insertBefore(makeTaskBarRow(null), addTaskBtn));
+
+        (data?.tasks || [{ label: "", start: "", end: "" }]).forEach(t => {
+          taskBars.insertBefore(makeTaskBarRow(t), addTaskBtn);
+        });
+        taskBars.appendChild(addTaskBtn);
+        wrapper.appendChild(taskBars);
+
+        return wrapper;
+      }
+
+      function addRow(data) {
+        const container = document.getElementById("rows-container");
+        container.appendChild(makeActivityRow(data));
+      }
+
+      // Load existing data from URL param
+      function loadExisting() {
+        const params = new URLSearchParams(window.location.search);
+        const dataB64 = params.get("data");
+        if (!dataB64) return null;
+        try {
+          return JSON.parse(decodeURIComponent(escape(atob(dataB64))));
+        } catch { return null; }
+      }
+
+      Office.onReady(() => {
+        const existing = loadExisting();
+
+        if (existing) {
+          document.getElementById("chart-title").value   = existing.title || "";
+          document.getElementById("proj-start").value    = existing.projectStart || "";
+          document.getElementById("proj-end").value      = existing.projectEnd || "";
+          document.getElementById("today-date").value    = existing.todayDate || "";
+          document.getElementById("granularity").value   = existing.granularity || "week";
+          (existing.rows || []).forEach(r => addRow(r));
+        } else {
+          addRow(null);
+        }
+
+        document.getElementById("btn-add-row").addEventListener("click", () => addRow(null));
+
+        document.getElementById("btn-submit").addEventListener("click", () => {
+          const rows = [];
+          document.querySelectorAll(".activity-row").forEach(rowEl => {
+            const activity = rowEl.querySelector(".activity-name").value.trim();
+            const team     = rowEl.querySelector(".activity-team").value.trim();
+            const note     = rowEl.querySelector(".activity-note-input").value.trim();
+            const tasks    = [];
+            rowEl.querySelectorAll(".task-bar-row").forEach(taskEl => {
+              const label = taskEl.querySelector(".task-label").value.trim();
+              const start = taskEl.querySelector(".task-start").value;
+              const end   = taskEl.querySelector(".task-end").value;
+              const color = taskEl.querySelector(".task-color").value;
+              if (label && start && end) tasks.push({ label, start, end, color });
+            });
+            if (activity) {
+              rows.push({ activity, team: team || undefined, tasks, note: note || undefined });
+            }
+          });
+
+          const payload = {
+            title:        document.getElementById("chart-title").value.trim() || undefined,
+            projectStart: document.getElementById("proj-start").value,
+            projectEnd:   document.getElementById("proj-end").value,
+            todayDate:    document.getElementById("today-date").value || undefined,
+            granularity:  document.getElementById("granularity").value,
+            rows,
+          };
+
+          Office.context.ui.messageParent(JSON.stringify(payload));
+        });
+
+        document.getElementById("btn-cancel").addEventListener("click", () => {
+          Office.context.ui.messageParent(JSON.stringify(null));
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -91,6 +91,36 @@ module.exports = async (env, options) => {
         template: "./src/taskpane/taskpane.html",
         chunks: ["polyfill", "taskpane"],
       }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/grid-builder.html",
+        template: "./src/dialogs/grid-builder.html",
+        chunks: [],
+        inject: false,
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/rename-shapes.html",
+        template: "./src/dialogs/rename-shapes.html",
+        chunks: [],
+        inject: false,
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/slide-outline.html",
+        template: "./src/dialogs/slide-outline.html",
+        chunks: [],
+        inject: false,
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/gantt-builder.html",
+        template: "./src/dialogs/gantt-builder.html",
+        chunks: [],
+        inject: false,
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/timeline-builder.html",
+        template: "./src/dialogs/timeline-builder.html",
+        chunks: [],
+        inject: false,
+      }),
     ],
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" },

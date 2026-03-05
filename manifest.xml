@@ -420,6 +420,390 @@
                     <FunctionName>splitTextBoxByLines</FunctionName>
                   </Action>
                 </Control>
+
+              </Group>
+
+              <!-- Labs group (experimental / unverified features) -->
+              <Group id="jolify.Labs">
+                <Label resid="Group.Labs.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <!-- Text (new) -->
+                <Control xsi:type="Button" id="btn.mergeTextBoxes">
+                  <Label resid="Btn.MergeTextBoxes.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MergeTextBoxes.Label" />
+                    <Description resid="Btn.MergeTextBoxes.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mergeTextBoxes</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.autoFontEqualizer">
+                  <Label resid="Btn.AutoFontEqualizer.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AutoFontEqualizer.Label" />
+                    <Description resid="Btn.AutoFontEqualizer.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>autoFontEqualizer</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.autoFlowText">
+                  <Label resid="Btn.AutoFlowText.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AutoFlowText.Label" />
+                    <Description resid="Btn.AutoFlowText.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>autoFlowText</FunctionName>
+                  </Action>
+                </Control>
+
+                <!-- Align & Group (new) -->
+                <Control xsi:type="Button" id="btn.alignCenterHAndGroup">
+                  <Label resid="Btn.AlignCenterHAndGroup.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignCenterHAndGroup.Label" />
+                    <Description resid="Btn.AlignCenterHAndGroup.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignCenterH.16" />
+                    <bt:Image size="32" resid="Icon.alignCenterH.32" />
+                    <bt:Image size="80" resid="Icon.alignCenterH.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignCenterHAndGroup</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.alignMiddleVAndGroup">
+                  <Label resid="Btn.AlignMiddleVAndGroup.Label" />
+                  <Supertip>
+                    <Title resid="Btn.AlignMiddleVAndGroup.Label" />
+                    <Description resid="Btn.AlignMiddleVAndGroup.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignMiddleV.16" />
+                    <bt:Image size="32" resid="Icon.alignMiddleV.32" />
+                    <bt:Image size="80" resid="Icon.alignMiddleV.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>alignMiddleVAndGroup</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.centerMiddleAndGroup">
+                  <Label resid="Btn.CenterMiddleAndGroup.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CenterMiddleAndGroup.Label" />
+                    <Description resid="Btn.CenterMiddleAndGroup.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>centerMiddleAndGroup</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.distributeHAndGroup">
+                  <Label resid="Btn.DistributeHAndGroup.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DistributeHAndGroup.Label" />
+                    <Description resid="Btn.DistributeHAndGroup.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.distributeH.16" />
+                    <bt:Image size="32" resid="Icon.distributeH.32" />
+                    <bt:Image size="80" resid="Icon.distributeH.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>distributeHAndGroup</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.distributeVAndGroup">
+                  <Label resid="Btn.DistributeVAndGroup.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DistributeVAndGroup.Label" />
+                    <Description resid="Btn.DistributeVAndGroup.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.distributeV.16" />
+                    <bt:Image size="32" resid="Icon.distributeV.32" />
+                    <bt:Image size="80" resid="Icon.distributeV.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>distributeVAndGroup</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.smartAnchorAlign">
+                  <Label resid="Btn.SmartAnchorAlign.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SmartAnchorAlign.Label" />
+                    <Description resid="Btn.SmartAnchorAlign.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>smartAnchorAlign</FunctionName>
+                  </Action>
+                </Control>
+
+                <!-- Style (new) -->
+                <Control xsi:type="Button" id="btn.batchStyleApply">
+                  <Label resid="Btn.BatchStyleApply.Label" />
+                  <Supertip>
+                    <Title resid="Btn.BatchStyleApply.Label" />
+                    <Description resid="Btn.BatchStyleApply.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.copyFillStyle.16" />
+                    <bt:Image size="32" resid="Icon.copyFillStyle.32" />
+                    <bt:Image size="80" resid="Icon.copyFillStyle.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>batchStyleApply</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.normalizeConnectors">
+                  <Label resid="Btn.NormalizeConnectors.Label" />
+                  <Supertip>
+                    <Title resid="Btn.NormalizeConnectors.Label" />
+                    <Description resid="Btn.NormalizeConnectors.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>normalizeConnectors</FunctionName>
+                  </Action>
+                </Control>
+
+                <!-- Builders (new) -->
+                <Control xsi:type="Button" id="btn.openGridDialog">
+                  <Label resid="Btn.OpenGridDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenGridDialog.Label" />
+                    <Description resid="Btn.OpenGridDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openGridDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openColumnsDialog">
+                  <Label resid="Btn.OpenColumnsDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenColumnsDialog.Label" />
+                    <Description resid="Btn.OpenColumnsDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openColumnsDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openRowsDialog">
+                  <Label resid="Btn.OpenRowsDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenRowsDialog.Label" />
+                    <Description resid="Btn.OpenRowsDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openRowsDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openRenameDialog">
+                  <Label resid="Btn.OpenRenameDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenRenameDialog.Label" />
+                    <Description resid="Btn.OpenRenameDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openRenameDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.pasteAsGrid">
+                  <Label resid="Btn.PasteAsGrid.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PasteAsGrid.Label" />
+                    <Description resid="Btn.PasteAsGrid.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pasteAsGrid</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openGanttDialog">
+                  <Label resid="Btn.OpenGanttDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenGanttDialog.Label" />
+                    <Description resid="Btn.OpenGanttDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openGanttDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openTimelineDialog">
+                  <Label resid="Btn.OpenTimelineDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenTimelineDialog.Label" />
+                    <Description resid="Btn.OpenTimelineDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openTimelineDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.openSlideOutlineDialog">
+                  <Label resid="Btn.OpenSlideOutlineDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenSlideOutlineDialog.Label" />
+                    <Description resid="Btn.OpenSlideOutlineDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSlideOutlineDialog</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.convertTableToGantt">
+                  <Label resid="Btn.ConvertTableToGantt.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ConvertTableToGantt.Label" />
+                    <Description resid="Btn.ConvertTableToGantt.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>convertTableToGantt</FunctionName>
+                  </Action>
+                </Control>
+
+                <!-- Diagnostics & Slides (new) -->
+                <Control xsi:type="Button" id="btn.runAccessibilityCheck">
+                  <Label resid="Btn.RunAccessibilityCheck.Label" />
+                  <Supertip>
+                    <Title resid="Btn.RunAccessibilityCheck.Label" />
+                    <Description resid="Btn.RunAccessibilityCheck.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>runAccessibilityCheck</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.exportShapeMetadata">
+                  <Label resid="Btn.ExportShapeMetadata.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ExportShapeMetadata.Label" />
+                    <Description resid="Btn.ExportShapeMetadata.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>exportShapeMetadata</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.moveToUnusedSection">
+                  <Label resid="Btn.MoveToUnusedSection.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MoveToUnusedSection.Label" />
+                    <Description resid="Btn.MoveToUnusedSection.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>moveToUnusedSection</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
               <!-- Branding group -->
@@ -560,6 +944,7 @@
         <bt:String id="Group.Match.Label" DefaultValue="Match" />
         <bt:String id="Group.Align.Label" DefaultValue="Align" />
         <bt:String id="Group.Text.Label" DefaultValue="Text" />
+        <bt:String id="Group.Labs.Label" DefaultValue="Labs" />
         <bt:String id="Group.Branding.Label" DefaultValue="Branding" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Pos+Size" />
         <bt:String id="Btn.PastePositionAndSize.Label" DefaultValue="Paste Pos+Size" />
@@ -582,6 +967,28 @@
         <bt:String id="Btn.DistributeH.Label" DefaultValue="Distribute H" />
         <bt:String id="Btn.DistributeV.Label" DefaultValue="Distribute V" />
         <bt:String id="Btn.SplitTextBoxByLines.Label" DefaultValue="Split Text Box" />
+        <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
+        <bt:String id="Btn.AutoFontEqualizer.Label" DefaultValue="Equalize Fonts" />
+        <bt:String id="Btn.AutoFlowText.Label" DefaultValue="Flow Text" />
+        <bt:String id="Btn.AlignCenterHAndGroup.Label" DefaultValue="Center+Group" />
+        <bt:String id="Btn.AlignMiddleVAndGroup.Label" DefaultValue="Middle+Group" />
+        <bt:String id="Btn.CenterMiddleAndGroup.Label" DefaultValue="Center+Mid+Grp" />
+        <bt:String id="Btn.DistributeHAndGroup.Label" DefaultValue="Distrib H+Grp" />
+        <bt:String id="Btn.DistributeVAndGroup.Label" DefaultValue="Distrib V+Grp" />
+        <bt:String id="Btn.SmartAnchorAlign.Label" DefaultValue="Anchor Align" />
+        <bt:String id="Btn.BatchStyleApply.Label" DefaultValue="Batch Style" />
+        <bt:String id="Btn.NormalizeConnectors.Label" DefaultValue="Norm. Connectors" />
+        <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
+        <bt:String id="Btn.OpenColumnsDialog.Label" DefaultValue="Create Columns" />
+        <bt:String id="Btn.OpenRowsDialog.Label" DefaultValue="Create Rows" />
+        <bt:String id="Btn.OpenRenameDialog.Label" DefaultValue="Batch Rename" />
+        <bt:String id="Btn.PasteAsGrid.Label" DefaultValue="Paste as Grid" />
+        <bt:String id="Btn.OpenGanttDialog.Label" DefaultValue="Gantt Chart" />
+        <bt:String id="Btn.OpenTimelineDialog.Label" DefaultValue="Timeline" />
+        <bt:String id="Btn.OpenSlideOutlineDialog.Label" DefaultValue="Slides from Outline" />
+        <bt:String id="Btn.ConvertTableToGantt.Label" DefaultValue="Table to Gantt" />
+        <bt:String id="Btn.RunAccessibilityCheck.Label" DefaultValue="Accessibility" />
+        <bt:String id="Btn.ExportShapeMetadata.Label" DefaultValue="Export Metadata" />
         <bt:String id="Btn.AddDraftSticker.Label" DefaultValue="Add Draft" />
         <bt:String id="Btn.RemoveDraftSticker.Label" DefaultValue="Remove Draft" />
       </bt:ShortStrings>
@@ -608,8 +1015,32 @@
         <bt:String id="Btn.DistributeH.Desc" DefaultValue="Distribute selected shapes evenly in horizontal space." />
         <bt:String id="Btn.DistributeV.Desc" DefaultValue="Distribute selected shapes evenly in vertical space." />
         <bt:String id="Btn.SplitTextBoxByLines.Desc" DefaultValue="Split a text box into one box per line." />
+        <bt:String id="Btn.MergeTextBoxes.Desc" DefaultValue="Merge selected text boxes into one, concatenating their text." />
+        <bt:String id="Btn.AutoFontEqualizer.Desc" DefaultValue="Apply the smallest font size among selected shapes to all of them." />
+        <bt:String id="Btn.AutoFlowText.Desc" DefaultValue="Redistribute words evenly across selected text boxes." />
+        <bt:String id="Btn.AlignCenterHAndGroup.Desc" DefaultValue="Center shapes horizontally then group them." />
+        <bt:String id="Btn.AlignMiddleVAndGroup.Desc" DefaultValue="Center shapes vertically then group them." />
+        <bt:String id="Btn.CenterMiddleAndGroup.Desc" DefaultValue="Center shapes on both axes then group them." />
+        <bt:String id="Btn.DistributeHAndGroup.Desc" DefaultValue="Distribute shapes horizontally then group them." />
+        <bt:String id="Btn.DistributeVAndGroup.Desc" DefaultValue="Distribute shapes vertically then group them." />
+        <bt:String id="Btn.SmartAnchorAlign.Desc" DefaultValue="Align all shapes to the center of the first selected shape." />
+        <bt:String id="Btn.BatchStyleApply.Desc" DefaultValue="Copy fill, outline, and font style from the first shape to the rest." />
+        <bt:String id="Btn.NormalizeConnectors.Desc" DefaultValue="Set selected connector/line shapes to a straight solid style." />
+        <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open dialog to create a grid of rectangles on the slide." />
+        <bt:String id="Btn.OpenColumnsDialog.Desc" DefaultValue="Open dialog to create a row of column shapes." />
+        <bt:String id="Btn.OpenRowsDialog.Desc" DefaultValue="Open dialog to create a column of row shapes." />
+        <bt:String id="Btn.OpenRenameDialog.Desc" DefaultValue="Open dialog to batch rename selected shapes with a template." />
+        <bt:String id="Btn.PasteAsGrid.Desc" DefaultValue="Read clipboard text rows and lay them out as a card grid." />
+        <bt:String id="Btn.OpenGanttDialog.Desc" DefaultValue="Open dialog to build a Gantt chart on the current slide." />
+        <bt:String id="Btn.OpenTimelineDialog.Desc" DefaultValue="Open dialog to build a timeline on the current slide." />
+        <bt:String id="Btn.OpenSlideOutlineDialog.Desc" DefaultValue="Open dialog to generate slides from a pasted text outline." />
+        <bt:String id="Btn.ConvertTableToGantt.Desc" DefaultValue="Convert a selected table with task/start/end columns into a Gantt chart." />
+        <bt:String id="Btn.RunAccessibilityCheck.Desc" DefaultValue="Check all slides for missing alt text on images." />
+        <bt:String id="Btn.ExportShapeMetadata.Desc" DefaultValue="Export shape names, positions, and sizes across all slides as JSON." />
         <bt:String id="Btn.AddDraftSticker.Desc" DefaultValue="Add a DRAFT watermark to the slide master." />
         <bt:String id="Btn.RemoveDraftSticker.Desc" DefaultValue="Remove the DRAFT watermark from the slide master." />
+        <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
+        <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to the Unused Slides section (creates it if it doesn't exist)." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

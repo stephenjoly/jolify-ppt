@@ -25,6 +25,29 @@ import {
   splitTextBoxByLines,
   addDraftSticker,
   removeDraftSticker,
+  mergeTextBoxes,
+  alignCenterHAndGroup,
+  alignMiddleVAndGroup,
+  centerMiddleAndGroup,
+  distributeHAndGroup,
+  distributeVAndGroup,
+  smartAnchorAlign,
+  autoFontEqualizer,
+  batchStyleApply,
+  exportShapeMetadata,
+  autoFlowText,
+  normalizeConnectors,
+  runAccessibilityCheck,
+  convertTableToGantt,
+  pasteAsGrid,
+  openGridDialog,
+  openColumnsDialog,
+  openRowsDialog,
+  openRenameDialog,
+  openGanttDialog,
+  openTimelineDialog,
+  openSlideOutlineDialog,
+  moveToUnusedSection,
 } from "../shared/shapeTools";
 
 async function withCommandEvent(
@@ -134,6 +157,77 @@ export function removeDraftStickerCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, removeDraftSticker);
 }
 
+// Phase 1 — new button-only commands
+export function mergeTextBoxesCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, mergeTextBoxes);
+}
+export function alignCenterHAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, alignCenterHAndGroup);
+}
+export function alignMiddleVAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, alignMiddleVAndGroup);
+}
+export function centerMiddleAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, centerMiddleAndGroup);
+}
+export function distributeHAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, distributeHAndGroup);
+}
+export function distributeVAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, distributeVAndGroup);
+}
+export function smartAnchorAlignCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, smartAnchorAlign);
+}
+export function autoFontEqualizerCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, autoFontEqualizer);
+}
+export function batchStyleApplyCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, batchStyleApply);
+}
+export function exportShapeMetadataCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, exportShapeMetadata);
+}
+export function autoFlowTextCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, autoFlowText);
+}
+export function normalizeConnectorsCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, normalizeConnectors);
+}
+export function runAccessibilityCheckCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, runAccessibilityCheck);
+}
+export function convertTableToGanttCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, convertTableToGantt);
+}
+export function pasteAsGridCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, pasteAsGrid);
+}
+export function openGridDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openGridDialog);
+}
+export function openColumnsDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openColumnsDialog);
+}
+export function openRowsDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openRowsDialog);
+}
+export function openRenameDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openRenameDialog);
+}
+export function openGanttDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openGanttDialog);
+}
+export function openTimelineDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openTimelineDialog);
+}
+export function openSlideOutlineDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openSlideOutlineDialog);
+}
+export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, moveToUnusedSection);
+}
+
 // Signal to Office that the function file is ready
 Office.onReady(() => {});
 
@@ -163,3 +257,26 @@ Office.onReady(() => {});
 (window as any).splitTextBoxByLines = splitTextBoxByLinesCommand;
 (window as any).addDraftSticker = addDraftStickerCommand;
 (window as any).removeDraftSticker = removeDraftStickerCommand;
+(window as any).mergeTextBoxes = mergeTextBoxesCommand;
+(window as any).alignCenterHAndGroup = alignCenterHAndGroupCommand;
+(window as any).alignMiddleVAndGroup = alignMiddleVAndGroupCommand;
+(window as any).centerMiddleAndGroup = centerMiddleAndGroupCommand;
+(window as any).distributeHAndGroup = distributeHAndGroupCommand;
+(window as any).distributeVAndGroup = distributeVAndGroupCommand;
+(window as any).smartAnchorAlign = smartAnchorAlignCommand;
+(window as any).autoFontEqualizer = autoFontEqualizerCommand;
+(window as any).batchStyleApply = batchStyleApplyCommand;
+(window as any).exportShapeMetadata = exportShapeMetadataCommand;
+(window as any).autoFlowText = autoFlowTextCommand;
+(window as any).normalizeConnectors = normalizeConnectorsCommand;
+(window as any).runAccessibilityCheck = runAccessibilityCheckCommand;
+(window as any).convertTableToGantt = convertTableToGanttCommand;
+(window as any).pasteAsGrid = pasteAsGridCommand;
+(window as any).openGridDialog = openGridDialogCommand;
+(window as any).openColumnsDialog = openColumnsDialogCommand;
+(window as any).openRowsDialog = openRowsDialogCommand;
+(window as any).openRenameDialog = openRenameDialogCommand;
+(window as any).openGanttDialog = openGanttDialogCommand;
+(window as any).openTimelineDialog = openTimelineDialogCommand;
+(window as any).openSlideOutlineDialog = openSlideOutlineDialogCommand;
+(window as any).moveToUnusedSection = moveToUnusedSectionCommand;
