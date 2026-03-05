@@ -1,9 +1,9 @@
+# Disabled until CR_PAT secret is configured.
+# To re-enable, change the trigger back to: on: push: branches: [main]
 name: Build and Publish Docker Image
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -21,11 +21,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: stephenjoly
-          password: ${{ secrets.CR_PAT }}
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u stephenjoly --password-stdin
 
       - name: Build and push Docker image (latest)
         env:
