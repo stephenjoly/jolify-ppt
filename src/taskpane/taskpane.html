@@ -209,9 +209,61 @@
       </section>
 
       <section class="card">
-        <h2>Text</h2>
+        <h2>Align &amp; Group</h2>
+        <div class="button-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));">
+          <button id="align-center-group-btn"   type="button" class="action-button outline">Center + Group</button>
+          <button id="align-middle-group-btn"   type="button" class="action-button outline">Middle + Group</button>
+          <button id="center-middle-group-btn"  type="button" class="action-button primary">Center+Middle + Group</button>
+          <button id="distribute-h-group-btn"   type="button" class="action-button neutral">Distribute H + Group</button>
+          <button id="distribute-v-group-btn"   type="button" class="action-button neutral">Distribute V + Group</button>
+          <button id="smart-anchor-align-btn"   type="button" class="action-button outline">Smart Anchor Align</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Text Tools</h2>
         <div class="button-grid">
-          <button id="split-textbox-btn" type="button" class="action-button primary">Split text box by lines</button>
+          <button id="split-textbox-btn"   type="button" class="action-button primary">Split text box by lines</button>
+          <button id="merge-textboxes-btn" type="button" class="action-button outline">Merge text boxes</button>
+          <button id="auto-font-eq-btn"    type="button" class="action-button outline">Auto Font Equalizer</button>
+          <button id="auto-flow-text-btn"  type="button" class="action-button outline">Auto-Flow Text</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Style</h2>
+        <div class="button-grid">
+          <button id="batch-style-apply-btn"   type="button" class="action-button primary">Batch Style Apply</button>
+          <button id="normalize-connectors-btn" type="button" class="action-button outline">Normalize Connectors</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Layout Builders</h2>
+        <div class="button-grid">
+          <button id="create-grid-btn"    type="button" class="action-button primary">Create Grid…</button>
+          <button id="create-columns-btn" type="button" class="action-button outline">Create Columns…</button>
+          <button id="create-rows-btn"    type="button" class="action-button outline">Create Rows…</button>
+          <button id="batch-rename-btn"   type="button" class="action-button neutral">Batch Rename…</button>
+          <button id="paste-as-grid-btn"  type="button" class="action-button outline">Paste as Grid</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Chart &amp; Slide Builders</h2>
+        <div class="button-grid">
+          <button id="gantt-chart-btn"       type="button" class="action-button primary">Gantt Chart…</button>
+          <button id="timeline-btn"          type="button" class="action-button primary">Timeline…</button>
+          <button id="slide-outline-btn"     type="button" class="action-button outline">Build Slides from Outline…</button>
+          <button id="table-to-gantt-btn"    type="button" class="action-button outline">Table → Gantt</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Diagnostics</h2>
+        <div class="button-grid">
+          <button id="accessibility-btn"      type="button" class="action-button outline">Accessibility Check</button>
+          <button id="export-metadata-btn"    type="button" class="action-button neutral">Export Shape Metadata</button>
         </div>
       </section>
 
@@ -220,6 +272,13 @@
         <div class="button-grid">
           <button id="remove-comments-btn" type="button" class="action-button danger">Remove comments (export)</button>
           <button id="remove-notes-btn" type="button" class="action-button danger">Remove speaker notes (export)</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Slides</h2>
+        <div class="button-grid">
+          <button id="move-to-unused-btn" type="button" class="action-button">Move to Unused</button>
         </div>
       </section>
 

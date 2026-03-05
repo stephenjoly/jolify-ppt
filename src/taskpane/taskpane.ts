@@ -25,6 +25,32 @@ import {
   removeDraftSticker,
   splitTextBoxByLines,
   swapPositions,
+  // Phase 1 — new
+  mergeTextBoxes,
+  alignCenterHAndGroup,
+  alignMiddleVAndGroup,
+  centerMiddleAndGroup,
+  distributeHAndGroup,
+  distributeVAndGroup,
+  smartAnchorAlign,
+  autoFontEqualizer,
+  batchStyleApply,
+  exportShapeMetadata,
+  autoFlowText,
+  normalizeConnectors,
+  runAccessibilityCheck,
+  // Phase 2 — dialog wrappers
+  openGridDialog,
+  openColumnsDialog,
+  openRowsDialog,
+  openRenameDialog,
+  pasteAsGrid,
+  // Phase 3 — dialog wrappers
+  openGanttDialog,
+  openTimelineDialog,
+  openSlideOutlineDialog,
+  convertTableToGantt,
+  moveToUnusedSection,
 } from "../shared/shapeTools";
 
 type ActionRunner = () => Promise<ActionResult>;
@@ -55,6 +81,36 @@ const ACTIONS: Record<string, ActionRunner> = {
   "remove-notes-btn": removeAllSpeakerNotes,
   "add-draft-btn": addDraftSticker,
   "remove-draft-btn": removeDraftSticker,
+  // Align & Group
+  "align-center-group-btn":  alignCenterHAndGroup,
+  "align-middle-group-btn":  alignMiddleVAndGroup,
+  "center-middle-group-btn": centerMiddleAndGroup,
+  "distribute-h-group-btn":  distributeHAndGroup,
+  "distribute-v-group-btn":  distributeVAndGroup,
+  "smart-anchor-align-btn":  smartAnchorAlign,
+  // Text Tools
+  "merge-textboxes-btn": mergeTextBoxes,
+  "auto-font-eq-btn":    autoFontEqualizer,
+  "auto-flow-text-btn":  autoFlowText,
+  // Style
+  "batch-style-apply-btn":    batchStyleApply,
+  "normalize-connectors-btn": normalizeConnectors,
+  // Layout Builders
+  "create-grid-btn":    openGridDialog,
+  "create-columns-btn": openColumnsDialog,
+  "create-rows-btn":    openRowsDialog,
+  "batch-rename-btn":   openRenameDialog,
+  "paste-as-grid-btn":  pasteAsGrid,
+  // Chart & Slide Builders
+  "gantt-chart-btn":    openGanttDialog,
+  "timeline-btn":       openTimelineDialog,
+  "slide-outline-btn":  openSlideOutlineDialog,
+  "table-to-gantt-btn": convertTableToGantt,
+  // Diagnostics
+  "accessibility-btn":   runAccessibilityCheck,
+  "export-metadata-btn": exportShapeMetadata,
+  // Slides
+  "move-to-unused-btn": moveToUnusedSection,
 };
 
 function statusEl() {
