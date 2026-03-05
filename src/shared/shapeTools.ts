@@ -273,7 +273,7 @@ export function clearSavedSize(): void {
 }
 
 const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
-const STICKER_SIZE = 130; // points, square — image is ~390×385 px
+const STICKER_SIZE = 81;  // points — 2.87 cm
 const STICKER_IMAGE_URL = "./assets/draft-sticker.png";
 
 async function fetchImageAsBase64(url: string): Promise<string> {
@@ -320,8 +320,8 @@ export async function addDraftSticker(): Promise<ActionResult> {
       }
 
       const sticker = shapes.addGeometricShape(PowerPoint.GeometricShapeType.rectangle, {
-        left: SLIDE_WIDTH - STICKER_SIZE,
-        top: 0,
+        left: 879,  // 31.04 cm in pt
+        top: -1,    // -0.04 cm in pt
         width: STICKER_SIZE,
         height: STICKER_SIZE,
       });
