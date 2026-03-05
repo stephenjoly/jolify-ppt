@@ -273,19 +273,28 @@ export function clearSavedSize(): void {
 }
 
 const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
+const STICKER_SIZE = 130; // points, square — image is ~390×385 px
+const STICKER_IMAGE_URL = "./assets/draft-sticker.png";
 
-// Diagonal corner ribbon geometry (widescreen 960×540 slide assumed).
-// The ribbon is a rotated text box whose center sits at ~(885, 75),
-// creating a red diagonal band across the top-right corner.
-const RIBBON_LEFT     = 775;  // unrotated bounding box left
-const RIBBON_TOP      = 40;   // unrotated bounding box top
-const RIBBON_WIDTH    = 220;  // ribbon length (along diagonal)
-const RIBBON_HEIGHT   = 70;   // ribbon thickness
-const RIBBON_ROTATION = 45;   // clockwise degrees
-const RIBBON_COLOR    = "#c00000";
-const RIBBON_FONT_SIZE = 18;
+async function fetchImageAsBase64(url: string): Promise<string> {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve((reader.result as string).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
 
 export async function addDraftSticker(): Promise<ActionResult> {
+  let imageBase64: string;
+  try {
+    imageBase64 = await fetchImageAsBase64(STICKER_IMAGE_URL);
+  } catch {
+    return { type: "error", message: "Could not load the draft sticker image." };
+  }
+
   return PowerPoint.run(async (context) => {
     const slides = context.presentation.slides;
     slides.load("items");
@@ -310,29 +319,19 @@ export async function addDraftSticker(): Promise<ActionResult> {
         continue;
       }
 
-      const sticker = shapes.addTextBox("DRAFT", {
-        left: RIBBON_LEFT,
-        top: RIBBON_TOP,
-        width: RIBBON_WIDTH,
-        height: RIBBON_HEIGHT,
+      const sticker = shapes.addGeometricShape(PowerPoint.GeometricShapeType.rectangle, {
+        left: SLIDE_WIDTH - STICKER_SIZE,
+        top: 0,
+        width: STICKER_SIZE,
+        height: STICKER_SIZE,
       });
-
       sticker.name = DRAFT_STICKER_NAME;
-      sticker.rotation = RIBBON_ROTATION;
-      sticker.fill.setSolidColor(RIBBON_COLOR);
+      sticker.fill.setImage(imageBase64);
       sticker.lineFormat.visible = false;
 
-      const text = sticker.textFrame.textRange;
-      text.font.color = "#ffffff";
-      text.font.bold = true;
-      text.font.size = RIBBON_FONT_SIZE;
-      text.paragraphFormat.alignment = "Center";
-      sticker.textFrame.verticalAlignment = "middle";
-
+      await context.sync();
       added++;
     }
-
-    await context.sync();
 
     if (added === 0) {
       return { type: "info", message: "All slides already have a DRAFT sticker." };
