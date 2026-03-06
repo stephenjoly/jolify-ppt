@@ -1887,53 +1887,49 @@ export async function moveToUnusedSection(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const selectedSlides = context.presentation.getSelectedSlides();
     const allSlides = context.presentation.slides;
-    selectedSlides.load("items");
-    allSlides.load("items");
+    selectedSlides.load("items/id");
+    allSlides.load("items/id");
     await context.sync();
 
     if (selectedSlides.items.length === 0) {
       return { type: "warning", message: "Select at least one slide in the slide panel first." };
     }
 
-    // Load IDs so we can compare slides
-    allSlides.items.forEach((s) => s.load("id"));
-    selectedSlides.items.forEach((s) => s.load("id"));
-
-    // Check every slide for the divider tag
-    const tagChecks = allSlides.items.map((s) =>
-      s.tags.getItemOrNullObject(UNUSED_DIVIDER_TAG)
-    );
+    // Find the divider slide (tagged sentinel that marks start of unused section)
+    const tagChecks = allSlides.items.map((s) => s.tags.getItemOrNullObject(UNUSED_DIVIDER_TAG));
     await context.sync();
 
-    const dividerIdx  = tagChecks.findIndex((t) => !t.isNullObject);
-    const dividerSlide = dividerIdx >= 0 ? allSlides.items[dividerIdx] : null;
-    const selectedIds  = new Set(selectedSlides.items.map((s) => s.id));
+    let dividerIdx = tagChecks.findIndex((t) => !t.isNullObject);
+    let dividerSlide = dividerIdx >= 0 ? allSlides.items[dividerIdx] : null;
 
-    // Filter out the divider itself if the user somehow selected it
-    const slidesToMove = selectedSlides.items.filter(
-      (s) => !dividerSlide || s.id !== dividerSlide.id
-    );
+    // Build a position map for O(1) lookups
+    const idToPos = new Map<string, number>();
+    allSlides.items.forEach((s, i) => idToPos.set(s.id, i));
+
+    // Only move slides that are currently before the divider (active slides)
+    const effectiveDividerPos = dividerSlide ? dividerIdx : allSlides.items.length;
+    const slidesToMove = selectedSlides.items.filter((s) => {
+      const pos = idToPos.get(s.id) ?? -1;
+      return pos >= 0 && pos < effectiveDividerPos;
+    });
 
     if (slidesToMove.length === 0) {
-      return { type: "info", message: "Nothing to move (divider slide is excluded)." };
+      return { type: "info", message: "Selected slides are already in the Unused Slides section." };
     }
 
-    // Guard: don't let the user move every real slide to unused
-    const totalReal = allSlides.items.length - (dividerSlide ? 1 : 0);
-    if (slidesToMove.length >= totalReal) {
-      return { type: "warning", message: "Cannot move all slides to Unused Slides." };
+    // Guard: leave at least 1 active slide
+    if (slidesToMove.length >= effectiveDividerPos) {
+      return { type: "warning", message: "Cannot move all active slides to Unused Slides." };
     }
 
-    // Create divider slide if one doesn't exist yet
-    let totalSlides = allSlides.items.length;
+    // Create the divider slide if it doesn't exist yet (appended to end)
     if (!dividerSlide) {
       allSlides.add();
       await context.sync();
-      allSlides.load("items");
+      allSlides.load("items/id");
       await context.sync();
-      totalSlides = allSlides.items.length;
 
-      const divSlide = allSlides.items[totalSlides - 1];
+      const divSlide = allSlides.items[allSlides.items.length - 1];
       divSlide.tags.add(UNUSED_DIVIDER_TAG, "true");
 
       const tb = divSlide.shapes.addTextBox("── Unused Slides ──", {
@@ -1946,14 +1942,25 @@ export async function moveToUnusedSection(): Promise<ActionResult> {
       tb.textFrame.textRange.font.color = "#A0A0A0";
       tb.textFrame.horizontalAlignment  = PowerPoint.ParagraphHorizontalAlignment.center;
       await context.sync();
+
+      dividerIdx = allSlides.items.length - 1;
     }
 
-    // Move each selected slide to the last position.
-    // Because moveTo(last) naturally pushes the divider one spot left each time,
-    // the divider always ends up just before all the moved slides.
-    for (const slide of slidesToMove) {
-      slide.moveTo(totalSlides - 1);
+    // Prepend slides to the unused section (right after the divider), preserving order.
+    //
+    // Strategy: move slides in REVERSE selection order, each time targeting position d
+    // (the current divider index). After each move the divider shifts one slot left,
+    // so d decrements. This inserts slides one-by-one immediately after the divider
+    // in the correct forward order.
+    //
+    // Example: divider at 3, moving [sA, sB] → reverse = [sB, sA]
+    //   moveTo(3): [..., divider(2), sB(3), u0, ...]   d→2
+    //   moveTo(2): [..., divider(1), sA(2), sB(3), u0, ...]  ✓
+    let d = dividerIdx;
+    for (const slide of [...slidesToMove].reverse()) {
+      slide.moveTo(d);
       await context.sync();
+      d--;
     }
 
     const n = slidesToMove.length;

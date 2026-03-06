@@ -30,8 +30,6 @@ fi
 echo "  ✓  Found PowerPoint: $PPT_APP"
 
 # ── 2. Locate or create the WEF folder ───────────────────────────
-# Checked in order of likelihood; the folder may not exist yet if
-# the user has never installed an add-in — we create it if needed.
 WEF_CANDIDATES=(
   "$HOME/Library/Containers/com.microsoft.Powerpoint/Data/Documents/wef"
   "$HOME/Library/Group Containers/UBF8T346G9.Office/User Content/Wef"
@@ -40,7 +38,6 @@ WEF_CANDIDATES=(
 
 WEF_DIR=""
 
-# Prefer whichever candidate already exists
 for candidate in "${WEF_CANDIDATES[@]}"; do
   if [ -d "$candidate" ]; then
     WEF_DIR="$candidate"
@@ -48,8 +45,6 @@ for candidate in "${WEF_CANDIDATES[@]}"; do
   fi
 done
 
-# If none exists yet, create the one that matches the install type.
-# App Store builds sandbox under ~/Library/Containers; retail builds don't.
 if [ -z "$WEF_DIR" ]; then
   if [ -d "$HOME/Library/Containers/com.microsoft.Powerpoint" ]; then
     WEF_DIR="${WEF_CANDIDATES[0]}"
@@ -62,9 +57,16 @@ if [ -z "$WEF_DIR" ]; then
   mkdir -p "$WEF_DIR"
 fi
 
+# ── 3. Check for existing installation ────────────────────────────
+UPGRADE=false
+if [ -f "$WEF_DIR/$MANIFEST_NAME" ]; then
+  UPGRADE=true
+  echo "  → Existing Jolify installation found — upgrading"
+fi
+
 echo "  → Installing to: $WEF_DIR"
 
-# ── 3. Download and install the manifest ─────────────────────────
+# ── 4. Download and install the manifest ──────────────────────────
 echo "  → Downloading manifest..."
 if ! curl -fsSL "$MANIFEST_URL" -o "/tmp/$MANIFEST_NAME"; then
   echo ""
@@ -75,6 +77,27 @@ fi
 cp "/tmp/$MANIFEST_NAME" "$WEF_DIR/$MANIFEST_NAME"
 rm "/tmp/$MANIFEST_NAME"
 
-echo ""
-echo "  ✓  Done! Restart PowerPoint and look for the Jolify tab in the ribbon."
+echo "  ✓  Manifest installed"
+
+# ── 5. Restart PowerPoint if upgrading ────────────────────────────
+if [ "$UPGRADE" = true ]; then
+  echo "  → Closing PowerPoint..."
+  osascript -e 'tell application "Microsoft PowerPoint" to quit' 2>/dev/null || true
+  sleep 2
+
+  # Force-kill if it didn't quit gracefully
+  if pgrep -xq "Microsoft PowerPoint"; then
+    kill "$(pgrep -x 'Microsoft PowerPoint')" 2>/dev/null || true
+    sleep 1
+  fi
+
+  echo "  → Reopening PowerPoint..."
+  open -a "Microsoft PowerPoint"
+  echo ""
+  echo "  ✓  Jolify has been upgraded! Look for the Jolify tab in the ribbon."
+else
+  echo ""
+  echo "  ✓  Done! Restart PowerPoint and look for the Jolify tab in the ribbon."
+fi
+
 echo ""

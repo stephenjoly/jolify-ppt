@@ -69,6 +69,10 @@ module.exports = async (env, options) => {
             to: "install.sh",
           },
           {
+            from: "uninstall.sh",
+            to: "uninstall.sh",
+          },
+          {
             from: "manifest*.xml",
             to: "[name]" + "[ext]",
             transform(content) {
