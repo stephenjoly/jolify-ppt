@@ -2,7 +2,7 @@
 set -euo pipefail
 
 MANIFEST_URL="https://stephenjoly.github.io/jolify-ppt/manifest.xml"
-MANIFEST_NAME="jolify-manifest.xml"
+MANIFEST_NAME="a13454cd-574c-44ce-9c64-19dcd0ae477b.manifest.xml"
 
 echo ""
 echo "  Jolify — PowerPoint Add-in Installer"
