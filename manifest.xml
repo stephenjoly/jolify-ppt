@@ -7,7 +7,7 @@
   xsi:type="TaskPaneApp">
 
   <Id>a13454cd-574c-44ce-9c64-19dcd0ae477b</Id>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.0.5</Version>
   <ProviderName>stephenjoly</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Jolify" />
@@ -18,6 +18,7 @@
 
   <AppDomains>
     <AppDomain>https://stephenjoly.github.io</AppDomain>
+    <AppDomain>https://api.openai.com</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -536,21 +537,6 @@
                     <FunctionName>distributeVAndGroup</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.smartAnchorAlign">
-                  <Label resid="Btn.SmartAnchorAlign.Label" />
-                  <Supertip>
-                    <Title resid="Btn.SmartAnchorAlign.Label" />
-                    <Description resid="Btn.SmartAnchorAlign.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.smartAnchorAlign.16" />
-                    <bt:Image size="32" resid="Icon.smartAnchorAlign.32" />
-                    <bt:Image size="80" resid="Icon.smartAnchorAlign.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>smartAnchorAlign</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <!-- Style group -->
@@ -561,51 +547,6 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <Control xsi:type="Button" id="btn.autoFontEqualizer">
-                  <Label resid="Btn.AutoFontEqualizer.Label" />
-                  <Supertip>
-                    <Title resid="Btn.AutoFontEqualizer.Label" />
-                    <Description resid="Btn.AutoFontEqualizer.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.autoFontEqualizer.16" />
-                    <bt:Image size="32" resid="Icon.autoFontEqualizer.32" />
-                    <bt:Image size="80" resid="Icon.autoFontEqualizer.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>autoFontEqualizer</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.autoFlowText">
-                  <Label resid="Btn.AutoFlowText.Label" />
-                  <Supertip>
-                    <Title resid="Btn.AutoFlowText.Label" />
-                    <Description resid="Btn.AutoFlowText.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.autoFlowText.16" />
-                    <bt:Image size="32" resid="Icon.autoFlowText.32" />
-                    <bt:Image size="80" resid="Icon.autoFlowText.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>autoFlowText</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.normalizeConnectors">
-                  <Label resid="Btn.NormalizeConnectors.Label" />
-                  <Supertip>
-                    <Title resid="Btn.NormalizeConnectors.Label" />
-                    <Description resid="Btn.NormalizeConnectors.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.normalizeConnectors.16" />
-                    <bt:Image size="32" resid="Icon.normalizeConnectors.32" />
-                    <bt:Image size="80" resid="Icon.normalizeConnectors.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>normalizeConnectors</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <!-- Layout group -->
@@ -661,36 +602,6 @@
                     <FunctionName>openRowsDialog</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.openRenameDialog">
-                  <Label resid="Btn.OpenRenameDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenRenameDialog.Label" />
-                    <Description resid="Btn.OpenRenameDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openRenameDialog.16" />
-                    <bt:Image size="32" resid="Icon.openRenameDialog.32" />
-                    <bt:Image size="80" resid="Icon.openRenameDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openRenameDialog</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.pasteAsGrid">
-                  <Label resid="Btn.PasteAsGrid.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PasteAsGrid.Label" />
-                    <Description resid="Btn.PasteAsGrid.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pasteAsGrid.16" />
-                    <bt:Image size="32" resid="Icon.pasteAsGrid.32" />
-                    <bt:Image size="80" resid="Icon.pasteAsGrid.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pasteAsGrid</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <!-- Builders group -->
@@ -716,51 +627,6 @@
                     <FunctionName>openGanttDialog</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.openTimelineDialog">
-                  <Label resid="Btn.OpenTimelineDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenTimelineDialog.Label" />
-                    <Description resid="Btn.OpenTimelineDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openTimelineDialog.16" />
-                    <bt:Image size="32" resid="Icon.openTimelineDialog.32" />
-                    <bt:Image size="80" resid="Icon.openTimelineDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openTimelineDialog</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.openSlideOutlineDialog">
-                  <Label resid="Btn.OpenSlideOutlineDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenSlideOutlineDialog.Label" />
-                    <Description resid="Btn.OpenSlideOutlineDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openSlideOutlineDialog.16" />
-                    <bt:Image size="32" resid="Icon.openSlideOutlineDialog.32" />
-                    <bt:Image size="80" resid="Icon.openSlideOutlineDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openSlideOutlineDialog</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.convertTableToGantt">
-                  <Label resid="Btn.ConvertTableToGantt.Label" />
-                  <Supertip>
-                    <Title resid="Btn.ConvertTableToGantt.Label" />
-                    <Description resid="Btn.ConvertTableToGantt.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.convertTableToGantt.16" />
-                    <bt:Image size="32" resid="Icon.convertTableToGantt.32" />
-                    <bt:Image size="80" resid="Icon.convertTableToGantt.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>convertTableToGantt</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <!-- Utils group -->
@@ -771,36 +637,6 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <Control xsi:type="Button" id="btn.runAccessibilityCheck">
-                  <Label resid="Btn.RunAccessibilityCheck.Label" />
-                  <Supertip>
-                    <Title resid="Btn.RunAccessibilityCheck.Label" />
-                    <Description resid="Btn.RunAccessibilityCheck.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.runAccessibilityCheck.16" />
-                    <bt:Image size="32" resid="Icon.runAccessibilityCheck.32" />
-                    <bt:Image size="80" resid="Icon.runAccessibilityCheck.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>runAccessibilityCheck</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.exportShapeMetadata">
-                  <Label resid="Btn.ExportShapeMetadata.Label" />
-                  <Supertip>
-                    <Title resid="Btn.ExportShapeMetadata.Label" />
-                    <Description resid="Btn.ExportShapeMetadata.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.exportShapeMetadata.16" />
-                    <bt:Image size="32" resid="Icon.exportShapeMetadata.32" />
-                    <bt:Image size="80" resid="Icon.exportShapeMetadata.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>exportShapeMetadata</FunctionName>
-                  </Action>
-                </Control>
                 <Control xsi:type="Button" id="btn.moveToUnusedSection">
                   <Label resid="Btn.MoveToUnusedSection.Label" />
                   <Supertip>
@@ -961,21 +797,9 @@
         <bt:Image id="Icon.distributeVAndGroup.16" DefaultValue="https://localhost:3300/assets/icons/distributeVAndGroup_16.png" />
         <bt:Image id="Icon.distributeVAndGroup.32" DefaultValue="https://localhost:3300/assets/icons/distributeVAndGroup_32.png" />
         <bt:Image id="Icon.distributeVAndGroup.80" DefaultValue="https://localhost:3300/assets/icons/distributeVAndGroup_80.png" />
-        <bt:Image id="Icon.smartAnchorAlign.16" DefaultValue="https://localhost:3300/assets/icons/smartAnchorAlign_16.png" />
-        <bt:Image id="Icon.smartAnchorAlign.32" DefaultValue="https://localhost:3300/assets/icons/smartAnchorAlign_32.png" />
-        <bt:Image id="Icon.smartAnchorAlign.80" DefaultValue="https://localhost:3300/assets/icons/smartAnchorAlign_80.png" />
-        <bt:Image id="Icon.autoFontEqualizer.16" DefaultValue="https://localhost:3300/assets/icons/autoFontEqualizer_16.png" />
-        <bt:Image id="Icon.autoFontEqualizer.32" DefaultValue="https://localhost:3300/assets/icons/autoFontEqualizer_32.png" />
-        <bt:Image id="Icon.autoFontEqualizer.80" DefaultValue="https://localhost:3300/assets/icons/autoFontEqualizer_80.png" />
-        <bt:Image id="Icon.autoFlowText.16" DefaultValue="https://localhost:3300/assets/icons/autoFlowText_16.png" />
-        <bt:Image id="Icon.autoFlowText.32" DefaultValue="https://localhost:3300/assets/icons/autoFlowText_32.png" />
-        <bt:Image id="Icon.autoFlowText.80" DefaultValue="https://localhost:3300/assets/icons/autoFlowText_80.png" />
         <bt:Image id="Icon.batchStyleApply.16" DefaultValue="https://localhost:3300/assets/icons/batchStyleApply_16.png" />
         <bt:Image id="Icon.batchStyleApply.32" DefaultValue="https://localhost:3300/assets/icons/batchStyleApply_32.png" />
         <bt:Image id="Icon.batchStyleApply.80" DefaultValue="https://localhost:3300/assets/icons/batchStyleApply_80.png" />
-        <bt:Image id="Icon.normalizeConnectors.16" DefaultValue="https://localhost:3300/assets/icons/normalizeConnectors_16.png" />
-        <bt:Image id="Icon.normalizeConnectors.32" DefaultValue="https://localhost:3300/assets/icons/normalizeConnectors_32.png" />
-        <bt:Image id="Icon.normalizeConnectors.80" DefaultValue="https://localhost:3300/assets/icons/normalizeConnectors_80.png" />
         <bt:Image id="Icon.openGridDialog.16" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_16.png" />
         <bt:Image id="Icon.openGridDialog.32" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_32.png" />
         <bt:Image id="Icon.openGridDialog.80" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_80.png" />
@@ -985,30 +809,9 @@
         <bt:Image id="Icon.openRowsDialog.16" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_16.png" />
         <bt:Image id="Icon.openRowsDialog.32" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_32.png" />
         <bt:Image id="Icon.openRowsDialog.80" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_80.png" />
-        <bt:Image id="Icon.openRenameDialog.16" DefaultValue="https://localhost:3300/assets/icons/openRenameDialog_16.png" />
-        <bt:Image id="Icon.openRenameDialog.32" DefaultValue="https://localhost:3300/assets/icons/openRenameDialog_32.png" />
-        <bt:Image id="Icon.openRenameDialog.80" DefaultValue="https://localhost:3300/assets/icons/openRenameDialog_80.png" />
-        <bt:Image id="Icon.pasteAsGrid.16" DefaultValue="https://localhost:3300/assets/icons/pasteAsGrid_16.png" />
-        <bt:Image id="Icon.pasteAsGrid.32" DefaultValue="https://localhost:3300/assets/icons/pasteAsGrid_32.png" />
-        <bt:Image id="Icon.pasteAsGrid.80" DefaultValue="https://localhost:3300/assets/icons/pasteAsGrid_80.png" />
         <bt:Image id="Icon.openGanttDialog.16" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_16.png" />
         <bt:Image id="Icon.openGanttDialog.32" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_32.png" />
         <bt:Image id="Icon.openGanttDialog.80" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_80.png" />
-        <bt:Image id="Icon.openTimelineDialog.16" DefaultValue="https://localhost:3300/assets/icons/openTimelineDialog_16.png" />
-        <bt:Image id="Icon.openTimelineDialog.32" DefaultValue="https://localhost:3300/assets/icons/openTimelineDialog_32.png" />
-        <bt:Image id="Icon.openTimelineDialog.80" DefaultValue="https://localhost:3300/assets/icons/openTimelineDialog_80.png" />
-        <bt:Image id="Icon.openSlideOutlineDialog.16" DefaultValue="https://localhost:3300/assets/icons/openSlideOutlineDialog_16.png" />
-        <bt:Image id="Icon.openSlideOutlineDialog.32" DefaultValue="https://localhost:3300/assets/icons/openSlideOutlineDialog_32.png" />
-        <bt:Image id="Icon.openSlideOutlineDialog.80" DefaultValue="https://localhost:3300/assets/icons/openSlideOutlineDialog_80.png" />
-        <bt:Image id="Icon.convertTableToGantt.16" DefaultValue="https://localhost:3300/assets/icons/convertTableToGantt_16.png" />
-        <bt:Image id="Icon.convertTableToGantt.32" DefaultValue="https://localhost:3300/assets/icons/convertTableToGantt_32.png" />
-        <bt:Image id="Icon.convertTableToGantt.80" DefaultValue="https://localhost:3300/assets/icons/convertTableToGantt_80.png" />
-        <bt:Image id="Icon.runAccessibilityCheck.16" DefaultValue="https://localhost:3300/assets/icons/runAccessibilityCheck_16.png" />
-        <bt:Image id="Icon.runAccessibilityCheck.32" DefaultValue="https://localhost:3300/assets/icons/runAccessibilityCheck_32.png" />
-        <bt:Image id="Icon.runAccessibilityCheck.80" DefaultValue="https://localhost:3300/assets/icons/runAccessibilityCheck_80.png" />
-        <bt:Image id="Icon.exportShapeMetadata.16" DefaultValue="https://localhost:3300/assets/icons/exportShapeMetadata_16.png" />
-        <bt:Image id="Icon.exportShapeMetadata.32" DefaultValue="https://localhost:3300/assets/icons/exportShapeMetadata_32.png" />
-        <bt:Image id="Icon.exportShapeMetadata.80" DefaultValue="https://localhost:3300/assets/icons/exportShapeMetadata_80.png" />
         <bt:Image id="Icon.moveToUnusedSection.16" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_16.png" />
         <bt:Image id="Icon.moveToUnusedSection.32" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_32.png" />
         <bt:Image id="Icon.moveToUnusedSection.80" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_80.png" />
@@ -1036,22 +839,11 @@
         <bt:String id="Btn.CenterMiddleAndGroup.Label" DefaultValue="Center+Mid+Group" />
         <bt:String id="Btn.DistributeHAndGroup.Label" DefaultValue="Dist H + Group" />
         <bt:String id="Btn.DistributeVAndGroup.Label" DefaultValue="Dist V + Group" />
-        <bt:String id="Btn.SmartAnchorAlign.Label" DefaultValue="Smart Anchor" />
-        <bt:String id="Btn.AutoFontEqualizer.Label" DefaultValue="Font Equalizer" />
-        <bt:String id="Btn.AutoFlowText.Label" DefaultValue="Auto-Flow Text" />
         <bt:String id="Btn.BatchStyleApply.Label" DefaultValue="Copy Style" />
-        <bt:String id="Btn.NormalizeConnectors.Label" DefaultValue="Norm. Connectors" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.OpenColumnsDialog.Label" DefaultValue="Create Columns" />
         <bt:String id="Btn.OpenRowsDialog.Label" DefaultValue="Create Rows" />
-        <bt:String id="Btn.OpenRenameDialog.Label" DefaultValue="Batch Rename" />
-        <bt:String id="Btn.PasteAsGrid.Label" DefaultValue="Paste as Grid" />
         <bt:String id="Btn.OpenGanttDialog.Label" DefaultValue="Gantt Chart" />
-        <bt:String id="Btn.OpenTimelineDialog.Label" DefaultValue="Timeline" />
-        <bt:String id="Btn.OpenSlideOutlineDialog.Label" DefaultValue="Slide Outline" />
-        <bt:String id="Btn.ConvertTableToGantt.Label" DefaultValue="Table to Gantt" />
-        <bt:String id="Btn.RunAccessibilityCheck.Label" DefaultValue="Accessibility" />
-        <bt:String id="Btn.ExportShapeMetadata.Label" DefaultValue="Export Metadata" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
@@ -1109,22 +901,11 @@
         <bt:String id="Btn.CenterMiddleAndGroup.Desc" DefaultValue="Center shapes on both axes then group them." />
         <bt:String id="Btn.DistributeHAndGroup.Desc" DefaultValue="Distribute shapes horizontally then group them." />
         <bt:String id="Btn.DistributeVAndGroup.Desc" DefaultValue="Distribute shapes vertically then group them." />
-        <bt:String id="Btn.SmartAnchorAlign.Desc" DefaultValue="Align all selected shapes to the first selected shape." />
-        <bt:String id="Btn.AutoFontEqualizer.Desc" DefaultValue="Apply the same font size to all selected text boxes." />
-        <bt:String id="Btn.AutoFlowText.Desc" DefaultValue="Redistribute overflow text across selected shapes." />
         <bt:String id="Btn.BatchStyleApply.Desc" DefaultValue="Copy fill and outline from the first shape to the rest." />
-        <bt:String id="Btn.NormalizeConnectors.Desc" DefaultValue="Set all selected connectors to straight routing." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenColumnsDialog.Desc" DefaultValue="Open the columns builder dialog." />
         <bt:String id="Btn.OpenRowsDialog.Desc" DefaultValue="Open the rows builder dialog." />
-        <bt:String id="Btn.OpenRenameDialog.Desc" DefaultValue="Open the batch rename dialog." />
-        <bt:String id="Btn.PasteAsGrid.Desc" DefaultValue="Paste clipboard content as a structured grid." />
         <bt:String id="Btn.OpenGanttDialog.Desc" DefaultValue="Open the Gantt chart builder dialog." />
-        <bt:String id="Btn.OpenTimelineDialog.Desc" DefaultValue="Open the timeline builder dialog." />
-        <bt:String id="Btn.OpenSlideOutlineDialog.Desc" DefaultValue="Build slides from a pasted outline." />
-        <bt:String id="Btn.ConvertTableToGantt.Desc" DefaultValue="Convert a selected table to a Gantt chart." />
-        <bt:String id="Btn.RunAccessibilityCheck.Desc" DefaultValue="Check slides for accessibility issues." />
-        <bt:String id="Btn.ExportShapeMetadata.Desc" DefaultValue="Export shape metadata from all slides as JSON." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
       </bt:LongStrings>
     </Resources>
