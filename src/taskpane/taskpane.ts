@@ -4,6 +4,8 @@ import {
   alignBottom,
   copyFillStyle,
   copyOutlineStyle,
+  clearFill,
+  clearOutline,
   matchHeight,
   matchHeightAndWidth,
   matchWidth,
@@ -20,8 +22,6 @@ import {
   pastePositionAndSize,
   pastePositionOnly,
   pasteSizeOnly,
-  removeAllComments,
-  removeAllSpeakerNotes,
   removeDraftSticker,
   splitTextBoxByLines,
   swapPositions,
@@ -32,24 +32,9 @@ import {
   centerMiddleAndGroup,
   distributeHAndGroup,
   distributeVAndGroup,
-  smartAnchorAlign,
-  autoFontEqualizer,
   batchStyleApply,
-  exportShapeMetadata,
-  autoFlowText,
-  normalizeConnectors,
-  runAccessibilityCheck,
   // Phase 2 — dialog wrappers
   openGridDialog,
-  openColumnsDialog,
-  openRowsDialog,
-  openRenameDialog,
-  pasteAsGrid,
-  // Phase 3 — dialog wrappers
-  openGanttDialog,
-  openTimelineDialog,
-  openSlideOutlineDialog,
-  convertTableToGantt,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -65,6 +50,8 @@ const ACTIONS: Record<string, ActionRunner> = {
   "swap-btn": swapPositions,
   "copy-outline-btn":    copyOutlineStyle,
   "copy-fill-btn":       copyFillStyle,
+  "clear-fill-btn":      clearFill,
+  "clear-outline-btn":   clearOutline,
   "match-height-btn":    matchHeight,
   "match-width-btn":     matchWidth,
   "match-size-btn":      matchHeightAndWidth,
@@ -77,8 +64,6 @@ const ACTIONS: Record<string, ActionRunner> = {
   "distribute-h-btn": distributeH,
   "distribute-v-btn": distributeV,
   "split-textbox-btn": splitTextBoxByLines,
-  "remove-comments-btn": removeAllComments,
-  "remove-notes-btn": removeAllSpeakerNotes,
   "add-draft-btn": addDraftSticker,
   "remove-draft-btn": removeDraftSticker,
   // Align & Group
@@ -87,28 +72,12 @@ const ACTIONS: Record<string, ActionRunner> = {
   "center-middle-group-btn": centerMiddleAndGroup,
   "distribute-h-group-btn":  distributeHAndGroup,
   "distribute-v-group-btn":  distributeVAndGroup,
-  "smart-anchor-align-btn":  smartAnchorAlign,
   // Text Tools
   "merge-textboxes-btn": mergeTextBoxes,
-  "auto-font-eq-btn":    autoFontEqualizer,
-  "auto-flow-text-btn":  autoFlowText,
   // Style
-  "batch-style-apply-btn":    batchStyleApply,
-  "normalize-connectors-btn": normalizeConnectors,
+  "batch-style-apply-btn": batchStyleApply,
   // Layout Builders
   "create-grid-btn":    openGridDialog,
-  "create-columns-btn": openColumnsDialog,
-  "create-rows-btn":    openRowsDialog,
-  "batch-rename-btn":   openRenameDialog,
-  "paste-as-grid-btn":  pasteAsGrid,
-  // Chart & Slide Builders
-  "gantt-chart-btn":    openGanttDialog,
-  "timeline-btn":       openTimelineDialog,
-  "slide-outline-btn":  openSlideOutlineDialog,
-  "table-to-gantt-btn": convertTableToGantt,
-  // Diagnostics
-  "accessibility-btn":   runAccessibilityCheck,
-  "export-metadata-btn": exportShapeMetadata,
   // Slides
   "move-to-unused-btn": moveToUnusedSection,
 };

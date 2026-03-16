@@ -33,8 +33,6 @@ import {
   distributeVAndGroup,
   batchStyleApply,
   openGridDialog,
-  openColumnsDialog,
-  openRowsDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -169,12 +167,6 @@ export function batchStyleApplyCommand(event: Office.AddinCommands.Event) {
 export function openGridDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openGridDialog);
 }
-export function openColumnsDialogCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, openColumnsDialog);
-}
-export function openRowsDialogCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, openRowsDialog);
-}
 export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, moveToUnusedSection);
 }
@@ -216,6 +208,4 @@ Office.onReady(() => {});
 (window as any).distributeVAndGroup = distributeVAndGroupCommand;
 (window as any).batchStyleApply = batchStyleApplyCommand;
 (window as any).openGridDialog = openGridDialogCommand;
-(window as any).openColumnsDialog = openColumnsDialogCommand;
-(window as any).openRowsDialog = openRowsDialogCommand;
 (window as any).moveToUnusedSection = moveToUnusedSectionCommand;

@@ -220,9 +220,9 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
+                <OfficeControl id="FontColorPicker" />
                 <OfficeControl id="ShapeFillColorPicker" />
                 <OfficeControl id="ShapeOutlineColorPicker" />
-                <OfficeControl id="FontColorPicker" />
                 <Control xsi:type="Button" id="btn.copyOutlineStyle">
                   <Label resid="Btn.CopyOutlineStyle.Label" />
                   <Supertip>
@@ -563,6 +563,16 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
+              </Group>
+
+              <!-- Presentation -->
+              <Group id="jolify.Review">
+                <Label resid="Group.Review.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
                 <Control xsi:type="Button" id="btn.openGridDialog">
                   <Label resid="Btn.OpenGridDialog.Label" />
                   <Supertip>
@@ -578,46 +588,6 @@
                     <FunctionName>openGridDialog</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.openColumnsDialog">
-                  <Label resid="Btn.OpenColumnsDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenColumnsDialog.Label" />
-                    <Description resid="Btn.OpenColumnsDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openColumnsDialog.16" />
-                    <bt:Image size="32" resid="Icon.openColumnsDialog.32" />
-                    <bt:Image size="80" resid="Icon.openColumnsDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openColumnsDialog</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.openRowsDialog">
-                  <Label resid="Btn.OpenRowsDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenRowsDialog.Label" />
-                    <Description resid="Btn.OpenRowsDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openRowsDialog.16" />
-                    <bt:Image size="32" resid="Icon.openRowsDialog.32" />
-                    <bt:Image size="80" resid="Icon.openRowsDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openRowsDialog</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- Presentation -->
-              <Group id="jolify.Review">
-                <Label resid="Group.Review.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
                 <Control xsi:type="Button" id="btn.moveToUnusedSection">
                   <Label resid="Btn.MoveToUnusedSection.Label" />
                   <Supertip>
@@ -779,12 +749,6 @@
         <bt:Image id="Icon.openGridDialog.16" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_16.png" />
         <bt:Image id="Icon.openGridDialog.32" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_32.png" />
         <bt:Image id="Icon.openGridDialog.80" DefaultValue="https://localhost:3300/assets/icons/openGridDialog_80.png" />
-        <bt:Image id="Icon.openColumnsDialog.16" DefaultValue="https://localhost:3300/assets/icons/openColumnsDialog_16.png" />
-        <bt:Image id="Icon.openColumnsDialog.32" DefaultValue="https://localhost:3300/assets/icons/openColumnsDialog_32.png" />
-        <bt:Image id="Icon.openColumnsDialog.80" DefaultValue="https://localhost:3300/assets/icons/openColumnsDialog_80.png" />
-        <bt:Image id="Icon.openRowsDialog.16" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_16.png" />
-        <bt:Image id="Icon.openRowsDialog.32" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_32.png" />
-        <bt:Image id="Icon.openRowsDialog.80" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_80.png" />
         <bt:Image id="Icon.moveToUnusedSection.16" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_16.png" />
         <bt:Image id="Icon.moveToUnusedSection.32" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_32.png" />
         <bt:Image id="Icon.moveToUnusedSection.80" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_80.png" />
@@ -812,8 +776,6 @@
         <bt:String id="Btn.ClearFill.Label" DefaultValue="No Fill" />
         <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
-        <bt:String id="Btn.OpenColumnsDialog.Label" DefaultValue="Create Columns" />
-        <bt:String id="Btn.OpenRowsDialog.Label" DefaultValue="Create Rows" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
@@ -875,8 +837,6 @@
         <bt:String id="Btn.ClearFill.Desc" DefaultValue="Remove the fill from the selected shape or shapes." />
         <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
-        <bt:String id="Btn.OpenColumnsDialog.Desc" DefaultValue="Open the columns builder dialog." />
-        <bt:String id="Btn.OpenRowsDialog.Desc" DefaultValue="Open the rows builder dialog." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
       </bt:LongStrings>
     </Resources>

@@ -65,12 +65,20 @@ module.exports = async (env, options) => {
             to: "index.html",
           },
           {
-            from: "install.sh",
+            from: "install/install.sh",
             to: "install.sh",
           },
           {
-            from: "uninstall.sh",
+            from: "install/uninstall.sh",
             to: "uninstall.sh",
+          },
+          {
+            from: "install/install-local.sh",
+            to: "install-local.sh",
+          },
+          {
+            from: "install/uninstall-local.sh",
+            to: "uninstall-local.sh",
           },
           {
             from: "manifest*.xml",
@@ -87,8 +95,18 @@ module.exports = async (env, options) => {
       }),
       new HtmlWebpackPlugin({
         filename: "commands.html",
-        template: "./src/commands/commands.html",
         chunks: ["polyfill", "commands"],
+        inject: false,
+        templateContent: () => `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script src="${dev ? urlDev : urlProd}polyfill.js"></script>
+    <script src="${dev ? urlDev : urlProd}commands.js"></script>
+  </head>
+  <body></body>
+</html>`,
       }),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
@@ -98,30 +116,6 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
         filename: "dialogs/grid-builder.html",
         template: "./src/dialogs/grid-builder.html",
-        chunks: [],
-        inject: false,
-      }),
-      new HtmlWebpackPlugin({
-        filename: "dialogs/rename-shapes.html",
-        template: "./src/dialogs/rename-shapes.html",
-        chunks: [],
-        inject: false,
-      }),
-      new HtmlWebpackPlugin({
-        filename: "dialogs/slide-outline.html",
-        template: "./src/dialogs/slide-outline.html",
-        chunks: [],
-        inject: false,
-      }),
-      new HtmlWebpackPlugin({
-        filename: "dialogs/gantt-builder.html",
-        template: "./src/dialogs/gantt-builder.html",
-        chunks: [],
-        inject: false,
-      }),
-      new HtmlWebpackPlugin({
-        filename: "dialogs/timeline-builder.html",
-        template: "./src/dialogs/timeline-builder.html",
         chunks: [],
         inject: false,
       }),

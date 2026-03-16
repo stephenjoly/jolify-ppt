@@ -3,10 +3,14 @@ set -euo pipefail
 
 MANIFEST_URL="https://stephenjoly.github.io/jolify-ppt/manifest.xml"
 MANIFEST_NAME="a13454cd-574c-44ce-9c64-19dcd0ae477b.manifest.xml"
+LOCAL_SERVICE_LABEL="com.stephenjoly.jolify.localserver"
+LOCAL_INSTALL_ROOT="$HOME/Library/Application Support/JolifyLocal"
+LOCAL_PLIST_PATH="$HOME/Library/LaunchAgents/$LOCAL_SERVICE_LABEL.plist"
+LOCAL_CERT_NAME="Jolify Local Add-in"
 
 echo ""
-echo "  Jolify — PowerPoint Add-in Installer"
-echo "  ──────────────────────────────────────"
+echo "  Jolify — Hosted Installer"
+echo "  ─────────────────────────"
 echo ""
 
 # ── 1. Confirm PowerPoint is installed ───────────────────────────
@@ -28,6 +32,22 @@ if [ -z "$PPT_APP" ]; then
 fi
 
 echo "  ✓  Found PowerPoint: $PPT_APP"
+
+# ── 1b. Disable local mode if it exists ──────────────────────────
+if [ -f "$LOCAL_PLIST_PATH" ] || [ -d "$LOCAL_INSTALL_ROOT" ]; then
+  echo "  → Switching from local mode to hosted mode"
+  launchctl bootout "gui/$(id -u)" "$LOCAL_PLIST_PATH" >/dev/null 2>&1 || true
+  rm -f "$LOCAL_PLIST_PATH"
+  rm -rf "$LOCAL_INSTALL_ROOT"
+
+  hashes="$(security find-certificate -a -Z -c "$LOCAL_CERT_NAME" "$HOME/Library/Keychains/login.keychain-db" 2>/dev/null | awk '/SHA-1 hash:/ { print $3 }')"
+  if [ -n "$hashes" ]; then
+    while IFS= read -r hash; do
+      [ -z "$hash" ] && continue
+      security delete-certificate -Z "$hash" "$HOME/Library/Keychains/login.keychain-db" >/dev/null 2>&1 || true
+    done <<< "$hashes"
+  fi
+fi
 
 # ── 2. Locate or create the WEF folder ───────────────────────────
 WEF_CANDIDATES=(
@@ -94,7 +114,7 @@ if [ "$UPGRADE" = true ]; then
   echo "  → Reopening PowerPoint..."
   open -a "Microsoft PowerPoint"
   echo ""
-  echo "  ✓  Jolify has been upgraded! Look for the Jolify tab in the ribbon."
+  echo "  ✓  Jolify hosted mode has been upgraded! Look for the Jolify tab in the ribbon."
 else
   echo ""
   echo "  ✓  Done! Restart PowerPoint and look for the Jolify tab in the ribbon."

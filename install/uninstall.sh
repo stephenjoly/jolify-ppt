@@ -4,8 +4,8 @@ set -euo pipefail
 MANIFEST_NAME="a13454cd-574c-44ce-9c64-19dcd0ae477b.manifest.xml"
 
 echo ""
-echo "  Jolify — Uninstaller"
-echo "  ──────────────────────────────────────"
+echo "  Jolify — Hosted Uninstaller"
+echo "  ───────────────────────────"
 echo ""
 
 # ── 1. Find the manifest ─────────────────────────────────────────
@@ -48,10 +48,10 @@ if pgrep -xq "Microsoft PowerPoint"; then
   echo "  → Reopening PowerPoint..."
   open -a "Microsoft PowerPoint"
   echo ""
-  echo "  ✓  Jolify has been removed. PowerPoint restarted without the add-in."
+  echo "  ✓  Jolify hosted mode has been removed. PowerPoint restarted without the add-in."
 else
   echo ""
-  echo "  ✓  Jolify has been removed. The Jolify tab will be gone next time you open PowerPoint."
+  echo "  ✓  Jolify hosted mode has been removed. The Jolify tab will be gone next time you open PowerPoint."
 fi
 
 echo ""

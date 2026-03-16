@@ -633,6 +633,54 @@ export async function copyOutlineStyle(): Promise<ActionResult> {
   });
 }
 
+export async function clearFill(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to remove its fill.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.fill.clear();
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Removed fill from ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function clearOutline(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to remove its outline.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.lineFormat.visible = false;
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Removed outline from ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
 export const alignLeft    = (): Promise<ActionResult> => alignShapes("left");
 export const alignCenterH = (): Promise<ActionResult> => alignShapes("centerH");
 export const alignRight   = (): Promise<ActionResult> => alignShapes("right");
@@ -874,63 +922,6 @@ export async function centerMiddleAndGroup(): Promise<ActionResult> {
   });
 }
 
-export async function smartAnchorAlign(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length < 2) {
-      return { type: "warning", message: "Select at least 2 shapes — the first is the anchor." };
-    }
-
-    shapes.forEach((s) => s.load("left,top,width,height"));
-    await context.sync();
-
-    const anchor = shapes[0];
-    const anchorCenterX = anchor.left + anchor.width / 2;
-    const anchorCenterY = anchor.top + anchor.height / 2;
-
-    shapes.slice(1).forEach((s) => {
-      s.left = anchorCenterX - s.width / 2;
-      s.top = anchorCenterY - s.height / 2;
-    });
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Aligned ${shapes.length - 1} shape(s) to the anchor's center.`,
-    };
-  });
-}
-
-export async function autoFontEqualizer(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length < 2) {
-      return { type: "warning", message: "Select at least 2 text boxes to equalize font sizes." };
-    }
-
-    shapes.forEach((s) => s.textFrame.textRange.font.load("size"));
-    await context.sync();
-
-    const sizes = shapes
-      .map((s) => s.textFrame.textRange.font.size)
-      .filter((sz) => sz != null && sz > 0);
-
-    if (sizes.length === 0) {
-      return { type: "warning", message: "No font sizes found on selected shapes." };
-    }
-
-    const minSize = Math.min(...sizes);
-    shapes.forEach((s) => { s.textFrame.textRange.font.size = minSize; });
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Set font size to ${minSize}pt on ${shapes.length} shapes.`,
-    };
-  });
-}
-
 export async function batchStyleApply(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
@@ -988,168 +979,25 @@ export async function batchStyleApply(): Promise<ActionResult> {
   });
 }
 
-export async function exportShapeMetadata(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const slides = context.presentation.slides;
-    slides.load("items");
-    await context.sync();
-
-    const data: object[] = [];
-
-    for (let slideIdx = 0; slideIdx < slides.items.length; slideIdx++) {
-      const slide = slides.items[slideIdx];
-      const shapeColl = slide.shapes;
-      shapeColl.load("items");
-      await context.sync();
-      shapeColl.items.forEach((s) => s.load("name,left,top,width,height,type"));
-      await context.sync();
-
-      shapeColl.items.forEach((s) => {
-        data.push({
-          slide: slideIdx + 1,
-          name: s.name,
-          type: s.type,
-          left: Math.round(s.left),
-          top: Math.round(s.top),
-          width: Math.round(s.width),
-          height: Math.round(s.height),
-        });
-      });
-    }
-
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "shape-metadata.json";
-    anchor.click();
-    URL.revokeObjectURL(url);
-
-    return {
-      type: "success",
-      message: `Exported metadata for ${data.length} shapes across ${slides.items.length} slide(s).`,
-    };
-  });
-}
-
-export async function autoFlowText(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length < 2) {
-      return { type: "warning", message: "Select at least 2 text boxes to flow text across." };
-    }
-
-    shapes.forEach((s) => s.textFrame.textRange.load("text"));
-    await context.sync();
-
-    // Collect all words from all selected shapes
-    const allText = shapes.map((s) => s.textFrame.textRange.text ?? "").join(" ");
-    const words = allText.split(/\s+/).filter(Boolean);
-
-    if (words.length === 0) {
-      return { type: "info", message: "No text found in selected shapes." };
-    }
-
-    const perShape = Math.ceil(words.length / shapes.length);
-    shapes.forEach((s, i) => {
-      const chunk = words.slice(i * perShape, (i + 1) * perShape).join(" ");
-      s.textFrame.textRange.text = chunk;
-    });
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Redistributed ${words.length} word(s) across ${shapes.length} shapes.`,
-    };
-  });
-}
-
-export async function normalizeConnectors(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length < 1) {
-      return { type: "warning", message: "Select at least one connector shape." };
-    }
-
-    shapes.forEach((s) => s.load("type"));
-    await context.sync();
-
-    const connectors = shapes.filter((s) => s.type === "Line");
-
-    if (connectors.length === 0) {
-      return { type: "info", message: "No connector/line shapes found in the selection." };
-    }
-
-    // Set connectors to use solid line style (normalize appearance)
-    connectors.forEach((s) => {
-      s.lineFormat.dashStyle = PowerPoint.ShapeLineDashStyle.solid;
-      s.lineFormat.style = PowerPoint.ShapeLineStyle.single;
-    });
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Normalized ${connectors.length} connector(s) to straight solid style.`,
-    };
-  });
-}
-
-// ─────────────────────────────────────────────────────────────────
-// Phase 1 — Diagnostics
-// ─────────────────────────────────────────────────────────────────
-
-export async function runAccessibilityCheck(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const slides = context.presentation.slides;
-    slides.load("items");
-    await context.sync();
-
-    const issues: string[] = [];
-
-    for (let slideIdx = 0; slideIdx < slides.items.length; slideIdx++) {
-      const slide = slides.items[slideIdx];
-      const shapeColl = slide.shapes;
-      shapeColl.load("items");
-      await context.sync();
-      shapeColl.items.forEach((s) => s.load("name,type,altTextTitle,altTextDescription"));
-      await context.sync();
-
-      for (const shape of shapeColl.items) {
-        const hasAltText = (shape.altTextTitle?.trim() || shape.altTextDescription?.trim());
-        const isImage = shape.type === "Picture" || shape.type === "Media";
-
-        if (isImage && !hasAltText) {
-          issues.push(`Slide ${slideIdx + 1}: "${shape.name}" — image missing alt text`);
-        }
-      }
-    }
-
-    if (issues.length === 0) {
-      return { type: "success", message: "No accessibility issues found." };
-    }
-
-    return {
-      type: "warning",
-      message: `Found ${issues.length} issue(s):\n${issues.slice(0, 5).join("\n")}${issues.length > 5 ? `\n…and ${issues.length - 5} more` : ""}`,
-    };
-  });
-}
-
 // ─────────────────────────────────────────────────────────────────
 // Phase 2 — Dialog-based helpers
 // ─────────────────────────────────────────────────────────────────
 
-export function openDialog<T>(relativeUrl: string): Promise<T | null> {
+export function openDialog<T>(
+  relativeUrl: string,
+  dialogOptions?: { height: number; width: number },
+): Promise<T | null> {
   return new Promise((resolve) => {
     const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}${relativeUrl}`;
     let dialog: Office.Dialog;
 
     Office.context.ui.displayDialogAsync(
       url,
-      { height: 50, width: 40, displayInIframe: true },
+      {
+        height: dialogOptions?.height ?? 50,
+        width: dialogOptions?.width ?? 40,
+        displayInIframe: true,
+      },
       (result) => {
         if (result.status === Office.AsyncResultStatus.Failed) {
           resolve(null);
@@ -1263,34 +1111,6 @@ export async function createRows(params: RowsParams): Promise<ActionResult> {
   return createGrid({ rows: params.count, cols: 1, gapPreset: params.gapPreset, sizePreset: params.sizePreset });
 }
 
-export type RenameParams = {
-  template: string;
-};
-
-export async function batchRenameShapes(params: RenameParams): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length < 1) {
-      return { type: "warning", message: "Select at least one shape to rename." };
-    }
-
-    shapes.forEach((s, i) => {
-      s.name = params.template
-        .replace(/\{n\}/g, String(i + 1))
-        .replace(/\{N\}/g, String(i + 1))
-        .replace(/\{i\}/g, String(i))
-        .replace(/\{I\}/g, String(i));
-    });
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Renamed ${shapes.length} shape(s) using template "${params.template}".`,
-    };
-  });
-}
-
 // ─────────────────────────────────────────────────────────────────
 // Phase 2 — Dialog wrappers (open dialog then execute)
 // ─────────────────────────────────────────────────────────────────
@@ -1300,590 +1120,21 @@ export async function openGridDialog(): Promise<ActionResult> {
   if (!params) return { type: "info", message: "Grid creation cancelled." };
   return createGrid(params);
 }
-
-export async function openColumnsDialog(): Promise<ActionResult> {
-  const params = await openDialog<ColumnsParams>("dialogs/grid-builder.html?mode=columns");
-  if (!params) return { type: "info", message: "Column creation cancelled." };
-  return createColumns(params);
-}
-
-export async function openRowsDialog(): Promise<ActionResult> {
-  const params = await openDialog<RowsParams>("dialogs/grid-builder.html?mode=rows");
-  if (!params) return { type: "info", message: "Row creation cancelled." };
-  return createRows(params);
-}
-
-export async function openRenameDialog(): Promise<ActionResult> {
-  const params = await openDialog<RenameParams>("dialogs/rename-shapes.html");
-  if (!params) return { type: "info", message: "Rename cancelled." };
-  return batchRenameShapes(params);
-}
-
-// ─────────────────────────────────────────────────────────────────
-// Phase 3 — Complex builders
-// ─────────────────────────────────────────────────────────────────
-
-// ─────────────────────────────────────────────────────────────────
-// Gantt Chart — types & builder
-// ─────────────────────────────────────────────────────────────────
-
-const GANTT_TAG = "__jolify_gantt__";
-
-export type GanttTaskBar = {
-  label: string;
-  start: string;  // ISO date "YYYY-MM-DD"
-  end: string;    // ISO date "YYYY-MM-DD"
-  color?: string; // hex, e.g. "#6B9E6B"
-};
-
-export type GanttRowEntry = {
-  activity: string;
-  team?: string;
-  tasks: GanttTaskBar[];
-  note?: string;
-};
-
-export type GanttChartParams = {
-  title?: string;
-  projectStart: string;
-  projectEnd: string;
-  granularity?: "week" | "biweek";
-  todayDate?: string;
-  rows: GanttRowEntry[];
-};
-
-// Keep old alias so convertTableToGantt compiles until updated below
-type GanttTask = GanttTaskBar & { name: string };
-type GanttParams = { tasks: GanttTask[]; projectStart: string; projectEnd: string };
-
-export async function buildGanttChart(params: GanttChartParams): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    if (!params.rows || params.rows.length === 0) {
-      return { type: "warning", message: "No rows provided for the Gantt chart." };
-    }
-
-    const selectedSlides = context.presentation.getSelectedSlides();
-    selectedSlides.load("items");
-    await context.sync();
-
-    if (selectedSlides.items.length === 0) {
-      return { type: "error", message: "Could not determine the current slide." };
-    }
-
-    const slide = selectedSlides.items[0];
-
-    // Remove any existing Gantt shapes on this slide
-    const allShapes = slide.shapes;
-    allShapes.load("items");
-    await context.sync();
-    allShapes.items.forEach((s) => s.load("name"));
-    await context.sync();
-    allShapes.items
-      .filter((s) => s.name?.startsWith(GANTT_TAG))
-      .forEach((s) => s.delete());
-    await context.sync();
-
-    // --- Week columns ---
-    const granDays = params.granularity === "biweek" ? 14 : 7;
-    const projStart = new Date(params.projectStart);
-    const projEnd   = new Date(params.projectEnd);
-
-    // Snap to the Monday on/before projStart
-    const firstDay = new Date(projStart);
-    const dow = firstDay.getDay();
-    firstDay.setDate(firstDay.getDate() - (dow === 0 ? 6 : dow - 1));
-
-    const weekStarts: Date[] = [];
-    const cur = new Date(firstDay);
-    while (cur <= projEnd) {
-      weekStarts.push(new Date(cur));
-      cur.setDate(cur.getDate() + granDays);
-    }
-    const nCols = weekStarts.length;
-
-    // --- Layout ---
-    const MARGIN       = 10;
-    const TITLE_H      = params.title ? 28 : 0;
-    const TABLE_LEFT   = MARGIN;
-    const TABLE_TOP    = MARGIN + TITLE_H + (TITLE_H > 0 ? 4 : 0);
-    const ACT_COL_W    = 138;
-    const MONTH_ROW_H  = 22;
-    const WEEK_ROW_H   = 16;
-    const ACT_ROW_H    = 44;
-    const maxTimeW     = SLIDE_WIDTH - TABLE_LEFT - ACT_COL_W - MARGIN;
-    const TIME_COL_W   = Math.max(28, Math.floor(maxTimeW / nCols));
-    const TABLE_W      = ACT_COL_W + nCols * TIME_COL_W;
-    const TABLE_H      = MONTH_ROW_H + WEEK_ROW_H + params.rows.length * ACT_ROW_H;
-
-    function dateToX(date: Date): number {
-      const totalMs = nCols * granDays * 86400000;
-      const fraction = Math.max(0, Math.min(1, (date.getTime() - weekStarts[0].getTime()) / totalMs));
-      return TABLE_LEFT + ACT_COL_W + fraction * (nCols * TIME_COL_W);
-    }
-
-    // --- Title ---
-    if (params.title) {
-      const t = slide.shapes.addTextBox(params.title.toUpperCase(), {
-        left: TABLE_LEFT, top: MARGIN, width: TABLE_W, height: TITLE_H,
-      });
-      t.name = `${GANTT_TAG}title`;
-      t.fill.clear();
-      t.lineFormat.visible = false;
-      t.textFrame.textRange.font.bold = true;
-      t.textFrame.textRange.font.size = 12;
-      t.textFrame.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
-    }
-
-    // --- Table ---
-    const tableShape = slide.shapes.addTable(2 + params.rows.length, 1 + nCols, {
-      left: TABLE_LEFT, top: TABLE_TOP, width: TABLE_W, height: TABLE_H,
-    });
-    tableShape.name = `${GANTT_TAG}table`;
-    const tbl = tableShape.table;
-
-    // Column widths
-    tbl.columns.getItemAt(0).width = ACT_COL_W;
-    for (let c = 0; c < nCols; c++) tbl.columns.getItemAt(1 + c).width = TIME_COL_W;
-
-    // Row heights
-    tbl.rows.getItemAt(0).height = MONTH_ROW_H;
-    tbl.rows.getItemAt(1).height = WEEK_ROW_H;
-    for (let r = 0; r < params.rows.length; r++) tbl.rows.getItemAt(2 + r).height = ACT_ROW_H;
-
-    // "Activity" header — spans month + week rows
-    const actCell = tbl.getCellOrNullObject(0, 0);
-    actCell.text = "Activity";
-    actCell.resize(2, 1);
-    actCell.fill.setSolidColor("#595959");
-    actCell.font.color = "#FFFFFF";
-    actCell.font.bold = true;
-    actCell.font.size = 10;
-    actCell.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
-    actCell.verticalAlignment   = PowerPoint.TextVerticalAlignment.middle;
-
-    // Month headers (merged cells per month)
-    let curMonth = "";
-    let mStart = 0;
-    type MG = { month: string; start: number; end: number };
-    const monthGroups: MG[] = [];
-    for (let c = 0; c < nCols; c++) {
-      const m = weekStarts[c].toLocaleString("en-US", { month: "long" });
-      if (m !== curMonth) {
-        if (curMonth) monthGroups.push({ month: curMonth, start: mStart, end: c - 1 });
-        curMonth = m; mStart = c;
-      }
-    }
-    monthGroups.push({ month: curMonth, start: mStart, end: nCols - 1 });
-
-    for (const mg of monthGroups) {
-      const cell = tbl.getCellOrNullObject(0, 1 + mg.start);
-      cell.text = mg.month;
-      if (mg.end > mg.start) cell.resize(1, mg.end - mg.start + 1);
-      cell.fill.setSolidColor("#595959");
-      cell.font.color = "#FFFFFF";
-      cell.font.bold  = true;
-      cell.font.size  = 10;
-      cell.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
-      cell.verticalAlignment   = PowerPoint.TextVerticalAlignment.middle;
-    }
-
-    // Week date headers
-    for (let c = 0; c < nCols; c++) {
-      const cell = tbl.getCellOrNullObject(1, 1 + c);
-      cell.text = String(weekStarts[c].getDate());
-      cell.fill.setSolidColor("#747474");
-      cell.font.color = "#FFFFFF";
-      cell.font.size  = 9;
-      cell.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
-      cell.verticalAlignment   = PowerPoint.TextVerticalAlignment.middle;
-    }
-
-    // Activity rows
-    for (let r = 0; r < params.rows.length; r++) {
-      const row = params.rows[r];
-      const cell = tbl.getCellOrNullObject(2 + r, 0);
-      cell.text = row.activity + (row.team ? `\n(${row.team})` : "");
-      cell.font.size = 10;
-      cell.verticalAlignment = PowerPoint.TextVerticalAlignment.middle;
-      if (r % 2 === 1) {
-        for (let c = 0; c < nCols; c++) {
-          tbl.getCellOrNullObject(2 + r, 1 + c).fill.setSolidColor("#F5F5F5");
-        }
-      }
-    }
-
-    await context.sync();
-
-    // --- Task bars ---
-    const BAR_PAD = 5;
-    const BAR_H   = ACT_ROW_H - BAR_PAD * 2;
-
-    for (let rowIdx = 0; rowIdx < params.rows.length; rowIdx++) {
-      const row    = params.rows[rowIdx];
-      const barTop = TABLE_TOP + MONTH_ROW_H + WEEK_ROW_H + rowIdx * ACT_ROW_H + BAR_PAD;
-
-      for (const task of row.tasks) {
-        const x1   = Math.max(TABLE_LEFT + ACT_COL_W + 1, dateToX(new Date(task.start)));
-        const x2   = Math.min(TABLE_LEFT + ACT_COL_W + nCols * TIME_COL_W - 1, dateToX(new Date(task.end)));
-        const barW = Math.max(22, x2 - x1);
-
-        const bar = slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.homePlate, {
-          left: x1, top: barTop, width: barW, height: BAR_H,
-        });
-        bar.name = `${GANTT_TAG}bar_${rowIdx}`;
-        bar.fill.setSolidColor(task.color ?? "#6B9E6B");
-        bar.lineFormat.visible = false;
-        bar.textFrame.textRange.text = task.label;
-        bar.textFrame.textRange.font.color = "#FFFFFF";
-        bar.textFrame.textRange.font.size  = 9;
-        bar.textFrame.verticalAlignment   = PowerPoint.TextVerticalAlignment.middle;
-        bar.textFrame.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.left;
-      }
-
-      if (row.note) {
-        const lastTask = row.tasks[row.tasks.length - 1];
-        if (lastTask) {
-          const noteX = dateToX(new Date(lastTask.end)) + 6;
-          if (noteX < TABLE_LEFT + TABLE_W - 20) {
-            const nb = slide.shapes.addTextBox(row.note, {
-              left: noteX, top: barTop,
-              width: TABLE_LEFT + TABLE_W - noteX - MARGIN, height: BAR_H,
-            });
-            nb.name = `${GANTT_TAG}note_${rowIdx}`;
-            nb.fill.clear();
-            nb.lineFormat.visible = false;
-            nb.textFrame.textRange.font.size  = 9;
-            nb.textFrame.textRange.font.color = "#C00000";
-            nb.textFrame.textRange.font.bold  = true;
-            nb.textFrame.verticalAlignment    = PowerPoint.TextVerticalAlignment.middle;
-          }
-        }
-      }
-    }
-
-    // --- Today marker ---
-    if (params.todayDate) {
-      const tx = dateToX(new Date(params.todayDate));
-      if (tx > TABLE_LEFT + ACT_COL_W && tx < TABLE_LEFT + TABLE_W) {
-        const line = slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.rectangle, {
-          left: tx - 1, top: TABLE_TOP + MONTH_ROW_H,
-          width: 2, height: WEEK_ROW_H + params.rows.length * ACT_ROW_H,
-        });
-        line.name = `${GANTT_TAG}today_line`;
-        line.fill.setSolidColor("#00B4B4");
-        line.lineFormat.visible = false;
-
-        const lbl = slide.shapes.addTextBox("Today", {
-          left: tx - 18, top: TABLE_TOP + TABLE_H + 2, width: 36, height: 14,
-        });
-        lbl.name = `${GANTT_TAG}today_label`;
-        lbl.fill.clear();
-        lbl.lineFormat.visible = false;
-        lbl.textFrame.textRange.font.size  = 8;
-        lbl.textFrame.textRange.font.color = "#00B4B4";
-        lbl.textFrame.textRange.font.bold  = true;
-        lbl.textFrame.horizontalAlignment  = PowerPoint.ParagraphHorizontalAlignment.center;
-      }
-    }
-
-    // --- Data shape (for re-editing) ---
-    const dataBox = slide.shapes.addTextBox(JSON.stringify(params), {
-      left: 0, top: SLIDE_HEIGHT - 1, width: 20, height: 1,
-    });
-    dataBox.name = `${GANTT_TAG}data`;
-    dataBox.fill.clear();
-    dataBox.lineFormat.visible = false;
-    dataBox.textFrame.textRange.font.size  = 1;
-    dataBox.textFrame.textRange.font.color = "#FFFFFF";
-
-    await context.sync();
-
-    return { type: "success", message: `Built Gantt chart with ${params.rows.length} row(s).` };
-  });
-}
-
-export type Milestone = {
-  label: string;
-  date: string; // ISO date "YYYY-MM-DD"
-};
-
-export type TimelineParams = {
-  milestones: Milestone[];
-  startDate: string;
-  endDate: string;
-};
-
-export async function buildTimeline(params: TimelineParams): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const { milestones, startDate, endDate } = params;
-
-    if (!milestones || milestones.length === 0) {
-      return { type: "warning", message: "No milestones provided for the timeline." };
-    }
-
-    const selectedSlides = context.presentation.getSelectedSlides();
-    selectedSlides.load("items");
-    await context.sync();
-
-    if (selectedSlides.items.length === 0) {
-      return { type: "error", message: "Could not determine the current slide." };
-    }
-
-    const slide = selectedSlides.items[0];
-
-    const startMs = new Date(startDate).getTime();
-    const endMs = new Date(endDate).getTime();
-    const totalMs = endMs - startMs;
-
-    if (totalMs <= 0) {
-      return { type: "warning", message: "End date must be after start date." };
-    }
-
-    const LINE_LEFT = 40;
-    const LINE_TOP = SLIDE_HEIGHT / 2;
-    const LINE_WIDTH = SLIDE_WIDTH - 80;
-    const MARKER_SIZE = 10;
-    const LABEL_HEIGHT = 24;
-    const LABEL_WIDTH = 80;
-
-    // Draw baseline
-    const baseline = slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.rectangle, {
-      left: LINE_LEFT,
-      top: LINE_TOP - 2,
-      width: LINE_WIDTH,
-      height: 4,
-    });
-    baseline.fill.setSolidColor("#323130");
-    baseline.lineFormat.visible = false;
-
-    for (const milestone of milestones) {
-      const ms = new Date(milestone.date).getTime();
-      const x = LINE_LEFT + ((ms - startMs) / totalMs) * LINE_WIDTH;
-
-      // Diamond marker
-      const marker = slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.diamond, {
-        left: x - MARKER_SIZE / 2,
-        top: LINE_TOP - MARKER_SIZE / 2,
-        width: MARKER_SIZE,
-        height: MARKER_SIZE,
-      });
-      marker.fill.setSolidColor("#0078D4");
-      marker.lineFormat.visible = false;
-
-      // Label
-      slide.shapes.addTextBox(milestone.label, {
-        left: x - LABEL_WIDTH / 2,
-        top: LINE_TOP - MARKER_SIZE - LABEL_HEIGHT - 4,
-        width: LABEL_WIDTH,
-        height: LABEL_HEIGHT,
-      });
-    }
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Built timeline with ${milestones.length} milestone(s).`,
-    };
-  });
-}
-
-export type OutlineParams = {
-  outline: string;
-};
-
-export async function buildSlidesFromOutline(params: OutlineParams): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const { outline } = params;
-
-    if (!outline?.trim()) {
-      return { type: "warning", message: "No outline text provided." };
-    }
-
-    const lines = outline.split(/\r\n|\r|\n/);
-    const slides: { title: string; bullets: string[] }[] = [];
-    let current: { title: string; bullets: string[] } | null = null;
-
-    for (const raw of lines) {
-      const line = raw.trimEnd();
-      if (!line.trim()) continue;
-
-      // H1 (# Title) or unindented text → new slide
-      if (/^#\s/.test(line) || (!/^\s/.test(line) && !line.startsWith("-") && !line.startsWith("*"))) {
-        current = { title: line.replace(/^#+\s*/, "").trim(), bullets: [] };
-        slides.push(current);
-      } else if (current) {
-        current.bullets.push(line.replace(/^[\s\-*]+/, "").trim());
-      }
-    }
-
-    if (slides.length === 0) {
-      return { type: "warning", message: "Could not parse any slides from the outline." };
-    }
-
-    const presentation = context.presentation;
-
-    for (const slideData of slides) {
-      const newSlide = presentation.slides.add();
-      newSlide.shapes.addTextBox(slideData.title, {
-        left: 40,
-        top: 40,
-        width: SLIDE_WIDTH - 80,
-        height: 80,
-      });
-
-      if (slideData.bullets.length > 0) {
-        newSlide.shapes.addTextBox(slideData.bullets.join("\n"), {
-          left: 40,
-          top: 140,
-          width: SLIDE_WIDTH - 80,
-          height: SLIDE_HEIGHT - 180,
-        });
-      }
-    }
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Created ${slides.length} slide(s) from outline.`,
-    };
-  });
-}
-
-export async function convertTableToGantt(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const shapes = await getSelectedShapes(context);
-    if (shapes.length !== 1) {
-      return { type: "warning", message: "Select exactly one table shape to convert." };
-    }
-
-    shapes[0].load("type");
-    await context.sync();
-
-    if (shapes[0].type !== "Table") {
-      return { type: "warning", message: "Selected shape is not a table." };
-    }
-
-    const table = shapes[0].table;
-    table.load("rowCount,columnCount");
-    await context.sync();
-
-    const rowCount = table.rowCount;
-    const colCount = table.columnCount;
-
-    const cellMatrix: PowerPoint.TableCell[][] = [];
-    for (let r = 0; r < rowCount; r++) {
-      const row: PowerPoint.TableCell[] = [];
-      for (let c = 0; c < colCount; c++) {
-        const cell = table.getCellOrNullObject(r, c);
-        cell.load("text");
-        row.push(cell);
-      }
-      cellMatrix.push(row);
-    }
-    await context.sync();
-
-    const headers = cellMatrix[0].map((c) => c.text?.toLowerCase()?.trim() ?? "");
-    const actCol   = headers.findIndex((h) => h.includes("task") || h.includes("activity") || h.includes("name"));
-    const startCol = headers.findIndex((h) => h.includes("start"));
-    const endCol   = headers.findIndex((h) => h.includes("end") || h.includes("finish"));
-
-    if (actCol < 0 || startCol < 0 || endCol < 0) {
-      return {
-        type: "warning",
-        message: 'Table must have columns named "activity"/"task", "start", and "end"/"finish".',
-      };
-    }
-
-    const rows: GanttRowEntry[] = [];
-    let projectStart = "";
-    let projectEnd   = "";
-
-    for (let r = 1; r < rowCount; r++) {
-      const activity = cellMatrix[r][actCol].text?.trim() ?? "";
-      const start    = cellMatrix[r][startCol].text?.trim() ?? "";
-      const end      = cellMatrix[r][endCol].text?.trim() ?? "";
-      if (!activity || !start || !end) continue;
-      if (!projectStart || start < projectStart) projectStart = start;
-      if (!projectEnd   || end   > projectEnd)   projectEnd   = end;
-      rows.push({ activity, tasks: [{ label: activity, start, end }] });
-    }
-
-    if (rows.length === 0) {
-      return { type: "warning", message: "No valid rows found in the table." };
-    }
-
-    return buildGanttChart({ projectStart, projectEnd, rows });
-  });
-}
-
-export async function pasteAsGrid(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const selectedSlides = context.presentation.getSelectedSlides();
-    selectedSlides.load("items");
-    await context.sync();
-
-    if (selectedSlides.items.length === 0) {
-      return { type: "error", message: "Could not determine the current slide." };
-    }
-
-    // Read clipboard text
-    let clipboardText = "";
-    try {
-      clipboardText = await navigator.clipboard.readText();
-    } catch {
-      return {
-        type: "warning",
-        message: "Clipboard access denied. Please allow clipboard permission and try again.",
-      };
-    }
-
-    const rows = clipboardText
-      .split(/\r\n|\r|\n/)
-      .map((r) => r.trim())
-      .filter(Boolean);
-
-    if (rows.length === 0) {
-      return { type: "info", message: "Clipboard is empty or contains no text rows." };
-    }
-
-    const cols = Math.ceil(Math.sqrt(rows.length));
-    const gridRows = Math.ceil(rows.length / cols);
-
-    const gap = 12;
-    const cellWidth = (SLIDE_WIDTH - 40 - (cols - 1) * gap) / cols;
-    const cellHeight = Math.min(80, (SLIDE_HEIGHT - 40 - (gridRows - 1) * gap) / gridRows);
-
-    const slide = selectedSlides.items[0];
-
-    rows.forEach((text, idx) => {
-      const col = idx % cols;
-      const row = Math.floor(idx / cols);
-      slide.shapes.addTextBox(text, {
-        left: 20 + col * (cellWidth + gap),
-        top: 20 + row * (cellHeight + gap),
-        width: cellWidth,
-        height: cellHeight,
-      });
-    });
-
-    await context.sync();
-
-    return {
-      type: "success",
-      message: `Created ${rows.length} card(s) in a ${gridRows}×${cols} grid.`,
-    };
-  });
-}
-
 // ─────────────────────────────────────────────────────────────────
 // Slide organisation
 // ─────────────────────────────────────────────────────────────────
 
 const UNUSED_DIVIDER_TAG = "JOLIFY_UNUSED_DIVIDER";
+const UNUSED_SECTION_NAME = "Unused Slides";
 
 export async function moveToUnusedSection(): Promise<ActionResult> {
+  if (!Office.context.requirements.isSetSupported("PowerPointApi", "1.8")) {
+    return {
+      type: "error",
+      message: "Move to Unused requires PowerPointApi 1.8 (slide move support).",
+    };
+  }
+
   return PowerPoint.run(async (context) => {
     const selectedSlides = context.presentation.getSelectedSlides();
     const allSlides = context.presentation.slides;
@@ -1895,34 +1146,30 @@ export async function moveToUnusedSection(): Promise<ActionResult> {
       return { type: "warning", message: "Select at least one slide in the slide panel first." };
     }
 
-    // Find the divider slide (tagged sentinel that marks start of unused section)
-    const tagChecks = allSlides.items.map((s) => s.tags.getItemOrNullObject(UNUSED_DIVIDER_TAG));
+    // Find the tagged divider slide that marks the start of the Unused Slides area.
+    const tagChecks = allSlides.items.map((slide) => slide.tags.getItemOrNullObject(UNUSED_DIVIDER_TAG));
     await context.sync();
 
-    let dividerIdx = tagChecks.findIndex((t) => !t.isNullObject);
-    let dividerSlide = dividerIdx >= 0 ? allSlides.items[dividerIdx] : null;
-
-    // Build a position map for O(1) lookups
-    const idToPos = new Map<string, number>();
-    allSlides.items.forEach((s, i) => idToPos.set(s.id, i));
-
-    // Only move slides that are currently before the divider (active slides)
-    const effectiveDividerPos = dividerSlide ? dividerIdx : allSlides.items.length;
-    const slidesToMove = selectedSlides.items.filter((s) => {
-      const pos = idToPos.get(s.id) ?? -1;
-      return pos >= 0 && pos < effectiveDividerPos;
+    const taggedDividerIndexes: number[] = [];
+    tagChecks.forEach((tag, index) => {
+      if (!tag.isNullObject) {
+        taggedDividerIndexes.push(index);
+      }
     });
 
-    if (slidesToMove.length === 0) {
-      return { type: "info", message: "Selected slides are already in the Unused Slides section." };
+    let dividerSlide: PowerPoint.Slide | null =
+      taggedDividerIndexes.length > 0 ? allSlides.items[taggedDividerIndexes[0]] : null;
+
+    // If multiple divider tags exist, keep the first one and remove the rest.
+    if (taggedDividerIndexes.length > 1) {
+      for (let i = 1; i < taggedDividerIndexes.length; i += 1) {
+        allSlides.items[taggedDividerIndexes[i]].tags.delete(UNUSED_DIVIDER_TAG);
+      }
+      await context.sync();
     }
 
-    // Guard: leave at least 1 active slide
-    if (slidesToMove.length >= effectiveDividerPos) {
-      return { type: "warning", message: "Cannot move all active slides to Unused Slides." };
-    }
-
-    // Create the divider slide if it doesn't exist yet (appended to end)
+    // Create the divider slide if it doesn't exist yet.
+    let createdSection = false;
     if (!dividerSlide) {
       allSlides.add();
       await context.sync();
@@ -1932,7 +1179,7 @@ export async function moveToUnusedSection(): Promise<ActionResult> {
       const divSlide = allSlides.items[allSlides.items.length - 1];
       divSlide.tags.add(UNUSED_DIVIDER_TAG, "true");
 
-      const tb = divSlide.shapes.addTextBox("── Unused Slides ──", {
+      const tb = divSlide.shapes.addTextBox(UNUSED_SECTION_NAME, {
         left: 40,
         top: SLIDE_HEIGHT / 2 - 40,
         width: SLIDE_WIDTH - 80,
@@ -1943,79 +1190,86 @@ export async function moveToUnusedSection(): Promise<ActionResult> {
       tb.textFrame.horizontalAlignment  = PowerPoint.ParagraphHorizontalAlignment.center;
       await context.sync();
 
-      dividerIdx = allSlides.items.length - 1;
+      createdSection = true;
+      dividerSlide = divSlide;
     }
 
-    // Prepend slides to the unused section (right after the divider), preserving order.
-    //
-    // Strategy: move slides in REVERSE selection order, each time targeting position d
-    // (the current divider index). After each move the divider shifts one slot left,
-    // so d decrements. This inserts slides one-by-one immediately after the divider
-    // in the correct forward order.
-    //
-    // Example: divider at 3, moving [sA, sB] → reverse = [sB, sA]
-    //   moveTo(3): [..., divider(2), sB(3), u0, ...]   d→2
-    //   moveTo(2): [..., divider(1), sA(2), sB(3), u0, ...]  ✓
-    let d = dividerIdx;
-    for (const slide of [...slidesToMove].reverse()) {
-      slide.moveTo(d);
+    const dividerId = dividerSlide.id;
+
+    // Keep the divider tag current in case it was manually edited.
+    dividerSlide.tags.add(UNUSED_DIVIDER_TAG, "true");
+    await context.sync();
+
+    // Build an index map for current positions.
+    allSlides.load("items/id");
+    await context.sync();
+    const idToPos = new Map<string, number>();
+    allSlides.items.forEach((slide, index) => idToPos.set(slide.id, index));
+
+    const dividerIdx = idToPos.get(dividerId);
+    if (dividerIdx === undefined) {
+      return {
+        type: "error",
+        message: `Could not locate "${UNUSED_SECTION_NAME}" divider slide.`,
+      };
+    }
+
+    const selectedSlideIds = selectedSlides.items.map((slide) => slide.id).filter((id) => id !== dividerId);
+    if (selectedSlideIds.length === 0) {
+      return {
+        type: "warning",
+        message: `Select one or more slides (not the "${UNUSED_SECTION_NAME}" divider slide).`,
+      };
+    }
+
+    // Only move selected slides that are before the divider (active deck area).
+    const slidesToMove = selectedSlideIds
+      .filter((id) => {
+        const pos = idToPos.get(id);
+        return pos !== undefined && pos < dividerIdx;
+      })
+      .sort((a, b) => (idToPos.get(a) ?? 0) - (idToPos.get(b) ?? 0));
+
+    if (slidesToMove.length === 0) {
+      return {
+        type: "info",
+        message: `Selected slides are already in "${UNUSED_SECTION_NAME}".`,
+      };
+    }
+
+    // Move each selected slide to just after the divider, preserving relative order.
+    let movedCount = 0;
+    for (const slideId of slidesToMove) {
+      allSlides.load("items/id");
       await context.sync();
-      d--;
+
+      const livePos = new Map<string, number>();
+      allSlides.items.forEach((slide, index) => livePos.set(slide.id, index));
+
+      const liveDividerIdx = livePos.get(dividerId);
+      const liveSlideIdx = livePos.get(slideId);
+      if (liveDividerIdx === undefined || liveSlideIdx === undefined || liveSlideIdx > liveDividerIdx) {
+        continue;
+      }
+
+      const insertionIdx = Math.min(allSlides.items.length - 1, liveDividerIdx + 1 + movedCount);
+      allSlides.getItem(slideId).moveTo(insertionIdx);
+      await context.sync();
+      movedCount += 1;
     }
 
-    const n = slidesToMove.length;
+    if (movedCount === 0) {
+      return {
+        type: "info",
+        message: `Selected slides are already in "${UNUSED_SECTION_NAME}".`,
+      };
+    }
+
+    const n = movedCount;
+    const createdMsg = createdSection ? ` Created "${UNUSED_SECTION_NAME}" divider slide.` : "";
     return {
       type: "success",
-      message: `Moved ${n} slide${n !== 1 ? "s" : ""} to "Unused Slides".`,
+      message: `Moved ${n} slide${n !== 1 ? "s" : ""} to "${UNUSED_SECTION_NAME}".${createdMsg}`,
     };
   });
-}
-
-// ─────────────────────────────────────────────────────────────────
-// Phase 3 — Dialog wrappers
-// ─────────────────────────────────────────────────────────────────
-
-export async function openGanttDialog(): Promise<ActionResult> {
-  // Check current slide for an existing Gantt data shape to pre-populate the dialog
-  let existingDataParam = "";
-  try {
-    await PowerPoint.run(async (context) => {
-      const slides = context.presentation.getSelectedSlides();
-      slides.load("items");
-      await context.sync();
-      if (slides.items.length === 0) return;
-      const shapeColl = slides.items[0].shapes;
-      shapeColl.load("items");
-      await context.sync();
-      shapeColl.items.forEach((s) => s.load("name"));
-      await context.sync();
-      const dataShape = shapeColl.items.find((s) => s.name === `${GANTT_TAG}data`);
-      if (dataShape) {
-        dataShape.textFrame.textRange.load("text");
-        await context.sync();
-        const json = dataShape.textFrame.textRange.text?.trim();
-        if (json) existingDataParam = btoa(unescape(encodeURIComponent(json)));
-      }
-    });
-  } catch { /* no existing data */ }
-
-  const url = existingDataParam
-    ? `dialogs/gantt-builder.html?data=${encodeURIComponent(existingDataParam)}`
-    : "dialogs/gantt-builder.html";
-
-  const params = await openDialog<GanttChartParams>(url);
-  if (!params) return { type: "info", message: "Gantt chart creation cancelled." };
-  return buildGanttChart(params);
-}
-
-export async function openTimelineDialog(): Promise<ActionResult> {
-  const params = await openDialog<TimelineParams>("dialogs/timeline-builder.html");
-  if (!params) return { type: "info", message: "Timeline creation cancelled." };
-  return buildTimeline(params);
-}
-
-export async function openSlideOutlineDialog(): Promise<ActionResult> {
-  const params = await openDialog<OutlineParams>("dialogs/slide-outline.html");
-  if (!params) return { type: "info", message: "Slide creation cancelled." };
-  return buildSlidesFromOutline(params);
 }
