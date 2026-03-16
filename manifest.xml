@@ -18,7 +18,6 @@
 
   <AppDomains>
     <AppDomain>https://stephenjoly.github.io</AppDomain>
-    <AppDomain>https://api.openai.com</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -47,7 +46,7 @@
             <CustomTab id="jolify.Tab">
               <Label resid="Tab.Label" />
 
-              <!-- Position group -->
+              <!-- Position & Size -->
               <Group id="jolify.Position">
                 <Label resid="Group.Position.Label" />
                 <Icon>
@@ -151,7 +150,51 @@
                     <FunctionName>pasteSizeOnly</FunctionName>
                   </Action>
                 </Control>
-
+                <Control xsi:type="Button" id="btn.matchHeight">
+                  <Label resid="Btn.MatchHeight.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeight.Label" />
+                    <Description resid="Btn.MatchHeight.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchHeight.16" />
+                    <bt:Image size="32" resid="Icon.matchHeight.32" />
+                    <bt:Image size="80" resid="Icon.matchHeight.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeight</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.matchWidth">
+                  <Label resid="Btn.MatchWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchWidth.Label" />
+                    <Description resid="Btn.MatchWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchWidth.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchWidth</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
+                  <Label resid="Btn.MatchHeightAndWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeightAndWidth.Label" />
+                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeightAndWidth</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.swapPositions">
                   <Label resid="Btn.SwapPositions.Label" />
                   <Supertip>
@@ -169,7 +212,7 @@
                 </Control>
               </Group>
 
-              <!-- Match group -->
+              <!-- Format -->
               <Group id="jolify.Match">
                 <Label resid="Group.Match.Label" />
                 <Icon>
@@ -177,7 +220,9 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-
+                <OfficeControl id="ShapeFillColorPicker" />
+                <OfficeControl id="ShapeOutlineColorPicker" />
+                <OfficeControl id="FontColorPicker" />
                 <Control xsi:type="Button" id="btn.copyOutlineStyle">
                   <Label resid="Btn.CopyOutlineStyle.Label" />
                   <Supertip>
@@ -225,57 +270,39 @@
                     <FunctionName>batchStyleApply</FunctionName>
                   </Action>
                 </Control>
-
-                <Control xsi:type="Button" id="btn.matchHeight">
-                  <Label resid="Btn.MatchHeight.Label" />
+                <Control xsi:type="Button" id="btn.clearFill">
+                  <Label resid="Btn.ClearFill.Label" />
                   <Supertip>
-                    <Title resid="Btn.MatchHeight.Label" />
-                    <Description resid="Btn.MatchHeight.Desc" />
+                    <Title resid="Btn.ClearFill.Label" />
+                    <Description resid="Btn.ClearFill.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.matchHeight.16" />
-                    <bt:Image size="32" resid="Icon.matchHeight.32" />
-                    <bt:Image size="80" resid="Icon.matchHeight.80" />
+                    <bt:Image size="16" resid="Icon.clearFill.16" />
+                    <bt:Image size="32" resid="Icon.clearFill.32" />
+                    <bt:Image size="80" resid="Icon.clearFill.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchHeight</FunctionName>
+                    <FunctionName>clearFill</FunctionName>
                   </Action>
                 </Control>
-
-                <Control xsi:type="Button" id="btn.matchWidth">
-                  <Label resid="Btn.MatchWidth.Label" />
+                <Control xsi:type="Button" id="btn.clearOutline">
+                  <Label resid="Btn.ClearOutline.Label" />
                   <Supertip>
-                    <Title resid="Btn.MatchWidth.Label" />
-                    <Description resid="Btn.MatchWidth.Desc" />
+                    <Title resid="Btn.ClearOutline.Label" />
+                    <Description resid="Btn.ClearOutline.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.matchWidth.16" />
-                    <bt:Image size="32" resid="Icon.matchWidth.32" />
-                    <bt:Image size="80" resid="Icon.matchWidth.80" />
+                    <bt:Image size="16" resid="Icon.clearOutline.16" />
+                    <bt:Image size="32" resid="Icon.clearOutline.32" />
+                    <bt:Image size="80" resid="Icon.clearOutline.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchWidth</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
-                  <Label resid="Btn.MatchHeightAndWidth.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MatchHeightAndWidth.Label" />
-                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
-                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
-                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchHeightAndWidth</FunctionName>
+                    <FunctionName>clearOutline</FunctionName>
                   </Action>
                 </Control>
               </Group>
 
-              <!-- Align group -->
+              <!-- Align & Distribute -->
               <Group id="jolify.Align">
                 <Label resid="Group.Align.Label" />
                 <Icon>
@@ -413,50 +440,9 @@
                 </Control>
               </Group>
 
-              <!-- Text group -->
-              <Group id="jolify.Text">
-                <Label resid="Group.Text.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-
-                <Control xsi:type="Button" id="btn.splitTextBoxByLines">
-                  <Label resid="Btn.SplitTextBoxByLines.Label" />
-                  <Supertip>
-                    <Title resid="Btn.SplitTextBoxByLines.Label" />
-                    <Description resid="Btn.SplitTextBoxByLines.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.splitTextBoxByLines.16" />
-                    <bt:Image size="32" resid="Icon.splitTextBoxByLines.32" />
-                    <bt:Image size="80" resid="Icon.splitTextBoxByLines.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>splitTextBoxByLines</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.mergeTextBoxes">
-                  <Label resid="Btn.MergeTextBoxes.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MergeTextBoxes.Label" />
-                    <Description resid="Btn.MergeTextBoxes.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.mergeTextBoxes.16" />
-                    <bt:Image size="32" resid="Icon.mergeTextBoxes.32" />
-                    <bt:Image size="80" resid="Icon.mergeTextBoxes.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>mergeTextBoxes</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- Align & Group group -->
-              <Group id="jolify.AlignGroup">
-                <Label resid="Group.AlignGroup.Label" />
+              <!-- Group Ops & Text -->
+              <Group id="jolify.GroupOps">
+                <Label resid="Group.GroupOps.Label" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16" />
                   <bt:Image size="32" resid="Icon.32x32" />
@@ -537,21 +523,41 @@
                     <FunctionName>distributeVAndGroup</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.mergeTextBoxes">
+                  <Label resid="Btn.MergeTextBoxes.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MergeTextBoxes.Label" />
+                    <Description resid="Btn.MergeTextBoxes.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.mergeTextBoxes.16" />
+                    <bt:Image size="32" resid="Icon.mergeTextBoxes.32" />
+                    <bt:Image size="80" resid="Icon.mergeTextBoxes.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mergeTextBoxes</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.splitTextBoxByLines">
+                  <Label resid="Btn.SplitTextBoxByLines.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SplitTextBoxByLines.Label" />
+                    <Description resid="Btn.SplitTextBoxByLines.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.splitTextBoxByLines.16" />
+                    <bt:Image size="32" resid="Icon.splitTextBoxByLines.32" />
+                    <bt:Image size="80" resid="Icon.splitTextBoxByLines.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>splitTextBoxByLines</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
-              <!-- Style group -->
-              <Group id="jolify.Style">
-                <Label resid="Group.Style.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-              </Group>
-
-              <!-- Layout group -->
-              <Group id="jolify.Layout">
-                <Label resid="Group.Layout.Label" />
+              <!-- Slide Design -->
+              <Group id="jolify.Builders">
+                <Label resid="Group.Builders.Label" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16" />
                   <bt:Image size="32" resid="Icon.32x32" />
@@ -604,34 +610,9 @@
                 </Control>
               </Group>
 
-              <!-- Builders group -->
-              <Group id="jolify.Builders">
-                <Label resid="Group.Builders.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <Control xsi:type="Button" id="btn.openGanttDialog">
-                  <Label resid="Btn.OpenGanttDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenGanttDialog.Label" />
-                    <Description resid="Btn.OpenGanttDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openGanttDialog.16" />
-                    <bt:Image size="32" resid="Icon.openGanttDialog.32" />
-                    <bt:Image size="80" resid="Icon.openGanttDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openGanttDialog</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- Utils group -->
-              <Group id="jolify.Utils">
-                <Label resid="Group.Utils.Label" />
+              <!-- Presentation -->
+              <Group id="jolify.Review">
+                <Label resid="Group.Review.Label" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16" />
                   <bt:Image size="32" resid="Icon.32x32" />
@@ -652,17 +633,6 @@
                     <FunctionName>moveToUnusedSection</FunctionName>
                   </Action>
                 </Control>
-              </Group>
-
-              <!-- Branding group -->
-              <Group id="jolify.Branding">
-                <Label resid="Group.Branding.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-
                 <Control xsi:type="Button" id="btn.addDraftSticker">
                   <Label resid="Btn.AddDraftSticker.Label" />
                   <Supertip>
@@ -737,6 +707,12 @@
         <bt:Image id="Icon.copyFillStyle.16" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_16.png" />
         <bt:Image id="Icon.copyFillStyle.32" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_32.png" />
         <bt:Image id="Icon.copyFillStyle.80" DefaultValue="https://localhost:3300/assets/icons/copyFillStyle_80.png" />
+        <bt:Image id="Icon.clearFill.16" DefaultValue="https://localhost:3300/assets/icons/clearFill_16.png" />
+        <bt:Image id="Icon.clearFill.32" DefaultValue="https://localhost:3300/assets/icons/clearFill_32.png" />
+        <bt:Image id="Icon.clearFill.80" DefaultValue="https://localhost:3300/assets/icons/clearFill_80.png" />
+        <bt:Image id="Icon.clearOutline.16" DefaultValue="https://localhost:3300/assets/icons/clearOutline_16.png" />
+        <bt:Image id="Icon.clearOutline.32" DefaultValue="https://localhost:3300/assets/icons/clearOutline_32.png" />
+        <bt:Image id="Icon.clearOutline.80" DefaultValue="https://localhost:3300/assets/icons/clearOutline_80.png" />
         <bt:Image id="Icon.matchHeight.16" DefaultValue="https://localhost:3300/assets/icons/matchHeight_16.png" />
         <bt:Image id="Icon.matchHeight.32" DefaultValue="https://localhost:3300/assets/icons/matchHeight_32.png" />
         <bt:Image id="Icon.matchHeight.80" DefaultValue="https://localhost:3300/assets/icons/matchHeight_80.png" />
@@ -809,9 +785,6 @@
         <bt:Image id="Icon.openRowsDialog.16" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_16.png" />
         <bt:Image id="Icon.openRowsDialog.32" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_32.png" />
         <bt:Image id="Icon.openRowsDialog.80" DefaultValue="https://localhost:3300/assets/icons/openRowsDialog_80.png" />
-        <bt:Image id="Icon.openGanttDialog.16" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_16.png" />
-        <bt:Image id="Icon.openGanttDialog.32" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_32.png" />
-        <bt:Image id="Icon.openGanttDialog.80" DefaultValue="https://localhost:3300/assets/icons/openGanttDialog_80.png" />
         <bt:Image id="Icon.moveToUnusedSection.16" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_16.png" />
         <bt:Image id="Icon.moveToUnusedSection.32" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_32.png" />
         <bt:Image id="Icon.moveToUnusedSection.80" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_80.png" />
@@ -824,26 +797,23 @@
 
       <bt:ShortStrings>
         <bt:String id="Tab.Label" DefaultValue="Jolify" />
-        <bt:String id="Group.Position.Label" DefaultValue="Position" />
-        <bt:String id="Group.Match.Label" DefaultValue="Match" />
-        <bt:String id="Group.Align.Label" DefaultValue="Align" />
-        <bt:String id="Group.Text.Label" DefaultValue="Text" />
-        <bt:String id="Group.AlignGroup.Label" DefaultValue="Align &amp; Group" />
-        <bt:String id="Group.Style.Label" DefaultValue="Style" />
-        <bt:String id="Group.Layout.Label" DefaultValue="Layout" />
-        <bt:String id="Group.Builders.Label" DefaultValue="Builders" />
-        <bt:String id="Group.Utils.Label" DefaultValue="Utils" />
-        <bt:String id="Group.Branding.Label" DefaultValue="Branding" />
+        <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
+        <bt:String id="Group.Match.Label" DefaultValue="Format" />
+        <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
+        <bt:String id="Group.GroupOps.Label" DefaultValue="Group Ops &amp; Text" />
+        <bt:String id="Group.Builders.Label" DefaultValue="Slide Design" />
+        <bt:String id="Group.Review.Label" DefaultValue="Presentation" />
         <bt:String id="Btn.AlignCenterHAndGroup.Label" DefaultValue="Center + Group" />
         <bt:String id="Btn.AlignMiddleVAndGroup.Label" DefaultValue="Middle + Group" />
         <bt:String id="Btn.CenterMiddleAndGroup.Label" DefaultValue="Center+Mid+Group" />
         <bt:String id="Btn.DistributeHAndGroup.Label" DefaultValue="Dist H + Group" />
         <bt:String id="Btn.DistributeVAndGroup.Label" DefaultValue="Dist V + Group" />
         <bt:String id="Btn.BatchStyleApply.Label" DefaultValue="Copy Style" />
+        <bt:String id="Btn.ClearFill.Label" DefaultValue="No Fill" />
+        <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.OpenColumnsDialog.Label" DefaultValue="Create Columns" />
         <bt:String id="Btn.OpenRowsDialog.Label" DefaultValue="Create Rows" />
-        <bt:String id="Btn.OpenGanttDialog.Label" DefaultValue="Gantt Chart" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
@@ -902,10 +872,11 @@
         <bt:String id="Btn.DistributeHAndGroup.Desc" DefaultValue="Distribute shapes horizontally then group them." />
         <bt:String id="Btn.DistributeVAndGroup.Desc" DefaultValue="Distribute shapes vertically then group them." />
         <bt:String id="Btn.BatchStyleApply.Desc" DefaultValue="Copy fill and outline from the first shape to the rest." />
+        <bt:String id="Btn.ClearFill.Desc" DefaultValue="Remove the fill from the selected shape or shapes." />
+        <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenColumnsDialog.Desc" DefaultValue="Open the columns builder dialog." />
         <bt:String id="Btn.OpenRowsDialog.Desc" DefaultValue="Open the rows builder dialog." />
-        <bt:String id="Btn.OpenGanttDialog.Desc" DefaultValue="Open the Gantt chart builder dialog." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
       </bt:LongStrings>
     </Resources>

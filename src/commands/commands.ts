@@ -1,7 +1,5 @@
 import type { ActionResult } from "../shared/shapeTools";
 import {
-  copyPosition,
-  pastePosition,
   swapPositions,
   copyPositionAndSize,
   copyPositionOnly,
@@ -37,7 +35,6 @@ import {
   openGridDialog,
   openColumnsDialog,
   openRowsDialog,
-  openGanttDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -61,13 +58,6 @@ async function withCommandEvent(
   }
 }
 
-// Position (legacy aliases — kept for backwards compatibility)
-export function copyPositionCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyPosition);
-}
-export function pastePositionCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, pastePosition);
-}
 export function swapPositionsCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, swapPositions);
 }
@@ -185,9 +175,6 @@ export function openColumnsDialogCommand(event: Office.AddinCommands.Event) {
 export function openRowsDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openRowsDialog);
 }
-export function openGanttDialogCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, openGanttDialog);
-}
 export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, moveToUnusedSection);
 }
@@ -196,8 +183,6 @@ export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
 Office.onReady(() => {});
 
 // Make them global for ExecuteFunction
-(window as any).copyPosition = copyPositionCommand;
-(window as any).pastePosition = pastePositionCommand;
 (window as any).swapPositions = swapPositionsCommand;
 (window as any).copyPositionAndSize = copyPositionAndSizeCommand;
 (window as any).copyPositionOnly = copyPositionOnlyCommand;
@@ -233,5 +218,4 @@ Office.onReady(() => {});
 (window as any).openGridDialog = openGridDialogCommand;
 (window as any).openColumnsDialog = openColumnsDialogCommand;
 (window as any).openRowsDialog = openRowsDialogCommand;
-(window as any).openGanttDialog = openGanttDialogCommand;
 (window as any).moveToUnusedSection = moveToUnusedSectionCommand;
