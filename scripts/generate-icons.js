@@ -27,6 +27,8 @@ const ICON_MAP = {
   // Match
   copyOutlineStyle:     "border_outside_20_regular",
   copyFillStyle:        "color_background_20_regular",
+  clearFill:            "paint_brush_subtract_20_regular",
+  clearOutline:         "border_none_20_regular",
   matchHeight:          "arrow_autofit_height_20_regular",
   matchWidth:           "arrow_autofit_width_20_regular",
   matchHeightAndWidth:  "arrow_autofit_content_20_regular",

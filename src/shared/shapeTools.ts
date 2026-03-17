@@ -378,6 +378,35 @@ export async function removeDraftSticker(): Promise<ActionResult> {
   });
 }
 
+export async function toggleDraftSticker(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const slides = context.presentation.slides;
+    slides.load("items");
+    await context.sync();
+
+    if (slides.items.length === 0) {
+      return { type: "warning", message: "No slides found." };
+    }
+
+    let hasAnySticker = false;
+
+    for (const slide of slides.items) {
+      const shapes = slide.shapes;
+      shapes.load("items");
+      await context.sync();
+      shapes.items.forEach((s) => s.load("name"));
+      await context.sync();
+
+      if (shapes.items.some((s) => s.name === DRAFT_STICKER_NAME)) {
+        hasAnySticker = true;
+        break;
+      }
+    }
+
+    return hasAnySticker ? removeDraftSticker() : addDraftSticker();
+  });
+}
+
 const SLIDE_WIDTH = 960;  // points, widescreen default (same assumption as addDraftSticker)
 const SLIDE_HEIGHT = 540; // points, widescreen default
 

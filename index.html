@@ -195,6 +195,54 @@
       user-select: all;
     }
 
+    .mode-grid {
+      display: grid;
+      gap: 1.35rem;
+    }
+
+    .mode-card {
+      border: 1px solid #ddd9d3;
+      background: #fff;
+      padding: 1.25rem 1.2rem;
+    }
+
+    .mode-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.55rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .mode-title strong {
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .mode-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .mode-points {
+      list-style: none;
+      display: grid;
+      gap: 0.4rem;
+      margin: 1rem 0 1.15rem;
+      font-size: 0.92rem;
+      color: #444;
+    }
+
+    .mode-points li::before {
+      content: "• ";
+      color: #999;
+    }
+
     /* ── Footer ──────────────────────────────── */
     footer {
       margin-top: 4rem;
@@ -263,31 +311,84 @@
           <span class="feature-name">Branding</span>
           <span class="feature-desc">Add or remove a DRAFT watermark on the slide master in a single click.</span>
         </li>
+        <li>
+          <span class="feature-name">AI Leadlines</span>
+          <span class="feature-desc">Generate consulting-style slide leadlines from slide content, with a fallback prompt when a slide needs more context.</span>
+        </li>
       </ul>
     </section>
 
     <section>
-      <h2>Installation</h2>
-      <ol class="steps">
-        <li>Download the <code>manifest.xml</code> file below.</li>
-        <li>Open PowerPoint → Insert → Add-ins → Upload My Add-in.</li>
-        <li>Select the downloaded manifest file and confirm.</li>
-        <li>A <em>Jolify</em> tab appears in the ribbon. Done.</li>
-      </ol>
-      <a class="download-btn" href="manifest.xml" download>
-        ↓&nbsp;&nbsp;Download manifest.xml
-      </a>
-      <p class="download-note">
-        Requires PowerPoint for Mac (Microsoft 365). Re-installation is not needed for updates.
+      <h2>Install Modes</h2>
+      <p>
+        Jolify ships in two installation modes. Both are one-line installs. Pick the mode that best matches how you work.
       </p>
 
-      <div class="divider">or install via Terminal</div>
+      <div class="mode-grid">
+        <article class="mode-card">
+          <div class="mode-title">
+            <strong>Hosted Mode</strong>
+            <span class="mode-tag">No local daemon</span>
+          </div>
+          <p>
+            Uses the GitHub-hosted version of Jolify. This is the lightest install and the easiest one to update.
+          </p>
+          <ul class="mode-points">
+            <li>No background web server on your machine</li>
+            <li>Best for users who are usually online</li>
+            <li>Updates flow from the hosted site</li>
+          </ul>
 
-      <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/install.sh | bash</pre>
+          <div class="divider">install</div>
+          <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/install.sh | bash</pre>
 
-      <div class="divider">to uninstall</div>
+          <div class="divider">uninstall</div>
+          <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/uninstall.sh | bash</pre>
 
-      <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/uninstall.sh | bash</pre>
+          <p class="download-note">
+            Manual option: download <a href="manifest.xml" download>manifest.xml</a> and upload it through PowerPoint.
+          </p>
+        </article>
+
+        <article class="mode-card">
+          <div class="mode-title">
+            <strong>Local Stable Mode</strong>
+            <span class="mode-tag">launchd-managed</span>
+          </div>
+          <p>
+            Installs a localhost-served Jolify runtime and configures a macOS <code>launchd</code> agent so it comes back after reboot and restarts if it dies.
+          </p>
+          <ul class="mode-points">
+            <li>Better resilience for users who restart often</li>
+            <li>No manual <code>npm</code> or Terminal server process after install</li>
+            <li>Jolify’s own assets are served locally</li>
+            <li>AI still requires internet access</li>
+          </ul>
+
+          <div class="divider">install</div>
+          <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/install-local.sh | bash</pre>
+
+          <div class="divider">uninstall</div>
+          <pre class="code-block">curl -fsSL https://stephenjoly.github.io/jolify-ppt/uninstall-local.sh | bash</pre>
+
+          <p class="download-note">
+            macOS only. The installer sets up a trusted localhost certificate and a user-level launch agent.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Switching Modes</h2>
+      <ol class="steps">
+        <li>Choose the mode you want and run its install command.</li>
+        <li>PowerPoint will be restarted if needed so the new manifest is picked up.</li>
+        <li>Hosted mode is the simplest path. Local stable mode is the most restart-safe path.</li>
+        <li>AI features require internet access in either mode.</li>
+      </ol>
+      <p class="download-note">
+        Local stable mode self-hosts Jolify’s assets. Office still runs within the standard Microsoft Office add-in environment.
+      </p>
     </section>
 
     <footer>

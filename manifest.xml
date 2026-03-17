@@ -603,11 +603,11 @@
                     <FunctionName>moveToUnusedSection</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.addDraftSticker">
-                  <Label resid="Btn.AddDraftSticker.Label" />
+                <Control xsi:type="Button" id="btn.toggleDraftSticker">
+                  <Label resid="Btn.ToggleDraftSticker.Label" />
                   <Supertip>
-                    <Title resid="Btn.AddDraftSticker.Label" />
-                    <Description resid="Btn.AddDraftSticker.Desc" />
+                    <Title resid="Btn.ToggleDraftSticker.Label" />
+                    <Description resid="Btn.ToggleDraftSticker.Desc" />
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="Icon.addDraftSticker.16" />
@@ -615,23 +615,7 @@
                     <bt:Image size="80" resid="Icon.addDraftSticker.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
-                    <FunctionName>addDraftSticker</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.removeDraftSticker">
-                  <Label resid="Btn.RemoveDraftSticker.Label" />
-                  <Supertip>
-                    <Title resid="Btn.RemoveDraftSticker.Label" />
-                    <Description resid="Btn.RemoveDraftSticker.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.removeDraftSticker.16" />
-                    <bt:Image size="32" resid="Icon.removeDraftSticker.32" />
-                    <bt:Image size="80" resid="Icon.removeDraftSticker.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>removeDraftSticker</FunctionName>
+                    <FunctionName>toggleDraftSticker</FunctionName>
                   </Action>
                 </Control>
               </Group>
@@ -722,9 +706,6 @@
         <bt:Image id="Icon.addDraftSticker.16" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_16.png" />
         <bt:Image id="Icon.addDraftSticker.32" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_32.png" />
         <bt:Image id="Icon.addDraftSticker.80" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_80.png" />
-        <bt:Image id="Icon.removeDraftSticker.16" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_16.png" />
-        <bt:Image id="Icon.removeDraftSticker.32" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_32.png" />
-        <bt:Image id="Icon.removeDraftSticker.80" DefaultValue="https://localhost:3300/assets/icons/removeDraftSticker_80.png" />
         <bt:Image id="Icon.mergeTextBoxes.16" DefaultValue="https://localhost:3300/assets/icons/mergeTextBoxes_16.png" />
         <bt:Image id="Icon.mergeTextBoxes.32" DefaultValue="https://localhost:3300/assets/icons/mergeTextBoxes_32.png" />
         <bt:Image id="Icon.mergeTextBoxes.80" DefaultValue="https://localhost:3300/assets/icons/mergeTextBoxes_80.png" />
@@ -799,8 +780,7 @@
         <bt:String id="Btn.DistributeH.Label" DefaultValue="Distribute H" />
         <bt:String id="Btn.DistributeV.Label" DefaultValue="Distribute V" />
         <bt:String id="Btn.SplitTextBoxByLines.Label" DefaultValue="Split Text Box" />
-        <bt:String id="Btn.AddDraftSticker.Label" DefaultValue="Add Draft" />
-        <bt:String id="Btn.RemoveDraftSticker.Label" DefaultValue="Remove Draft" />
+        <bt:String id="Btn.ToggleDraftSticker.Label" DefaultValue="Toggle Draft" />
       </bt:ShortStrings>
 
       <bt:LongStrings>
@@ -825,8 +805,7 @@
         <bt:String id="Btn.DistributeH.Desc" DefaultValue="Distribute selected shapes evenly in horizontal space." />
         <bt:String id="Btn.DistributeV.Desc" DefaultValue="Distribute selected shapes evenly in vertical space." />
         <bt:String id="Btn.SplitTextBoxByLines.Desc" DefaultValue="Split a text box into one box per line." />
-        <bt:String id="Btn.AddDraftSticker.Desc" DefaultValue="Add a DRAFT watermark to the slide master." />
-        <bt:String id="Btn.RemoveDraftSticker.Desc" DefaultValue="Remove the DRAFT watermark from the slide master." />
+        <bt:String id="Btn.ToggleDraftSticker.Desc" DefaultValue="Add the DRAFT sticker to all slides, or remove it if the deck already has one." />
         <bt:String id="Btn.MergeTextBoxes.Desc" DefaultValue="Merge selected text boxes into one." />
         <bt:String id="Btn.AlignCenterHAndGroup.Desc" DefaultValue="Center shapes horizontally then group them." />
         <bt:String id="Btn.AlignMiddleVAndGroup.Desc" DefaultValue="Center shapes vertically then group them." />

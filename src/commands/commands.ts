@@ -23,8 +23,7 @@ import {
   distributeH,
   distributeV,
   splitTextBoxByLines,
-  addDraftSticker,
-  removeDraftSticker,
+  toggleDraftSticker,
   mergeTextBoxes,
   alignCenterHAndGroup,
   alignMiddleVAndGroup,
@@ -135,11 +134,8 @@ export function splitTextBoxByLinesCommand(event: Office.AddinCommands.Event) {
 }
 
 // Branding
-export function addDraftStickerCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, addDraftSticker);
-}
-export function removeDraftStickerCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, removeDraftSticker);
+export function toggleDraftStickerCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, toggleDraftSticker);
 }
 
 // Phase 1 — new button-only commands
@@ -198,8 +194,7 @@ Office.onReady(() => {});
 (window as any).distributeH = distributeHCommand;
 (window as any).distributeV = distributeVCommand;
 (window as any).splitTextBoxByLines = splitTextBoxByLinesCommand;
-(window as any).addDraftSticker = addDraftStickerCommand;
-(window as any).removeDraftSticker = removeDraftStickerCommand;
+(window as any).toggleDraftSticker = toggleDraftStickerCommand;
 (window as any).mergeTextBoxes = mergeTextBoxesCommand;
 (window as any).alignCenterHAndGroup = alignCenterHAndGroupCommand;
 (window as any).alignMiddleVAndGroup = alignMiddleVAndGroupCommand;

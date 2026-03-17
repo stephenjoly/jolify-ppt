@@ -1,6 +1,6 @@
 import type { ActionResult } from "../shared/shapeTools";
 import {
-  addDraftSticker,
+  toggleDraftSticker,
   alignBottom,
   copyFillStyle,
   copyOutlineStyle,
@@ -22,7 +22,6 @@ import {
   pastePositionAndSize,
   pastePositionOnly,
   pasteSizeOnly,
-  removeDraftSticker,
   splitTextBoxByLines,
   swapPositions,
   // Phase 1 — new
@@ -64,8 +63,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "distribute-h-btn": distributeH,
   "distribute-v-btn": distributeV,
   "split-textbox-btn": splitTextBoxByLines,
-  "add-draft-btn": addDraftSticker,
-  "remove-draft-btn": removeDraftSticker,
+  "toggle-draft-btn": toggleDraftSticker,
   // Align & Group
   "align-center-group-btn":  alignCenterHAndGroup,
   "align-middle-group-btn":  alignMiddleVAndGroup,
