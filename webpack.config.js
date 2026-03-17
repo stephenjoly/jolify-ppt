@@ -81,14 +81,13 @@ module.exports = async (env, options) => {
             to: "uninstall-local.sh",
           },
           {
-            from: "manifest*.xml",
-            to: "[name]" + "[ext]",
+            from: dev ? "manifest.dev.xml" : "manifest.xml",
+            to: "[name][ext]",
             transform(content) {
               if (dev) {
                 return content;
-              } else {
-                return content.toString().replace(new RegExp(urlDev, "g"), urlProd);
               }
+              return content.toString().replace(new RegExp(urlDev, "g"), urlProd);
             },
           },
         ],
