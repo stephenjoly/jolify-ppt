@@ -19,6 +19,7 @@ module.exports = async (env, options) => {
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       commands: "./src/commands/commands.ts",
+      selectedDeckDialog: "./src/dialogs/selected-deck-dialog.ts",
       taskpane: "./src/taskpane/taskpane.ts",
     },
     output: {
@@ -81,8 +82,8 @@ module.exports = async (env, options) => {
             to: "uninstall-local.sh",
           },
           {
-            from: dev ? "manifest.dev.xml" : "manifest.xml",
-            to: "[name][ext]",
+            from: dev ? "dev/manifest.xml" : "manifest.xml",
+            to: dev ? "manifest.dev.xml" : "[name][ext]",
             transform(content) {
               if (dev) {
                 return content;
@@ -118,6 +119,11 @@ module.exports = async (env, options) => {
         chunks: [],
         inject: false,
       }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/selected-deck.html",
+        template: "./src/dialogs/selected-deck-dialog.html",
+        chunks: ["polyfill", "selectedDeckDialog"],
+      }),
     ],
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" },
@@ -135,21 +141,10 @@ module.exports = async (env, options) => {
         { directory: __dirname + "/dist" },
         { directory: __dirname + "/assets" },
       ],
-      client: {
-        // tell WDS client where to open the websocket
-        webSocketURL: {
-          protocol: "wss",
-          hostname: "localhost",
-          port: 3300,
-          pathname: "/ws",
-        },
-        overlay: true,
-        logging: "info",
-      },
+      client: false,
       allowedHosts: "all",
-      // If you still see WS issues, you can disable hot reload:
-      // hot: false,
-      // liveReload: false,
+      hot: false,
+      liveReload: false,
     },
   };
 

@@ -75,7 +75,7 @@ npm install
 npm start
 ```
 
-Starts the webpack dev server on `https://localhost:3300` and sideloads `manifest.dev.xml` into PowerPoint automatically.
+Starts the webpack dev server on `https://localhost:3300` and sideloads `dev/manifest.xml` into PowerPoint automatically.
 The dev add-in uses a separate add-in ID and `Jolify Dev` tab, so it can coexist with the stable installed add-in.
 
 ### Stop
@@ -93,7 +93,7 @@ This stops the `Jolify Dev` sideload only. It does not remove a stable hosted or
 - `docs/FUTURE_FEATURES.md` - feature backlog intentionally kept out of the stable ribbon
 - `docs/TROUBLESHOOTING.md` - local runtime and sideload troubleshooting playbook
 - `manifest.xml` - stable hosted/local-stable manifest
-- `manifest.dev.xml` - local sideload manifest for side-by-side development
+- `dev/manifest.xml` - local sideload manifest for side-by-side development
 - `install/install.sh` - hosted installer source
 - `install/uninstall.sh` - hosted uninstaller source
 - `install/install-local.sh` - local-mode installer source

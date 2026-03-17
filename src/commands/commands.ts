@@ -32,6 +32,7 @@ import {
   distributeVAndGroup,
   batchStyleApply,
   openGridDialog,
+  openSelectedDeckDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -163,6 +164,9 @@ export function batchStyleApplyCommand(event: Office.AddinCommands.Event) {
 export function openGridDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openGridDialog);
 }
+export function openSelectedDeckDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openSelectedDeckDialog);
+}
 export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, moveToUnusedSection);
 }
@@ -203,4 +207,5 @@ Office.onReady(() => {});
 (window as any).distributeVAndGroup = distributeVAndGroupCommand;
 (window as any).batchStyleApply = batchStyleApplyCommand;
 (window as any).openGridDialog = openGridDialogCommand;
+(window as any).openSelectedDeckDialog = openSelectedDeckDialogCommand;
 (window as any).moveToUnusedSection = moveToUnusedSectionCommand;

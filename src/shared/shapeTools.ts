@@ -1017,7 +1017,8 @@ export function openDialog<T>(
   dialogOptions?: { height: number; width: number },
 ): Promise<T | null> {
   return new Promise((resolve) => {
-    const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}${relativeUrl}`;
+    const separator = relativeUrl.includes("?") ? "&" : "?";
+    const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}${relativeUrl}${separator}v=${Date.now()}`;
     let dialog: Office.Dialog;
 
     Office.context.ui.displayDialogAsync(
@@ -1148,6 +1149,90 @@ export async function openGridDialog(): Promise<ActionResult> {
   const params = await openDialog<GridParams>("dialogs/grid-builder.html");
   if (!params) return { type: "info", message: "Grid creation cancelled." };
   return createGrid(params);
+}
+
+export function openSelectedDeckDialog(): Promise<ActionResult> {
+  return new Promise((resolve) => {
+    const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}dialogs/selected-deck.html?v=${Date.now()}`;
+    let settled = false;
+
+    Office.context.ui.displayDialogAsync(
+      url,
+      {
+        height: 52,
+        width: 34,
+        displayInIframe: true,
+      },
+      (result) => {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          settled = true;
+          resolve({
+            type: "error",
+            message: result.error.message || "Could not open the Save Selected Deck dialog.",
+          });
+          return;
+        }
+
+        const dialog = result.value;
+
+        dialog.addEventHandler(Office.EventType.DialogMessageReceived, async (args: { message: string }) => {
+          let payload: { type?: string } | null = null;
+          try {
+            payload = JSON.parse(args.message) as { type?: string } | null;
+          } catch {
+            payload = null;
+          }
+
+          if (!payload?.type) {
+            return;
+          }
+
+          if (payload.type === "close") {
+            dialog.close();
+            if (!settled) {
+              settled = true;
+              resolve({ type: "info", message: "Save Selected Deck cancelled." });
+            }
+            return;
+          }
+
+          if (payload.type !== "run") {
+            return;
+          }
+
+          try {
+            const presentationTools = await import("./presentationTools");
+            const actionResult = await presentationTools.createDeckFromSelectedSlides();
+
+            if (typeof dialog.messageChild === "function") {
+              dialog.messageChild(JSON.stringify({ type: "result", result: actionResult }));
+            }
+          } catch (error) {
+            const failureResult: ActionResult = {
+              type: "error",
+              message: error instanceof Error ? error.message : "Something went wrong.",
+            };
+
+            if (typeof dialog.messageChild === "function") {
+              dialog.messageChild(JSON.stringify({ type: "result", result: failureResult }));
+            }
+          }
+        });
+
+        dialog.addEventHandler(Office.EventType.DialogEventReceived, () => {
+          if (!settled) {
+            settled = true;
+            resolve({ type: "info", message: "Save Selected Deck closed." });
+          }
+        });
+
+        resolve({
+          type: "info",
+          message: "Opened the Save Selected Deck dialog.",
+        });
+      },
+    );
+  });
 }
 // ─────────────────────────────────────────────────────────────────
 // Slide organisation

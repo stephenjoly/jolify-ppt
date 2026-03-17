@@ -603,6 +603,21 @@
                     <FunctionName>moveToUnusedSection</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.openSelectedDeckDialog">
+                  <Label resid="Btn.OpenSelectedDeckDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenSelectedDeckDialog.Label" />
+                    <Description resid="Btn.OpenSelectedDeckDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.moveToUnusedSection.16" />
+                    <bt:Image size="32" resid="Icon.moveToUnusedSection.32" />
+                    <bt:Image size="80" resid="Icon.moveToUnusedSection.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSelectedDeckDialog</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.toggleDraftSticker">
                   <Label resid="Btn.ToggleDraftSticker.Label" />
                   <Supertip>
@@ -758,6 +773,7 @@
         <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Label" DefaultValue="Save Selected Deck" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
         <bt:String id="Btn.PastePositionAndSize.Label" DefaultValue="Paste Position &amp; Size" />
@@ -817,6 +833,7 @@
         <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
