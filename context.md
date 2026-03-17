@@ -4,11 +4,12 @@ Jolify is a PowerPoint add-in for slide production work. It combines a custom ri
 
 ## Core Runtime Shape
 
-1. `manifest.xml` defines the Jolify tab, ribbon controls, native Office controls, and command bindings.
-2. `src/commands/commands.ts` exposes ribbon handlers on `window`.
-3. `src/shared/shapeTools.ts` implements the main Office.js actions.
-4. `src/taskpane/taskpane.ts` wires taskpane buttons to the same shared actions.
-5. Static HTML dialogs in `src/dialogs/` send JSON payloads back through `Office.context.ui.messageParent(...)`.
+1. `manifest.xml` defines the stable Jolify tab, ribbon controls, native Office controls, and command bindings.
+2. `manifest.dev.xml` mirrors the same command surface for localhost sideloading with a separate add-in ID and `Jolify Dev` tab.
+3. `src/commands/commands.ts` exposes ribbon handlers on `window`.
+4. `src/shared/shapeTools.ts` implements the main Office.js actions.
+5. `src/taskpane/taskpane.ts` wires taskpane buttons to the same shared actions.
+6. Static HTML dialogs in `src/dialogs/` send JSON payloads back through `Office.context.ui.messageParent(...)`.
 
 ## Repository Map
 
@@ -23,8 +24,8 @@ Jolify is a PowerPoint add-in for slide production work. It combines a custom ri
 
 ## Build and Install Paths
 
-- `npm start`: local webpack dev server plus Office sideload flow.
-- `npm stop`: stop the local debug/sideload flow.
+- `npm start`: local webpack dev server plus `manifest.dev.xml` sideload flow.
+- `npm stop`: stop the local `manifest.dev.xml` sideload flow.
 - `npm run build`: production webpack build plus local-runtime bundle packaging.
 - `install/install.sh` / `install/uninstall.sh`: hosted-mode installer/uninstaller sources.
 - `install/install-local.sh` / `install/uninstall-local.sh`: macOS local-stable runtime installer/uninstaller sources.

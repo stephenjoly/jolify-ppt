@@ -17,6 +17,7 @@ What this usually means:
 
 1. Check what the manifest points to.
    - Local dev should point to `https://localhost:3300/taskpane.html` and `https://localhost:3300/commands.html`.
+   - `npm start` uses `manifest.dev.xml`, not `manifest.xml`, so the WEF folder should show a separate `Jolify Dev` add-in identity during local testing.
 
 2. Check the installed WEF manifest.
    - Common location on this machine:
@@ -63,6 +64,7 @@ Typical symptom:
    ```bash
    npm run build:dev
    xmllint --noout manifest.xml
+   xmllint --noout manifest.dev.xml
    ```
 
 2. Treat `npm run validate` carefully.
@@ -126,7 +128,8 @@ done
 
 Interpretation:
 - One Jolify manifest in WEF is expected during local dev.
-- The repo having `manifest.xml` and `dist/manifest.xml` is not itself the problem.
+- If stable and local dev are both installed, seeing two Jolify manifests is expected as long as one is the `Jolify Dev` manifest ID.
+- The repo having `manifest.xml`, `manifest.dev.xml`, and `dist/manifest.xml` is not itself the problem.
 
 ## 6. If Custom Ribbon Buttons Still Fail After A Clean Restart
 
