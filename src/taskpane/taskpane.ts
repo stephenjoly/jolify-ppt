@@ -34,6 +34,7 @@ import {
   batchStyleApply,
   // Phase 2 — dialog wrappers
   openGridDialog,
+  openSelectedDeckDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -77,6 +78,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   // Layout Builders
   "create-grid-btn":    openGridDialog,
   // Slides
+  "save-selected-deck-btn": openSelectedDeckDialog,
   "move-to-unused-btn": moveToUnusedSection,
 };
 

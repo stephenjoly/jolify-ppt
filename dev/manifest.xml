@@ -71,22 +71,6 @@
                   </Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btn.pastePositionAndSize">
-                  <Label resid="Btn.PastePositionAndSize.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PastePositionAndSize.Label" />
-                    <Description resid="Btn.PastePositionAndSize.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pastePositionAndSize.16" />
-                    <bt:Image size="32" resid="Icon.pastePositionAndSize.32" />
-                    <bt:Image size="80" resid="Icon.pastePositionAndSize.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pastePositionAndSize</FunctionName>
-                  </Action>
-                </Control>
-
                 <Control xsi:type="Button" id="btn.copyPositionOnly">
                   <Label resid="Btn.CopyPositionOnly.Label" />
                   <Supertip>
@@ -100,22 +84,6 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>copyPositionOnly</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.pastePositionOnly">
-                  <Label resid="Btn.PastePositionOnly.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PastePositionOnly.Label" />
-                    <Description resid="Btn.PastePositionOnly.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pastePositionOnly.16" />
-                    <bt:Image size="32" resid="Icon.pastePositionOnly.32" />
-                    <bt:Image size="80" resid="Icon.pastePositionOnly.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pastePositionOnly</FunctionName>
                   </Action>
                 </Control>
 
@@ -135,6 +103,38 @@
                   </Action>
                 </Control>
 
+                <Control xsi:type="Button" id="btn.pastePositionAndSize">
+                  <Label resid="Btn.PastePositionAndSize.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PastePositionAndSize.Label" />
+                    <Description resid="Btn.PastePositionAndSize.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.pastePositionAndSize.16" />
+                    <bt:Image size="32" resid="Icon.pastePositionAndSize.32" />
+                    <bt:Image size="80" resid="Icon.pastePositionAndSize.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pastePositionAndSize</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.pastePositionOnly">
+                  <Label resid="Btn.PastePositionOnly.Label" />
+                  <Supertip>
+                    <Title resid="Btn.PastePositionOnly.Label" />
+                    <Description resid="Btn.PastePositionOnly.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.pastePositionOnly.16" />
+                    <bt:Image size="32" resid="Icon.pastePositionOnly.32" />
+                    <bt:Image size="80" resid="Icon.pastePositionOnly.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>pastePositionOnly</FunctionName>
+                  </Action>
+                </Control>
+
                 <Control xsi:type="Button" id="btn.pasteSizeOnly">
                   <Label resid="Btn.PasteSizeOnly.Label" />
                   <Supertip>
@@ -148,6 +148,21 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>pasteSizeOnly</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
+                  <Label resid="Btn.MatchHeightAndWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeightAndWidth.Label" />
+                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeightAndWidth</FunctionName>
                   </Action>
                 </Control>
                 <Control xsi:type="Button" id="btn.matchHeight">
@@ -178,21 +193,6 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>matchWidth</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
-                  <Label resid="Btn.MatchHeightAndWidth.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MatchHeightAndWidth.Label" />
-                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
-                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
-                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchHeightAndWidth</FunctionName>
                   </Action>
                 </Control>
                 <Control xsi:type="Button" id="btn.swapPositions">

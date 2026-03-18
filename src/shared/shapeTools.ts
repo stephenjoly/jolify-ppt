@@ -15,21 +15,120 @@ export type ActionResult = {
 
 let savedPosition: ShapePosition | null = null;
 let savedSize: ShapeSize | null = null;
+const SAVED_POSITION_KEY = "__jolify_saved_position__";
+const SAVED_SIZE_KEY = "__jolify_saved_size__";
+
+function getDocumentSettings(): Office.Settings | null {
+  return Office.context?.document?.settings ?? null;
+}
+
+function parseStoredValue<T>(value: unknown): T | null {
+  if (value == null) {
+    return null;
+  }
+
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      return null;
+    }
+  }
+
+  return value as T;
+}
+
+function refreshDocumentSettings(settings: Office.Settings): Promise<void> {
+  return new Promise((resolve, reject) => {
+    settings.refreshAsync((result) => {
+      if (result.status === Office.AsyncResultStatus.Succeeded) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(result.error?.message || "Could not refresh saved Jolify settings."));
+    });
+  });
+}
+
+function saveDocumentSettings(settings: Office.Settings): Promise<void> {
+  return new Promise((resolve, reject) => {
+    settings.saveAsync((result) => {
+      if (result.status === Office.AsyncResultStatus.Succeeded) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(result.error?.message || "Could not save Jolify settings."));
+    });
+  });
+}
+
+async function loadSavedGeometry(): Promise<void> {
+  const settings = getDocumentSettings();
+  if (!settings) {
+    return;
+  }
+
+  await refreshDocumentSettings(settings);
+  savedPosition = parseStoredValue<ShapePosition>(settings.get(SAVED_POSITION_KEY));
+  savedSize = parseStoredValue<ShapeSize>(settings.get(SAVED_SIZE_KEY));
+}
+
+async function persistSavedGeometry(): Promise<void> {
+  const settings = getDocumentSettings();
+  if (!settings) {
+    return;
+  }
+
+  if (savedPosition) {
+    settings.set(SAVED_POSITION_KEY, savedPosition);
+  } else {
+    settings.remove(SAVED_POSITION_KEY);
+  }
+
+  if (savedSize) {
+    settings.set(SAVED_SIZE_KEY, savedSize);
+  } else {
+    settings.remove(SAVED_SIZE_KEY);
+  }
+
+  await saveDocumentSettings(settings);
+}
 
 async function getSelectedShapes(context: PowerPoint.RequestContext) {
   const selection = context.presentation.getSelectedShapes();
   selection.load("items");
   await context.sync();
-  return selection.items;
+
+  if (selection.items.length > 0) {
+    return selection.items;
+  }
+
+  const textRange = context.presentation.getSelectedTextRangeOrNullObject();
+  textRange.load("isNullObject");
+  await context.sync();
+
+  if (textRange.isNullObject) {
+    return [];
+  }
+
+  const parentTextFrame = textRange.getParentTextFrame();
+  const parentShape = parentTextFrame.getParentShape();
+  parentShape.load("id");
+  await context.sync();
+
+  return [parentShape];
 }
 
 export async function copyPositionOnly(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
     const shapes = await getSelectedShapes(context);
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select at least one shape to copy its position.",
+        message: "Select at least one shape or click into table/text content to copy its position.",
       };
     }
 
@@ -41,6 +140,7 @@ export async function copyPositionOnly(): Promise<ActionResult> {
       left: shape.left,
       top: shape.top,
     };
+    await persistSavedGeometry();
 
     return {
       type: "success",
@@ -51,11 +151,12 @@ export async function copyPositionOnly(): Promise<ActionResult> {
 
 export async function copySizeOnly(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
     const shapes = await getSelectedShapes(context);
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select at least one shape to copy its size.",
+        message: "Select at least one shape or click into table/text content to copy its size.",
       };
     }
 
@@ -67,6 +168,7 @@ export async function copySizeOnly(): Promise<ActionResult> {
       width: shape.width,
       height: shape.height,
     };
+    await persistSavedGeometry();
 
     return {
       type: "success",
@@ -77,11 +179,12 @@ export async function copySizeOnly(): Promise<ActionResult> {
 
 export async function copyPositionAndSize(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
     const shapes = await getSelectedShapes(context);
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select at least one shape to copy its position & size.",
+        message: "Select at least one shape or click into table/text content to copy its position & size.",
       };
     }
 
@@ -98,6 +201,7 @@ export async function copyPositionAndSize(): Promise<ActionResult> {
       width: shape.width,
       height: shape.height,
     };
+    await persistSavedGeometry();
 
     return {
       type: "success",
@@ -111,6 +215,7 @@ export function copyPosition(): Promise<ActionResult> {
 }
 
 export async function pastePositionOnly(): Promise<ActionResult> {
+  await loadSavedGeometry();
   if (!savedPosition) {
     return {
       type: "warning",
@@ -123,7 +228,7 @@ export async function pastePositionOnly(): Promise<ActionResult> {
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select one or more shapes to paste the saved position.",
+        message: "Select one or more shapes, or click into table/text content, to paste the saved position.",
       };
     }
 
@@ -142,6 +247,7 @@ export async function pastePositionOnly(): Promise<ActionResult> {
 }
 
 export async function pasteSizeOnly(): Promise<ActionResult> {
+  await loadSavedGeometry();
   if (!savedSize) {
     return {
       type: "warning",
@@ -154,7 +260,7 @@ export async function pasteSizeOnly(): Promise<ActionResult> {
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select one or more shapes to paste the saved size.",
+        message: "Select one or more shapes, or click into table/text content, to paste the saved size.",
       };
     }
 
@@ -173,6 +279,7 @@ export async function pasteSizeOnly(): Promise<ActionResult> {
 }
 
 export async function pastePositionAndSize(): Promise<ActionResult> {
+  await loadSavedGeometry();
   if (!savedPosition || !savedSize) {
     return {
       type: "warning",
@@ -185,7 +292,7 @@ export async function pastePositionAndSize(): Promise<ActionResult> {
     if (shapes.length < 1) {
       return {
         type: "warning",
-        message: "Select one or more shapes to paste the saved position & size.",
+        message: "Select one or more shapes, or click into table/text content, to paste the saved position & size.",
       };
     }
 
