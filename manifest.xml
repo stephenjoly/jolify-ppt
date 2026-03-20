@@ -68,6 +68,15 @@
                 <OfficeControl id="BulletsGallery" />
                 <OfficeControl id="NumberingGallery" />
                 <OfficeControl id="LineSpacingGalleryPowerPoint" />
+              </Group>
+
+              <Group id="jolify.ParagraphTools">
+                <Label resid="Group.ParagraphTools.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
                 <OfficeControl id="PowerPointParagraphDialog" />
               </Group>
 
@@ -831,6 +840,7 @@
       <bt:ShortStrings>
         <bt:String id="Tab.Label" DefaultValue="Jolify" />
         <bt:String id="Group.NativeText.Label" DefaultValue="Text" />
+        <bt:String id="Group.ParagraphTools.Label" DefaultValue="Paragraph" />
         <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
         <bt:String id="Group.Match.Label" DefaultValue="Format" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
