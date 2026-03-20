@@ -46,11 +46,6 @@
             <CustomTab id="jolify.Tab">
               <Label resid="Tab.Label" />
 
-              <OfficeGroup id="GroupFont" />
-              <OfficeGroup id="GroupParagraph" />
-              <OfficeGroup id="GroupDrawing" />
-              <OfficeGroup id="GroupComments" />
-
               <!-- Position & Size -->
               <Group id="jolify.Position">
                 <Label resid="Group.Position.Label" />
