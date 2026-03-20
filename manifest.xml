@@ -52,6 +52,7 @@
               <Label resid="Tab.Label" />
 
               <OfficeGroup id="GroupFont" />
+              <OfficeGroup id="Paragraph" />
 
               <Group id="jolify.NativeText">
                 <Label resid="Group.NativeText.Label" />
