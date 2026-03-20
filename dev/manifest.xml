@@ -440,8 +440,6 @@
                 </Control>
               </Group>
 
-              <OfficeGroup id="GroupArrange" />
-
               <!-- Group Ops & Text -->
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
@@ -450,6 +448,8 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
+                <OfficeControl id="ObjectBringToFront" />
+                <OfficeControl id="ObjectSendToBack" />
                 <Control xsi:type="Button" id="btn.alignCenterHAndGroup">
                   <Label resid="Btn.AlignCenterHAndGroup.Label" />
                   <Supertip>
@@ -610,10 +610,22 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <OfficeControl id="NumberInsert" />
+                <Control xsi:type="Button" id="btn.applySlideNumbersAcrossDeck">
+                  <Label resid="Btn.ApplySlideNumbersAcrossDeck.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ApplySlideNumbersAcrossDeck.Label" />
+                    <Description resid="Btn.ApplySlideNumbersAcrossDeck.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>applySlideNumbersAcrossDeck</FunctionName>
+                  </Action>
+                </Control>
               </Group>
-
-              <OfficeGroup id="GroupSlides" />
 
               <!-- Presentation -->
               <Group id="jolify.Review">
@@ -849,6 +861,7 @@
         <bt:String id="Btn.RemoveTextMargins.Label" DefaultValue="Remove Text Margins" />
         <bt:String id="Btn.DisableTextAutofit.Label" DefaultValue="AutoFit Off" />
         <bt:String id="Btn.CreateCenterSticker.Label" DefaultValue="Create Center Sticker" />
+        <bt:String id="Btn.ApplySlideNumbersAcrossDeck.Label" DefaultValue="Apply Slide Numbers" />
         <bt:String id="Btn.ToggleDraftSticker.Label" DefaultValue="Toggle Draft" />
       </bt:ShortStrings>
 
@@ -877,6 +890,7 @@
         <bt:String id="Btn.RemoveTextMargins.Desc" DefaultValue="Set all text margins to zero for the selected text boxes." />
         <bt:String id="Btn.DisableTextAutofit.Desc" DefaultValue="Turn off text autofit for the selected text boxes." />
         <bt:String id="Btn.CreateCenterSticker.Desc" DefaultValue="Create a centered square text box with placeholder text and sticker formatting." />
+        <bt:String id="Btn.ApplySlideNumbersAcrossDeck.Desc" DefaultValue="Add or update Jolify slide numbers on every slide except the title slide." />
         <bt:String id="Btn.ToggleDraftSticker.Desc" DefaultValue="Add the DRAFT sticker to all slides, or remove it if the deck already has one." />
         <bt:String id="Btn.MergeTextBoxes.Desc" DefaultValue="Merge selected text boxes into one." />
         <bt:String id="Btn.AlignCenterHAndGroup.Desc" DefaultValue="Center shapes horizontally then group them." />
