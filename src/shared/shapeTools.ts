@@ -425,7 +425,8 @@ const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
 const STICKER_SIZE = 81;  // points — 2.87 cm
 const STICKER_IMAGE_URL = "./assets/draft-sticker.png";
 const CENTER_STICKER_NAME = "__jolify_center_sticker__";
-const CENTER_STICKER_SIZE = 72;
+const CENTER_STICKER_WIDTH = 99.2126;
+const CENTER_STICKER_HEIGHT = 148.8189;
 const CENTER_STICKER_TEXT = "Placeholder text";
 const CENTER_STICKER_FILL_COLOR = "#D9D9D9";
 const CENTER_STICKER_OUTLINE_COLOR = "#BFBFBF";
@@ -1019,8 +1020,8 @@ export async function createCenterSticker(): Promise<ActionResult> {
     }
 
     const slide = selectedSlides.items[0];
-    const targetLeft = (SLIDE_WIDTH - CENTER_STICKER_SIZE) / 2;
-    const targetTop = (SLIDE_HEIGHT - CENTER_STICKER_SIZE) / 2;
+    const targetLeft = (SLIDE_WIDTH - CENTER_STICKER_WIDTH) / 2;
+    const targetTop = (SLIDE_HEIGHT - CENTER_STICKER_HEIGHT) / 2;
     const shapes = slide.shapes;
     shapes.load("items");
     await context.sync();
@@ -1039,8 +1040,8 @@ export async function createCenterSticker(): Promise<ActionResult> {
     shapes.items.forEach((shape) => {
       const usesCenterStickerName = shape.name === CENTER_STICKER_NAME;
       const looksLikeLegacyCenterSticker =
-        shape.width === CENTER_STICKER_SIZE &&
-        shape.height === CENTER_STICKER_SIZE &&
+        shape.width === CENTER_STICKER_WIDTH &&
+        shape.height === CENTER_STICKER_HEIGHT &&
         shape.hasText &&
         shape.textFrame.textRange.text === CENTER_STICKER_TEXT &&
         shape.textFrame.autoSizeSetting === PowerPoint.ShapeAutoSize.autoSizeNone &&
@@ -1083,8 +1084,8 @@ export async function createCenterSticker(): Promise<ActionResult> {
     const sticker = slide.shapes.addTextBox(CENTER_STICKER_TEXT, {
       left: targetLeft + cascadeIndex * CENTER_STICKER_CASCADE_OFFSET,
       top: targetTop + cascadeIndex * CENTER_STICKER_CASCADE_OFFSET,
-      width: CENTER_STICKER_SIZE,
-      height: CENTER_STICKER_SIZE,
+      width: CENTER_STICKER_WIDTH,
+      height: CENTER_STICKER_HEIGHT,
     });
 
     sticker.name = CENTER_STICKER_NAME;
