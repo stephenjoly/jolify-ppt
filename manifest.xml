@@ -59,22 +59,9 @@
                 <OfficeControl id="Italic" />
                 <OfficeControl id="Underline" />
                 <OfficeControl id="Strikethrough" />
-                <OfficeControl id="ChangeCaseGallery" />
-                <OfficeControl id="HighlightingStop" />
                 <OfficeControl id="BulletsGallery" />
                 <OfficeControl id="NumberingGallery" />
-                <OfficeControl id="IndentDecrease" />
-                <OfficeControl id="IndentIncrease" />
-                <OfficeControl id="AlignLeft" />
-                <OfficeControl id="AlignCenter" />
-                <OfficeControl id="AlignRight" />
-                <OfficeControl id="AlignJustify" />
-                <OfficeControl id="AlignTextTop" />
-                <OfficeControl id="AlignTextMiddle" />
-                <OfficeControl id="AlignTextBottom" />
                 <OfficeControl id="LineSpacingGalleryPowerPoint" />
-                <OfficeControl id="TextDirectionLeftToRight" />
-                <OfficeControl id="TextDirectionRightToLeft" />
                 <OfficeControl id="PowerPointParagraphDialog" />
               </Group>
 
