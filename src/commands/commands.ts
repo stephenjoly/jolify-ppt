@@ -26,7 +26,6 @@ import {
   removeTextMargins,
   disableTextAutofit,
   createCenterSticker,
-  toggleSlideNumbersAcrossDeck,
   toggleDraftSticker,
   mergeTextBoxes,
   alignCenterHAndGroup,
@@ -146,9 +145,6 @@ export function disableTextAutofitCommand(event: Office.AddinCommands.Event) {
 export function createCenterStickerCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, createCenterSticker);
 }
-export function toggleSlideNumbersAcrossDeckCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, toggleSlideNumbersAcrossDeck);
-}
 
 // Branding
 export function toggleDraftStickerCommand(event: Office.AddinCommands.Event) {
@@ -217,7 +213,6 @@ Office.onReady(() => {});
 (window as any).removeTextMargins = removeTextMarginsCommand;
 (window as any).disableTextAutofit = disableTextAutofitCommand;
 (window as any).createCenterSticker = createCenterStickerCommand;
-(window as any).toggleSlideNumbersAcrossDeck = toggleSlideNumbersAcrossDeckCommand;
 (window as any).toggleDraftSticker = toggleDraftStickerCommand;
 (window as any).mergeTextBoxes = mergeTextBoxesCommand;
 (window as any).alignCenterHAndGroup = alignCenterHAndGroupCommand;
