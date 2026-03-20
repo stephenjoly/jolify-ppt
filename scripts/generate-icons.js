@@ -43,6 +43,9 @@ const ICON_MAP = {
   distributeV:          "text_align_distributed_vertical_20_regular",
   // Text
   splitTextBoxByLines:  "text_column_two_20_regular",
+  removeTextMargins:    "textbox_align_top_left_20_regular",
+  disableTextAutofit:   "text_wrap_off_20_filled",
+  createCenterSticker:  "sticker_20_regular",
   // Branding
   addDraftSticker:      "tag_add_20_regular",
   removeDraftSticker:   "tag_dismiss_20_regular",

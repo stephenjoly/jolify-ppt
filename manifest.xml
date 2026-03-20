@@ -562,9 +562,9 @@
                     <Description resid="Btn.RemoveTextMargins.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.removeTextMargins.16" />
+                    <bt:Image size="32" resid="Icon.removeTextMargins.32" />
+                    <bt:Image size="80" resid="Icon.removeTextMargins.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>removeTextMargins</FunctionName>
@@ -577,9 +577,9 @@
                     <Description resid="Btn.DisableTextAutofit.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.disableTextAutofit.16" />
+                    <bt:Image size="32" resid="Icon.disableTextAutofit.32" />
+                    <bt:Image size="80" resid="Icon.disableTextAutofit.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>disableTextAutofit</FunctionName>
@@ -592,9 +592,9 @@
                     <Description resid="Btn.CreateCenterSticker.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.createCenterSticker.16" />
+                    <bt:Image size="32" resid="Icon.createCenterSticker.32" />
+                    <bt:Image size="80" resid="Icon.createCenterSticker.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>createCenterSticker</FunctionName>
@@ -754,6 +754,15 @@
         <bt:Image id="Icon.splitTextBoxByLines.16" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_16.png" />
         <bt:Image id="Icon.splitTextBoxByLines.32" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_32.png" />
         <bt:Image id="Icon.splitTextBoxByLines.80" DefaultValue="https://localhost:3300/assets/icons/splitTextBoxByLines_80.png" />
+        <bt:Image id="Icon.removeTextMargins.16" DefaultValue="https://localhost:3300/assets/icons/removeTextMargins_16.png" />
+        <bt:Image id="Icon.removeTextMargins.32" DefaultValue="https://localhost:3300/assets/icons/removeTextMargins_32.png" />
+        <bt:Image id="Icon.removeTextMargins.80" DefaultValue="https://localhost:3300/assets/icons/removeTextMargins_80.png" />
+        <bt:Image id="Icon.disableTextAutofit.16" DefaultValue="https://localhost:3300/assets/icons/disableTextAutofit_16.png" />
+        <bt:Image id="Icon.disableTextAutofit.32" DefaultValue="https://localhost:3300/assets/icons/disableTextAutofit_32.png" />
+        <bt:Image id="Icon.disableTextAutofit.80" DefaultValue="https://localhost:3300/assets/icons/disableTextAutofit_80.png" />
+        <bt:Image id="Icon.createCenterSticker.16" DefaultValue="https://localhost:3300/assets/icons/createCenterSticker_16.png" />
+        <bt:Image id="Icon.createCenterSticker.32" DefaultValue="https://localhost:3300/assets/icons/createCenterSticker_32.png" />
+        <bt:Image id="Icon.createCenterSticker.80" DefaultValue="https://localhost:3300/assets/icons/createCenterSticker_80.png" />
         <bt:Image id="Icon.addDraftSticker.16" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_16.png" />
         <bt:Image id="Icon.addDraftSticker.32" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_32.png" />
         <bt:Image id="Icon.addDraftSticker.80" DefaultValue="https://localhost:3300/assets/icons/addDraftSticker_80.png" />
