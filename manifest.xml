@@ -51,6 +51,8 @@
             <CustomTab id="jolify.Tab">
               <Label resid="Tab.Label" />
 
+              <OfficeGroup id="GroupFont" />
+
               <Group id="jolify.NativeText">
                 <Label resid="Group.NativeText.Label" />
                 <Icon>
