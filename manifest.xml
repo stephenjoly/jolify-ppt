@@ -49,8 +49,6 @@
 
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="jolify.Tab">
-              <Label resid="Tab.Label" />
-
               <OfficeGroup id="GroupFont" />
               <OfficeGroup id="Paragraph" />
 
@@ -698,6 +696,8 @@
                   </Action>
                 </Control>
               </Group>
+
+              <Label resid="Tab.Label" />
 
             </CustomTab>
           </ExtensionPoint>
