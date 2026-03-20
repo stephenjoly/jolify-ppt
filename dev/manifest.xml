@@ -611,6 +611,7 @@
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
                 <OfficeControl id="SlideLayoutGallery" />
+                <OfficeControl id="ShapesInsertGallery" />
                 <OfficeControl id="NumberInsert" />
               </Group>
 
