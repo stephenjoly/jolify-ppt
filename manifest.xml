@@ -610,7 +610,21 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <OfficeControl id="NumberInsert" />
+                <Control xsi:type="Button" id="btn.toggleSlideNumbersAcrossDeck">
+                  <Label resid="Btn.ToggleSlideNumbersAcrossDeck.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ToggleSlideNumbersAcrossDeck.Label" />
+                    <Description resid="Btn.ToggleSlideNumbersAcrossDeck.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>toggleSlideNumbersAcrossDeck</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
               <OfficeGroup id="GroupSlides" />
@@ -833,6 +847,7 @@
         <bt:String id="Btn.RemoveTextMargins.Label" DefaultValue="Remove Text Margins" />
         <bt:String id="Btn.DisableTextAutofit.Label" DefaultValue="AutoFit Off" />
         <bt:String id="Btn.CreateCenterSticker.Label" DefaultValue="Create Center Sticker" />
+        <bt:String id="Btn.ToggleSlideNumbersAcrossDeck.Label" DefaultValue="Toggle Slide Numbers" />
         <bt:String id="Btn.ToggleDraftSticker.Label" DefaultValue="Toggle Draft" />
       </bt:ShortStrings>
 
@@ -861,6 +876,7 @@
         <bt:String id="Btn.RemoveTextMargins.Desc" DefaultValue="Set all text margins to zero for the selected text boxes." />
         <bt:String id="Btn.DisableTextAutofit.Desc" DefaultValue="Turn off text autofit for the selected text boxes." />
         <bt:String id="Btn.CreateCenterSticker.Desc" DefaultValue="Create a centered square text box with placeholder text and sticker formatting." />
+        <bt:String id="Btn.ToggleSlideNumbersAcrossDeck.Desc" DefaultValue="Turn Jolify slide numbers on for every slide except the title slide, or remove them if they are already on." />
         <bt:String id="Btn.ToggleDraftSticker.Desc" DefaultValue="Add the DRAFT sticker to all slides, or remove it if the deck already has one." />
         <bt:String id="Btn.MergeTextBoxes.Desc" DefaultValue="Merge selected text boxes into one." />
         <bt:String id="Btn.AlignCenterHAndGroup.Desc" DefaultValue="Center shapes horizontally then group them." />
