@@ -46,6 +46,36 @@
             <CustomTab id="jolify.Tab">
               <Label resid="Tab.Label" />
 
+              <Group id="jolify.NativeFont">
+                <Label resid="Group.NativeFont.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <OfficeControl id="Font" />
+                <OfficeControl id="FontSize" />
+                <OfficeControl id="Strikethrough" />
+              </Group>
+
+              <Group id="jolify.NativeParagraph">
+                <Label resid="Group.NativeParagraph.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <OfficeControl id="BulletsGallery" />
+                <OfficeControl id="NumberingGallery" />
+                <OfficeControl id="AlignLeft" />
+                <OfficeControl id="AlignCenter" />
+                <OfficeControl id="AlignRight" />
+                <OfficeControl id="AlignJustify" />
+                <OfficeControl id="TextDirectionLeftToRight" />
+                <OfficeControl id="TextDirectionRightToLeft" />
+                <OfficeControl id="PowerPointParagraphDialog" />
+              </Group>
+
               <!-- Position & Size -->
               <Group id="jolify.Position">
                 <Label resid="Group.Position.Label" />
@@ -803,6 +833,8 @@
 
       <bt:ShortStrings>
         <bt:String id="Tab.Label" DefaultValue="Jolify" />
+        <bt:String id="Group.NativeFont.Label" DefaultValue="Font" />
+        <bt:String id="Group.NativeParagraph.Label" DefaultValue="Paragraph" />
         <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
         <bt:String id="Group.Match.Label" DefaultValue="Format" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
