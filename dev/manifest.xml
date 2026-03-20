@@ -32,6 +32,11 @@
 
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
     xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="AddinCommands" MinVersion="1.3" />
+      </bt:Sets>
+    </Requirements>
     <Hosts>
       <Host xsi:type="Presentation">
         <DesktopFormFactor>
