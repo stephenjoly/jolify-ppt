@@ -6,12 +6,12 @@
   xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
   xsi:type="TaskPaneApp">
 
-  <Id>a13454cd-574c-44ce-9c64-19dcd0ae477b</Id>
+  <Id>51b02631-d5eb-4388-be2b-387e4f142688</Id>
   <Version>1.0.0.5</Version>
   <ProviderName>stephenjoly</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Jolify" />
-  <Description DefaultValue="Shape positioning, alignment, formatting, and text tools for PowerPoint." />
+  <DisplayName DefaultValue="Jolify Dev" />
+  <Description DefaultValue="Local development build of Jolify for PowerPoint." />
   <IconUrl DefaultValue="https://localhost:3300/assets/icon-32.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3300/assets/icon-64.png" />
   <SupportUrl DefaultValue="https://github.com/stephenjoly/jolify-ppt" />
@@ -440,8 +440,6 @@
                 </Control>
               </Group>
 
-              <OfficeGroup id="GroupArrange" />
-
               <!-- Group Ops & Text -->
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
@@ -610,10 +608,7 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <OfficeControl id="NumberInsert" />
               </Group>
-
-              <OfficeGroup id="GroupSlides" />
 
               <!-- Presentation -->
               <Group id="jolify.Review">
@@ -651,6 +646,21 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>moveToUnusedSection</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.openSelectedDeckDialog">
+                  <Label resid="Btn.OpenSelectedDeckDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenSelectedDeckDialog.Label" />
+                    <Description resid="Btn.OpenSelectedDeckDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.moveToUnusedSection.16" />
+                    <bt:Image size="32" resid="Icon.moveToUnusedSection.32" />
+                    <bt:Image size="80" resid="Icon.moveToUnusedSection.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSelectedDeckDialog</FunctionName>
                   </Action>
                 </Control>
                 <Control xsi:type="Button" id="btn.toggleDraftSticker">
@@ -791,7 +801,7 @@
       </bt:Urls>
 
       <bt:ShortStrings>
-        <bt:String id="Tab.Label" DefaultValue="Jolify" />
+        <bt:String id="Tab.Label" DefaultValue="Jolify Dev" />
         <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
         <bt:String id="Group.Match.Label" DefaultValue="Format" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
@@ -808,6 +818,7 @@
         <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Label" DefaultValue="Save Selected Deck" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
         <bt:String id="Btn.PastePositionAndSize.Label" DefaultValue="Paste Position &amp; Size" />
@@ -873,6 +884,7 @@
         <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

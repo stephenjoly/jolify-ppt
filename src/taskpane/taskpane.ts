@@ -23,12 +23,16 @@ import {
   pastePositionOnly,
   pasteSizeOnly,
   splitTextBoxByLines,
+  removeTextMargins,
+  disableTextAutofit,
+  createCenterSticker,
   swapPositions,
   // Phase 1 — new
   mergeTextBoxes,
   alignCenterHAndGroup,
   alignMiddleVAndGroup,
   centerMiddleAndGroup,
+  distributeHandVAndGroup,
   distributeHAndGroup,
   distributeVAndGroup,
   batchStyleApply,
@@ -63,16 +67,20 @@ const ACTIONS: Record<string, ActionRunner> = {
   "align-bottom-btn": alignBottom,
   "distribute-h-btn": distributeH,
   "distribute-v-btn": distributeV,
-  "split-textbox-btn": splitTextBoxByLines,
   "toggle-draft-btn": toggleDraftSticker,
   // Align & Group
   "align-center-group-btn":  alignCenterHAndGroup,
   "align-middle-group-btn":  alignMiddleVAndGroup,
   "center-middle-group-btn": centerMiddleAndGroup,
+  "distribute-hv-group-btn": distributeHandVAndGroup,
   "distribute-h-group-btn":  distributeHAndGroup,
   "distribute-v-group-btn":  distributeVAndGroup,
   // Text Tools
   "merge-textboxes-btn": mergeTextBoxes,
+  "split-textbox-btn": splitTextBoxByLines,
+  "remove-text-margins-btn": removeTextMargins,
+  "disable-text-autofit-btn": disableTextAutofit,
+  "create-center-sticker-btn": createCenterSticker,
   // Style
   "batch-style-apply-btn": batchStyleApply,
   // Layout Builders

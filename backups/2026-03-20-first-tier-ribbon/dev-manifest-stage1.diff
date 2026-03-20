@@ -1,0 +1,23 @@
+--- backups/2026-03-20-first-tier-ribbon/dev-manifest.pre-stage1.xml	2026-03-20 14:01:19
++++ dev/manifest.xml	2026-03-20 14:00:34
+@@ -439,6 +439,8 @@
+                   </Action>
+                 </Control>
+               </Group>
++
++              <OfficeGroup id="GroupArrange" />
+ 
+               <!-- Group Ops & Text -->
+               <Group id="jolify.GroupOps">
+@@ -608,8 +610,11 @@
+                   <bt:Image size="32" resid="Icon.32x32" />
+                   <bt:Image size="80" resid="Icon.80x80" />
+                 </Icon>
++                <OfficeControl id="NumberInsert" />
+               </Group>
+ 
++              <OfficeGroup id="GroupSlides" />
++
+               <!-- Presentation -->
+               <Group id="jolify.Review">
+                 <Label resid="Group.Review.Label" />

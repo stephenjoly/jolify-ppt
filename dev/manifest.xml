@@ -440,6 +440,8 @@
                 </Control>
               </Group>
 
+              <OfficeGroup id="GroupArrange" />
+
               <!-- Group Ops & Text -->
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
@@ -553,6 +555,51 @@
                     <FunctionName>splitTextBoxByLines</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.removeTextMargins">
+                  <Label resid="Btn.RemoveTextMargins.Label" />
+                  <Supertip>
+                    <Title resid="Btn.RemoveTextMargins.Label" />
+                    <Description resid="Btn.RemoveTextMargins.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>removeTextMargins</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.disableTextAutofit">
+                  <Label resid="Btn.DisableTextAutofit.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DisableTextAutofit.Label" />
+                    <Description resid="Btn.DisableTextAutofit.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>disableTextAutofit</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.createCenterSticker">
+                  <Label resid="Btn.CreateCenterSticker.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CreateCenterSticker.Label" />
+                    <Description resid="Btn.CreateCenterSticker.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>createCenterSticker</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
               <!-- Slide Design -->
@@ -563,7 +610,10 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
+                <OfficeControl id="NumberInsert" />
               </Group>
+
+              <OfficeGroup id="GroupSlides" />
 
               <!-- Presentation -->
               <Group id="jolify.Review">
@@ -796,6 +846,9 @@
         <bt:String id="Btn.DistributeH.Label" DefaultValue="Distribute H" />
         <bt:String id="Btn.DistributeV.Label" DefaultValue="Distribute V" />
         <bt:String id="Btn.SplitTextBoxByLines.Label" DefaultValue="Split Text Box" />
+        <bt:String id="Btn.RemoveTextMargins.Label" DefaultValue="Remove Text Margins" />
+        <bt:String id="Btn.DisableTextAutofit.Label" DefaultValue="AutoFit Off" />
+        <bt:String id="Btn.CreateCenterSticker.Label" DefaultValue="Create Center Sticker" />
         <bt:String id="Btn.ToggleDraftSticker.Label" DefaultValue="Toggle Draft" />
       </bt:ShortStrings>
 
@@ -821,6 +874,9 @@
         <bt:String id="Btn.DistributeH.Desc" DefaultValue="Distribute selected shapes evenly in horizontal space." />
         <bt:String id="Btn.DistributeV.Desc" DefaultValue="Distribute selected shapes evenly in vertical space." />
         <bt:String id="Btn.SplitTextBoxByLines.Desc" DefaultValue="Split a text box into one box per line." />
+        <bt:String id="Btn.RemoveTextMargins.Desc" DefaultValue="Set all text margins to zero for the selected text boxes." />
+        <bt:String id="Btn.DisableTextAutofit.Desc" DefaultValue="Turn off text autofit for the selected text boxes." />
+        <bt:String id="Btn.CreateCenterSticker.Desc" DefaultValue="Create a centered square text box with placeholder text and sticker formatting." />
         <bt:String id="Btn.ToggleDraftSticker.Desc" DefaultValue="Add the DRAFT sticker to all slides, or remove it if the deck already has one." />
         <bt:String id="Btn.MergeTextBoxes.Desc" DefaultValue="Merge selected text boxes into one." />
         <bt:String id="Btn.AlignCenterHAndGroup.Desc" DefaultValue="Center shapes horizontally then group them." />

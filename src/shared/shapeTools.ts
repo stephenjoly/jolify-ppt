@@ -121,6 +121,48 @@ async function getSelectedShapes(context: PowerPoint.RequestContext) {
   return [parentShape];
 }
 
+type SelectedTextShapesResult = {
+  shapes: PowerPoint.Shape[];
+  skippedCount: number;
+};
+
+async function getSelectedTextShapes(
+  context: PowerPoint.RequestContext,
+  emptyMessage: string,
+): Promise<SelectedTextShapesResult | ActionResult> {
+  const shapes = await getSelectedShapes(context);
+  if (shapes.length < 1) {
+    return {
+      type: "warning",
+      message: emptyMessage,
+    };
+  }
+
+  shapes.forEach((shape) => {
+    shape.load("type,hasText");
+  });
+  await context.sync();
+
+  const textShapes = shapes.filter((shape) => shape.type === "TextBox" || shape.hasText);
+  if (textShapes.length < 1) {
+    return {
+      type: "warning",
+      message: emptyMessage,
+    };
+  }
+
+  return {
+    shapes: textShapes,
+    skippedCount: shapes.length - textShapes.length,
+  };
+}
+
+function getIgnoredShapeNote(skippedCount: number): string {
+  return skippedCount > 0
+    ? ` Ignored ${skippedCount} non-text shape${skippedCount !== 1 ? "s" : ""}.`
+    : "";
+}
+
 export async function copyPositionOnly(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     await loadSavedGeometry();
@@ -382,6 +424,13 @@ export function clearSavedSize(): void {
 const DRAFT_STICKER_NAME = "__jolify_draft_sticker__";
 const STICKER_SIZE = 81;  // points — 2.87 cm
 const STICKER_IMAGE_URL = "./assets/draft-sticker.png";
+const CENTER_STICKER_NAME = "__jolify_center_sticker__";
+const CENTER_STICKER_SIZE = 72;
+const CENTER_STICKER_TEXT = "Placeholder text";
+const CENTER_STICKER_FILL_COLOR = "#D9D9D9";
+const CENTER_STICKER_OUTLINE_COLOR = "#BFBFBF";
+const CENTER_STICKER_CASCADE_OFFSET = 10;
+const POSITION_TOLERANCE = 0.5;
 
 async function fetchImageAsBase64(url: string): Promise<string> {
   const response = await fetch(url);
@@ -908,6 +957,165 @@ export async function removeAllSpeakerNotes(): Promise<ActionResult> {
 // Phase 1 — Button-only features
 // ─────────────────────────────────────────────────────────────────
 
+export async function removeTextMargins(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select at least one text box to remove its text margins.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.leftMargin = 0;
+      shape.textFrame.rightMargin = 0;
+      shape.textFrame.topMargin = 0;
+      shape.textFrame.bottomMargin = 0;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `Removed text margins from ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+export async function disableTextAutofit(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select at least one text box to turn off autofit.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.autoSizeSetting = PowerPoint.ShapeAutoSize.autoSizeNone;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `Turned off autofit for ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+export async function createCenterSticker(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selectedSlides = context.presentation.getSelectedSlides();
+    selectedSlides.load("items");
+    await context.sync();
+
+    if (selectedSlides.items.length === 0) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const slide = selectedSlides.items[0];
+    const targetLeft = (SLIDE_WIDTH - CENTER_STICKER_SIZE) / 2;
+    const targetTop = (SLIDE_HEIGHT - CENTER_STICKER_SIZE) / 2;
+    const shapes = slide.shapes;
+    shapes.load("items");
+    await context.sync();
+
+    shapes.items.forEach((shape) => {
+      shape.load("name,left,top,width,height,hasText");
+      shape.textFrame.load("autoSizeSetting,leftMargin,rightMargin,topMargin,bottomMargin,verticalAlignment");
+      shape.textFrame.textRange.load("text");
+      shape.textFrame.textRange.paragraphFormat.load("horizontalAlignment");
+      shape.fill.load("type,foregroundColor");
+      shape.lineFormat.load("visible,color,weight");
+    });
+    await context.sync();
+
+    const existingStickerPositions = new Set<number>();
+    shapes.items.forEach((shape) => {
+      const usesCenterStickerName = shape.name === CENTER_STICKER_NAME;
+      const looksLikeLegacyCenterSticker =
+        shape.width === CENTER_STICKER_SIZE &&
+        shape.height === CENTER_STICKER_SIZE &&
+        shape.hasText &&
+        shape.textFrame.textRange.text === CENTER_STICKER_TEXT &&
+        shape.textFrame.autoSizeSetting === PowerPoint.ShapeAutoSize.autoSizeNone &&
+        shape.textFrame.leftMargin === 0 &&
+        shape.textFrame.rightMargin === 0 &&
+        shape.textFrame.topMargin === 0 &&
+        shape.textFrame.bottomMargin === 0 &&
+        shape.textFrame.verticalAlignment === PowerPoint.TextVerticalAlignment.middle &&
+        shape.textFrame.textRange.paragraphFormat.horizontalAlignment === PowerPoint.ParagraphHorizontalAlignment.center &&
+        shape.fill.type === "Solid" &&
+        shape.fill.foregroundColor === CENTER_STICKER_FILL_COLOR &&
+        shape.lineFormat.visible &&
+        shape.lineFormat.color === CENTER_STICKER_OUTLINE_COLOR &&
+        Math.abs(shape.lineFormat.weight - 1) <= POSITION_TOLERANCE;
+
+      if (!usesCenterStickerName && !looksLikeLegacyCenterSticker) {
+        return;
+      }
+
+      const leftStep = (shape.left - targetLeft) / CENTER_STICKER_CASCADE_OFFSET;
+      const topStep = (shape.top - targetTop) / CENTER_STICKER_CASCADE_OFFSET;
+      const roundedLeftStep = Math.round(leftStep);
+      const roundedTopStep = Math.round(topStep);
+
+      if (
+        Math.abs(leftStep - roundedLeftStep) <= POSITION_TOLERANCE &&
+        Math.abs(topStep - roundedTopStep) <= POSITION_TOLERANCE &&
+        roundedLeftStep === roundedTopStep &&
+        roundedLeftStep >= 0
+      ) {
+        existingStickerPositions.add(roundedLeftStep);
+      }
+    });
+
+    let cascadeIndex = 0;
+    while (existingStickerPositions.has(cascadeIndex)) {
+      cascadeIndex += 1;
+    }
+
+    const sticker = slide.shapes.addTextBox(CENTER_STICKER_TEXT, {
+      left: targetLeft + cascadeIndex * CENTER_STICKER_CASCADE_OFFSET,
+      top: targetTop + cascadeIndex * CENTER_STICKER_CASCADE_OFFSET,
+      width: CENTER_STICKER_SIZE,
+      height: CENTER_STICKER_SIZE,
+    });
+
+    sticker.name = CENTER_STICKER_NAME;
+    sticker.fill.setSolidColor(CENTER_STICKER_FILL_COLOR);
+    sticker.lineFormat.visible = true;
+    sticker.lineFormat.color = CENTER_STICKER_OUTLINE_COLOR;
+    sticker.lineFormat.weight = 1;
+    sticker.textFrame.leftMargin = 0;
+    sticker.textFrame.rightMargin = 0;
+    sticker.textFrame.topMargin = 0;
+    sticker.textFrame.bottomMargin = 0;
+    sticker.textFrame.autoSizeSetting = PowerPoint.ShapeAutoSize.autoSizeNone;
+    sticker.textFrame.verticalAlignment = PowerPoint.TextVerticalAlignment.middle;
+    sticker.textFrame.wordWrap = true;
+    sticker.textFrame.textRange.paragraphFormat.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
+    sticker.load("id");
+    await context.sync();
+
+    slide.setSelectedShapes([sticker.id]);
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        cascadeIndex === 0
+          ? "Created a centered sticker."
+          : `Created a centered sticker with a ${cascadeIndex * CENTER_STICKER_CASCADE_OFFSET}pt cascade offset.`,
+    };
+  });
+}
+
 export async function mergeTextBoxes(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
@@ -1022,6 +1230,45 @@ export const alignCenterHAndGroup  = (): Promise<ActionResult> => alignAndGroup(
 export const alignMiddleVAndGroup  = (): Promise<ActionResult> => alignAndGroup("middleV");
 export const distributeHAndGroup   = (): Promise<ActionResult> => alignAndGroup("distributeH");
 export const distributeVAndGroup   = (): Promise<ActionResult> => alignAndGroup("distributeV");
+
+export async function distributeHandVAndGroup(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 3) {
+      return { type: "warning", message: "Select at least 3 shapes to distribute on both axes and group." };
+    }
+
+    shapes.forEach((s) => s.load("left,top,width,height"));
+    const selectedSlides = context.presentation.getSelectedSlides();
+    selectedSlides.load("items");
+    await context.sync();
+
+    if (selectedSlides.items.length === 0) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const sortedH = [...shapes].sort((a, b) => a.left - b.left);
+    const spanH = sortedH[sortedH.length - 1].left + sortedH[sortedH.length - 1].width - sortedH[0].left;
+    const totalWidth = sortedH.reduce((sum, s) => sum + s.width, 0);
+    const gapH = (spanH - totalWidth) / (sortedH.length - 1);
+    let cursorH = sortedH[0].left;
+    sortedH.forEach((s) => { s.left = cursorH; cursorH += s.width + gapH; });
+
+    const sortedV = [...shapes].sort((a, b) => a.top - b.top);
+    const spanV = sortedV[sortedV.length - 1].top + sortedV[sortedV.length - 1].height - sortedV[0].top;
+    const totalHeight = sortedV.reduce((sum, s) => sum + s.height, 0);
+    const gapV = (spanV - totalHeight) / (sortedV.length - 1);
+    let cursorV = sortedV[0].top;
+    sortedV.forEach((s) => { s.top = cursorV; cursorV += s.height + gapV; });
+
+    await context.sync();
+
+    selectedSlides.items[0].shapes.addGroup(shapes);
+    await context.sync();
+
+    return { type: "success", message: `Distributed horizontally and vertically, then grouped ${shapes.length} shapes.` };
+  });
+}
 
 export async function centerMiddleAndGroup(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
