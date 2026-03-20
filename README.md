@@ -90,6 +90,7 @@ This stops the `Jolify Dev` sideload only. It does not remove a stable hosted or
 
 - `agents.md` - project-specific working norms for contributors and coding agents
 - `context.md` - project architecture and contributor entry point
+- `docs/DEPLOYMENT.md` - repeatable dev-to-production release checklist
 - `docs/FUTURE_FEATURES.md` - feature backlog intentionally kept out of the stable ribbon
 - `docs/TROUBLESHOOTING.md` - local runtime and sideload troubleshooting playbook
 - `manifest.xml` - stable hosted/local-stable manifest
@@ -112,8 +113,12 @@ This stops the `Jolify Dev` sideload only. It does not remove a stable hosted or
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Actions workflow which builds the project and deploys it to GitHub Pages automatically. No server or Docker required.
+Pushing to `main` triggers the GitHub Actions workflow which builds the project and deploys it to GitHub Pages automatically. No server or Docker is required.
 
 **Production URL:** `https://stephenjoly.github.io/jolify-ppt/`
 
-Hosted mode picks up JS/HTML updates automatically from the live site. Local stable mode is installed from the hosted site but then serves Jolify locally through its launch agent.
+Use [docs/DEPLOYMENT.md](/Users/stephenjoly/Documents/Coding/ppt-addin/docs/DEPLOYMENT.md) for the full repeatable release checklist.
+
+The key distinction is:
+- Hosted mode users pick up website asset updates automatically, but they still need to rerun `install.sh` if `manifest.xml` changes.
+- Local stable users need to rerun `install-local.sh` whenever the packaged local runtime changes.
