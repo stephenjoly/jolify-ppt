@@ -41,6 +41,7 @@ import {
   openGridDialog,
   openWeekdayRangeDialog,
   openSelectedDeckDialog,
+  openJolifyWebsite,
   moveToUnusedSection,
 } from "../shared/shapeTools";
 
@@ -199,6 +200,9 @@ export function openWeekdayRangeDialogCommand(event: Office.AddinCommands.Event)
 export function openSelectedDeckDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openSelectedDeckDialog);
 }
+export function openJolifyWebsiteCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openJolifyWebsite);
+}
 export function moveToUnusedSectionCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, moveToUnusedSection);
 }
@@ -248,4 +252,5 @@ Office.onReady(() => {});
 (window as any).openGridDialog = openGridDialogCommand;
 (window as any).openWeekdayRangeDialog = openWeekdayRangeDialogCommand;
 (window as any).openSelectedDeckDialog = openSelectedDeckDialogCommand;
+(window as any).openJolifyWebsite = openJolifyWebsiteCommand;
 (window as any).moveToUnusedSection = moveToUnusedSectionCommand;

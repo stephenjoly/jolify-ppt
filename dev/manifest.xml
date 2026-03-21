@@ -797,6 +797,21 @@
                     <FunctionName>openWeekdayRangeDialog</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.openJolifyWebsite">
+                  <Label resid="Btn.OpenJolifyWebsite.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenJolifyWebsite.Label" />
+                    <Description resid="Btn.OpenJolifyWebsite.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.openJolifyWebsite.16" />
+                    <bt:Image size="32" resid="Icon.openJolifyWebsite.32" />
+                    <bt:Image size="80" resid="Icon.openJolifyWebsite.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openJolifyWebsite</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
               <Label resid="Tab.Label" />
@@ -857,6 +872,9 @@
         <bt:Image id="Icon.matchHeightAndWidth.16" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_16.png" />
         <bt:Image id="Icon.matchHeightAndWidth.32" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_32.png" />
         <bt:Image id="Icon.matchHeightAndWidth.80" DefaultValue="https://localhost:3300/assets/icons/matchHeightAndWidth_80.png" />
+        <bt:Image id="Icon.openJolifyWebsite.16" DefaultValue="https://localhost:3300/assets/icons/openJolifyWebsite_16.png" />
+        <bt:Image id="Icon.openJolifyWebsite.32" DefaultValue="https://localhost:3300/assets/icons/openJolifyWebsite_32.png" />
+        <bt:Image id="Icon.openJolifyWebsite.80" DefaultValue="https://localhost:3300/assets/icons/openJolifyWebsite_80.png" />
         <bt:Image id="Icon.alignLeft.16" DefaultValue="https://localhost:3300/assets/icons/alignLeft_16.png" />
         <bt:Image id="Icon.alignLeft.32" DefaultValue="https://localhost:3300/assets/icons/alignLeft_32.png" />
         <bt:Image id="Icon.alignLeft.80" DefaultValue="https://localhost:3300/assets/icons/alignLeft_80.png" />
@@ -955,6 +973,7 @@
         <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Label" DefaultValue="Weekday Range" />
+        <bt:String id="Btn.OpenJolifyWebsite.Label" DefaultValue="About Jolify" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
         <bt:String id="Btn.OpenSelectedDeckDialog.Label" DefaultValue="Save Selected Deck" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
@@ -1030,6 +1049,7 @@
         <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Desc" DefaultValue="Generate a list of matching weekdays between two dates for easy table pasting." />
+        <bt:String id="Btn.OpenJolifyWebsite.Desc" DefaultValue="Open the Jolify website in your browser." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
         <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />
       </bt:LongStrings>

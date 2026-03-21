@@ -1859,6 +1859,21 @@ export function openSelectedDeckDialog(): Promise<ActionResult> {
     );
   });
 }
+
+export async function openJolifyWebsite(): Promise<ActionResult> {
+  try {
+    Office.context.ui.openBrowserWindow("https://stephenjoly.github.io/jolify-ppt/");
+    return {
+      type: "success",
+      message: "Opened the Jolify website.",
+    };
+  } catch {
+    return {
+      type: "error",
+      message: "Could not open the Jolify website.",
+    };
+  }
+}
 // ─────────────────────────────────────────────────────────────────
 // Slide organisation
 // ─────────────────────────────────────────────────────────────────
