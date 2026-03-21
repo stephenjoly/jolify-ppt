@@ -418,8 +418,8 @@
                 </Control>
               </Group>
 
-              <Group id="jolify.GroupOps">
-                <Label resid="Group.GroupOps.Label" />
+              <Group id="jolify.ArrangeNative">
+                <Label resid="Group.ArrangeNative.Label" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16" />
                   <bt:Image size="32" resid="Icon.32x32" />
@@ -427,6 +427,15 @@
                 </Icon>
                 <OfficeControl id="ObjectBringToFront" />
                 <OfficeControl id="ObjectSendToBack" />
+              </Group>
+
+              <Group id="jolify.GroupOps">
+                <Label resid="Group.GroupOps.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
                 <Control xsi:type="Button" id="btn.alignCenterHAndGroup">
                   <Label resid="Btn.AlignCenterHAndGroup.Label" />
                   <Supertip>
@@ -930,6 +939,7 @@
         <bt:String id="Group.Resize.Label" DefaultValue="Resize" />
         <bt:String id="Group.Match.Label" DefaultValue="Style" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
+        <bt:String id="Group.ArrangeNative.Label" DefaultValue="Order" />
         <bt:String id="Group.GroupOps.Label" DefaultValue="Arrange" />
         <bt:String id="Group.Builders.Label" DefaultValue="Insert" />
         <bt:String id="Group.Review.Label" DefaultValue="Slides" />
