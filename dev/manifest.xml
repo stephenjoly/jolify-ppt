@@ -461,6 +461,79 @@
                 </Control>
               </Group>
 
+              <Group id="jolify.Stretch">
+                <Label resid="Group.Stretch.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+
+                <Control xsi:type="Button" id="btn.stretchToLeftEdge">
+                  <Label resid="Btn.StretchToLeftEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToLeftEdge.Label" />
+                    <Description resid="Btn.StretchToLeftEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignLeft.16" />
+                    <bt:Image size="32" resid="Icon.alignLeft.32" />
+                    <bt:Image size="80" resid="Icon.alignLeft.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToLeftEdge</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.stretchToRightEdge">
+                  <Label resid="Btn.StretchToRightEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToRightEdge.Label" />
+                    <Description resid="Btn.StretchToRightEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignRight.16" />
+                    <bt:Image size="32" resid="Icon.alignRight.32" />
+                    <bt:Image size="80" resid="Icon.alignRight.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToRightEdge</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.stretchToTopEdge">
+                  <Label resid="Btn.StretchToTopEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToTopEdge.Label" />
+                    <Description resid="Btn.StretchToTopEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignTop.16" />
+                    <bt:Image size="32" resid="Icon.alignTop.32" />
+                    <bt:Image size="80" resid="Icon.alignTop.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToTopEdge</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btn.stretchToBottomEdge">
+                  <Label resid="Btn.StretchToBottomEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToBottomEdge.Label" />
+                    <Description resid="Btn.StretchToBottomEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignBottom.16" />
+                    <bt:Image size="32" resid="Icon.alignBottom.32" />
+                    <bt:Image size="80" resid="Icon.alignBottom.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToBottomEdge</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
               <!-- Group Ops & Text -->
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
@@ -843,6 +916,7 @@
         <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
         <bt:String id="Group.Match.Label" DefaultValue="Format" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
+        <bt:String id="Group.Stretch.Label" DefaultValue="Stretch To Edge" />
         <bt:String id="Group.GroupOps.Label" DefaultValue="Group Ops &amp; Text" />
         <bt:String id="Group.Builders.Label" DefaultValue="Slide Design" />
         <bt:String id="Group.Review.Label" DefaultValue="Presentation" />
@@ -878,6 +952,10 @@
         <bt:String id="Btn.AlignBottom.Label" DefaultValue="Align Bottom" />
         <bt:String id="Btn.DistributeH.Label" DefaultValue="Distribute H" />
         <bt:String id="Btn.DistributeV.Label" DefaultValue="Distribute V" />
+        <bt:String id="Btn.StretchToLeftEdge.Label" DefaultValue="Match Left Edge" />
+        <bt:String id="Btn.StretchToRightEdge.Label" DefaultValue="Match Right Edge" />
+        <bt:String id="Btn.StretchToTopEdge.Label" DefaultValue="Match Top Edge" />
+        <bt:String id="Btn.StretchToBottomEdge.Label" DefaultValue="Match Bottom Edge" />
         <bt:String id="Btn.SplitTextBoxByLines.Label" DefaultValue="Split Text Box" />
         <bt:String id="Btn.RemoveTextMargins.Label" DefaultValue="Remove Text Margins" />
         <bt:String id="Btn.DisableTextAutofit.Label" DefaultValue="AutoFit Off" />
@@ -906,6 +984,10 @@
         <bt:String id="Btn.AlignBottom.Desc" DefaultValue="Align selected shapes to the bottommost edge." />
         <bt:String id="Btn.DistributeH.Desc" DefaultValue="Distribute selected shapes evenly in horizontal space." />
         <bt:String id="Btn.DistributeV.Desc" DefaultValue="Distribute selected shapes evenly in vertical space." />
+        <bt:String id="Btn.StretchToLeftEdge.Desc" DefaultValue="Resize selected target shapes so their left edge matches the first selected shape while keeping their right edge fixed." />
+        <bt:String id="Btn.StretchToRightEdge.Desc" DefaultValue="Resize selected target shapes so their right edge matches the first selected shape while keeping their left edge fixed." />
+        <bt:String id="Btn.StretchToTopEdge.Desc" DefaultValue="Resize selected target shapes so their top edge matches the first selected shape while keeping their bottom edge fixed." />
+        <bt:String id="Btn.StretchToBottomEdge.Desc" DefaultValue="Resize selected target shapes so their bottom edge matches the first selected shape while keeping their top edge fixed." />
         <bt:String id="Btn.SplitTextBoxByLines.Desc" DefaultValue="Split a text box into one box per line." />
         <bt:String id="Btn.RemoveTextMargins.Desc" DefaultValue="Set all text margins to zero for the selected text boxes." />
         <bt:String id="Btn.DisableTextAutofit.Desc" DefaultValue="Turn off text autofit for the selected text boxes." />

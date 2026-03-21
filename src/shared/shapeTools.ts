@@ -568,6 +568,7 @@ const SLIDE_WIDTH = 960;  // points, widescreen default (same assumption as addD
 const SLIDE_HEIGHT = 540; // points, widescreen default
 
 type AlignType = "left" | "centerH" | "right" | "top" | "middleV" | "bottom" | "distributeH" | "distributeV";
+type StretchEdge = "left" | "right" | "top" | "bottom";
 
 async function alignShapes(type: AlignType): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
@@ -658,6 +659,99 @@ async function alignShapes(type: AlignType): Promise<ActionResult> {
     return {
       type: "success",
       message: `${verb} ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+async function stretchShapesToReferenceEdge(edge: StretchEdge): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+
+    if (shapes.length < 2) {
+      return {
+        type: "warning",
+        message: "Select at least 2 shapes. The first selected shape is the reference.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.load("left,top,width,height");
+    });
+    await context.sync();
+
+    const [referenceShape, ...targetShapes] = shapes;
+    const referenceRight = referenceShape.left + referenceShape.width;
+    const referenceBottom = referenceShape.top + referenceShape.height;
+
+    let updatedCount = 0;
+    let skippedCount = 0;
+
+    targetShapes.forEach((shape) => {
+      switch (edge) {
+        case "left": {
+          const fixedRight = shape.left + shape.width;
+          const newWidth = fixedRight - referenceShape.left;
+          if (newWidth <= 0) {
+            skippedCount += 1;
+            return;
+          }
+          shape.left = referenceShape.left;
+          shape.width = newWidth;
+          updatedCount += 1;
+          return;
+        }
+        case "right": {
+          const newWidth = referenceRight - shape.left;
+          if (newWidth <= 0) {
+            skippedCount += 1;
+            return;
+          }
+          shape.width = newWidth;
+          updatedCount += 1;
+          return;
+        }
+        case "top": {
+          const fixedBottom = shape.top + shape.height;
+          const newHeight = fixedBottom - referenceShape.top;
+          if (newHeight <= 0) {
+            skippedCount += 1;
+            return;
+          }
+          shape.top = referenceShape.top;
+          shape.height = newHeight;
+          updatedCount += 1;
+          return;
+        }
+        case "bottom": {
+          const newHeight = referenceBottom - shape.top;
+          if (newHeight <= 0) {
+            skippedCount += 1;
+            return;
+          }
+          shape.height = newHeight;
+          updatedCount += 1;
+        }
+      }
+    });
+
+    if (updatedCount === 0) {
+      return {
+        type: "warning",
+        message: "No target shapes could be resized to that reference edge without collapsing.",
+      };
+    }
+
+    await context.sync();
+
+    const edgeLabel = edge.charAt(0).toUpperCase() + edge.slice(1);
+    const skippedNote =
+      skippedCount > 0
+        ? ` Skipped ${skippedCount} shape${skippedCount !== 1 ? "s" : ""} that would have collapsed.`
+        : "";
+
+    return {
+      type: "success",
+      message: `Stretched ${updatedCount} shape${updatedCount !== 1 ? "s" : ""} to match the reference ${edgeLabel.toLowerCase()} edge.${skippedNote}`,
     };
   });
 }
@@ -875,6 +969,10 @@ export const alignMiddleV = (): Promise<ActionResult> => alignShapes("middleV");
 export const alignBottom  = (): Promise<ActionResult> => alignShapes("bottom");
 export const distributeH  = (): Promise<ActionResult> => alignShapes("distributeH");
 export const distributeV  = (): Promise<ActionResult> => alignShapes("distributeV");
+export const stretchToLeftEdge = (): Promise<ActionResult> => stretchShapesToReferenceEdge("left");
+export const stretchToRightEdge = (): Promise<ActionResult> => stretchShapesToReferenceEdge("right");
+export const stretchToTopEdge = (): Promise<ActionResult> => stretchShapesToReferenceEdge("top");
+export const stretchToBottomEdge = (): Promise<ActionResult> => stretchShapesToReferenceEdge("bottom");
 
 export async function splitTextBoxByLines(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {

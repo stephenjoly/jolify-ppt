@@ -22,6 +22,10 @@ import {
   alignBottom,
   distributeH,
   distributeV,
+  stretchToLeftEdge,
+  stretchToRightEdge,
+  stretchToTopEdge,
+  stretchToBottomEdge,
   splitTextBoxByLines,
   removeTextMargins,
   disableTextAutofit,
@@ -131,6 +135,18 @@ export function distributeHCommand(event: Office.AddinCommands.Event) {
 export function distributeVCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, distributeV);
 }
+export function stretchToLeftEdgeCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, stretchToLeftEdge);
+}
+export function stretchToRightEdgeCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, stretchToRightEdge);
+}
+export function stretchToTopEdgeCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, stretchToTopEdge);
+}
+export function stretchToBottomEdgeCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, stretchToBottomEdge);
+}
 
 // Text
 export function splitTextBoxByLinesCommand(event: Office.AddinCommands.Event) {
@@ -209,6 +225,10 @@ Office.onReady(() => {});
 (window as any).alignBottom = alignBottomCommand;
 (window as any).distributeH = distributeHCommand;
 (window as any).distributeV = distributeVCommand;
+(window as any).stretchToLeftEdge = stretchToLeftEdgeCommand;
+(window as any).stretchToRightEdge = stretchToRightEdgeCommand;
+(window as any).stretchToTopEdge = stretchToTopEdgeCommand;
+(window as any).stretchToBottomEdge = stretchToBottomEdgeCommand;
 (window as any).splitTextBoxByLines = splitTextBoxByLinesCommand;
 (window as any).removeTextMargins = removeTextMarginsCommand;
 (window as any).disableTextAutofit = disableTextAutofitCommand;
