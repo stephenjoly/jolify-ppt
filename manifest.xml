@@ -171,6 +171,66 @@
                     <FunctionName>pasteSizeOnly</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.stretchToLeftEdge">
+                  <Label resid="Btn.StretchToLeftEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToLeftEdge.Label" />
+                    <Description resid="Btn.StretchToLeftEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignLeft.16" />
+                    <bt:Image size="32" resid="Icon.alignLeft.32" />
+                    <bt:Image size="80" resid="Icon.alignLeft.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToLeftEdge</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.stretchToRightEdge">
+                  <Label resid="Btn.StretchToRightEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToRightEdge.Label" />
+                    <Description resid="Btn.StretchToRightEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignRight.16" />
+                    <bt:Image size="32" resid="Icon.alignRight.32" />
+                    <bt:Image size="80" resid="Icon.alignRight.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToRightEdge</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.stretchToTopEdge">
+                  <Label resid="Btn.StretchToTopEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToTopEdge.Label" />
+                    <Description resid="Btn.StretchToTopEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignTop.16" />
+                    <bt:Image size="32" resid="Icon.alignTop.32" />
+                    <bt:Image size="80" resid="Icon.alignTop.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToTopEdge</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.stretchToBottomEdge">
+                  <Label resid="Btn.StretchToBottomEdge.Label" />
+                  <Supertip>
+                    <Title resid="Btn.StretchToBottomEdge.Label" />
+                    <Description resid="Btn.StretchToBottomEdge.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.alignBottom.16" />
+                    <bt:Image size="32" resid="Icon.alignBottom.32" />
+                    <bt:Image size="80" resid="Icon.alignBottom.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>stretchToBottomEdge</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.matchHeightAndWidth">
                   <Label resid="Btn.MatchHeightAndWidth.Label" />
                   <Supertip>
@@ -457,79 +517,6 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>distributeV</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
-              <Group id="jolify.Stretch">
-                <Label resid="Group.Stretch.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-
-                <Control xsi:type="Button" id="btn.stretchToLeftEdge">
-                  <Label resid="Btn.StretchToLeftEdge.Label" />
-                  <Supertip>
-                    <Title resid="Btn.StretchToLeftEdge.Label" />
-                    <Description resid="Btn.StretchToLeftEdge.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.alignLeft.16" />
-                    <bt:Image size="32" resid="Icon.alignLeft.32" />
-                    <bt:Image size="80" resid="Icon.alignLeft.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>stretchToLeftEdge</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.stretchToRightEdge">
-                  <Label resid="Btn.StretchToRightEdge.Label" />
-                  <Supertip>
-                    <Title resid="Btn.StretchToRightEdge.Label" />
-                    <Description resid="Btn.StretchToRightEdge.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.alignRight.16" />
-                    <bt:Image size="32" resid="Icon.alignRight.32" />
-                    <bt:Image size="80" resid="Icon.alignRight.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>stretchToRightEdge</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.stretchToTopEdge">
-                  <Label resid="Btn.StretchToTopEdge.Label" />
-                  <Supertip>
-                    <Title resid="Btn.StretchToTopEdge.Label" />
-                    <Description resid="Btn.StretchToTopEdge.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.alignTop.16" />
-                    <bt:Image size="32" resid="Icon.alignTop.32" />
-                    <bt:Image size="80" resid="Icon.alignTop.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>stretchToTopEdge</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.stretchToBottomEdge">
-                  <Label resid="Btn.StretchToBottomEdge.Label" />
-                  <Supertip>
-                    <Title resid="Btn.StretchToBottomEdge.Label" />
-                    <Description resid="Btn.StretchToBottomEdge.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.alignBottom.16" />
-                    <bt:Image size="32" resid="Icon.alignBottom.32" />
-                    <bt:Image size="80" resid="Icon.alignBottom.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>stretchToBottomEdge</FunctionName>
                   </Action>
                 </Control>
               </Group>
@@ -919,7 +906,6 @@
         <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
         <bt:String id="Group.Match.Label" DefaultValue="Format" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
-        <bt:String id="Group.Stretch.Label" DefaultValue="Stretch To Edge" />
         <bt:String id="Group.GroupOps.Label" DefaultValue="Group Ops &amp; Text" />
         <bt:String id="Group.Builders.Label" DefaultValue="Slide Design" />
         <bt:String id="Group.Review.Label" DefaultValue="Presentation" />
