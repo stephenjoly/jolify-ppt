@@ -788,6 +788,22 @@
                     <FunctionName>openWeekdayRangeDialog</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.openTaskpane">
+                  <Label resid="Btn.OpenTaskpane.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenTaskpane.Label" />
+                    <Description resid="Btn.OpenTaskpane.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>JolifyTaskpane</TaskpaneId>
+                    <SourceLocation resid="taskpanePage" />
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.openJolifyWebsite">
                   <Label resid="Btn.OpenJolifyWebsite.Label" />
                   <Supertip>
@@ -963,6 +979,7 @@
         <bt:String id="Btn.ClearOutline.Label" DefaultValue="No Outline" />
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Label" DefaultValue="Weekday Range" />
+        <bt:String id="Btn.OpenTaskpane.Label" DefaultValue="Open Task Pane" />
         <bt:String id="Btn.OpenJolifyWebsite.Label" DefaultValue="About Jolify" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
         <bt:String id="Btn.OpenSelectedDeckDialog.Label" DefaultValue="Save Selected Deck" />
@@ -1039,6 +1056,7 @@
         <bt:String id="Btn.ClearOutline.Desc" DefaultValue="Remove the outline from the selected shape or shapes." />
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Desc" DefaultValue="Generate a list of matching weekdays between two dates for easy table pasting." />
+        <bt:String id="Btn.OpenTaskpane.Desc" DefaultValue="Open the Jolify task pane for troubleshooting and secondary actions." />
         <bt:String id="Btn.OpenJolifyWebsite.Desc" DefaultValue="Open the Jolify website in your browser." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
         <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />

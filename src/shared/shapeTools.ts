@@ -1295,21 +1295,11 @@ async function alignAndGroup(type: AlignType): Promise<ActionResult> {
         break;
       }
       case "distributeH": {
-        const sorted = [...shapes].sort((a, b) => a.left - b.left);
-        const span = sorted[sorted.length - 1].left + sorted[sorted.length - 1].width - sorted[0].left;
-        const totalWidth = sorted.reduce((sum, s) => sum + s.width, 0);
-        const gap = (span - totalWidth) / (sorted.length - 1);
-        let cursor = sorted[0].left;
-        sorted.forEach((s) => { s.left = cursor; cursor += s.width + gap; });
+        distributeShapesOnAxis(shapes, "horizontal");
         break;
       }
       case "distributeV": {
-        const sorted = [...shapes].sort((a, b) => a.top - b.top);
-        const span = sorted[sorted.length - 1].top + sorted[sorted.length - 1].height - sorted[0].top;
-        const totalHeight = sorted.reduce((sum, s) => sum + s.height, 0);
-        const gap = (span - totalHeight) / (sorted.length - 1);
-        let cursor = sorted[0].top;
-        sorted.forEach((s) => { s.top = cursor; cursor += s.height + gap; });
+        distributeShapesOnAxis(shapes, "vertical");
         break;
       }
     }
@@ -1330,6 +1320,36 @@ export const alignMiddleVAndGroup  = (): Promise<ActionResult> => alignAndGroup(
 export const distributeHAndGroup   = (): Promise<ActionResult> => alignAndGroup("distributeH");
 export const distributeVAndGroup   = (): Promise<ActionResult> => alignAndGroup("distributeV");
 
+function distributeShapesOnAxis(
+  shapes: PowerPoint.Shape[],
+  axis: "horizontal" | "vertical",
+): void {
+  const sorted = [...shapes].sort((a, b) =>
+    axis === "horizontal" ? a.left - b.left : a.top - b.top,
+  );
+
+  if (axis === "horizontal") {
+    const span = sorted[sorted.length - 1].left + sorted[sorted.length - 1].width - sorted[0].left;
+    const totalWidth = sorted.reduce((sum, shape) => sum + shape.width, 0);
+    const gap = (span - totalWidth) / (sorted.length - 1);
+    let cursor = sorted[0].left;
+    sorted.forEach((shape) => {
+      shape.left = cursor;
+      cursor += shape.width + gap;
+    });
+    return;
+  }
+
+  const span = sorted[sorted.length - 1].top + sorted[sorted.length - 1].height - sorted[0].top;
+  const totalHeight = sorted.reduce((sum, shape) => sum + shape.height, 0);
+  const gap = (span - totalHeight) / (sorted.length - 1);
+  let cursor = sorted[0].top;
+  sorted.forEach((shape) => {
+    shape.top = cursor;
+    cursor += shape.height + gap;
+  });
+}
+
 export async function distributeHandVAndGroup(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
@@ -1346,19 +1366,8 @@ export async function distributeHandVAndGroup(): Promise<ActionResult> {
       return { type: "error", message: "Could not determine the current slide." };
     }
 
-    const sortedH = [...shapes].sort((a, b) => a.left - b.left);
-    const spanH = sortedH[sortedH.length - 1].left + sortedH[sortedH.length - 1].width - sortedH[0].left;
-    const totalWidth = sortedH.reduce((sum, s) => sum + s.width, 0);
-    const gapH = (spanH - totalWidth) / (sortedH.length - 1);
-    let cursorH = sortedH[0].left;
-    sortedH.forEach((s) => { s.left = cursorH; cursorH += s.width + gapH; });
-
-    const sortedV = [...shapes].sort((a, b) => a.top - b.top);
-    const spanV = sortedV[sortedV.length - 1].top + sortedV[sortedV.length - 1].height - sortedV[0].top;
-    const totalHeight = sortedV.reduce((sum, s) => sum + s.height, 0);
-    const gapV = (spanV - totalHeight) / (sortedV.length - 1);
-    let cursorV = sortedV[0].top;
-    sortedV.forEach((s) => { s.top = cursorV; cursorV += s.height + gapV; });
+    distributeShapesOnAxis(shapes, "horizontal");
+    distributeShapesOnAxis(shapes, "vertical");
 
     await context.sync();
 
