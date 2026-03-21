@@ -152,6 +152,21 @@
                     <FunctionName>pasteSizeOnly</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.swapPositions">
+                  <Label resid="Btn.SwapPositions.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SwapPositions.Label" />
+                    <Description resid="Btn.SwapPositions.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.swapPositions.16" />
+                    <bt:Image size="32" resid="Icon.swapPositions.32" />
+                    <bt:Image size="80" resid="Icon.swapPositions.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>swapPositions</FunctionName>
+                  </Action>
+                </Control>
               </Group>
 
               <Group id="jolify.Resize">
@@ -161,6 +176,51 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
+                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
+                  <Label resid="Btn.MatchHeightAndWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeightAndWidth.Label" />
+                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeightAndWidth</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.matchWidth">
+                  <Label resid="Btn.MatchWidth.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchWidth.Label" />
+                    <Description resid="Btn.MatchWidth.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchWidth.16" />
+                    <bt:Image size="32" resid="Icon.matchWidth.32" />
+                    <bt:Image size="80" resid="Icon.matchWidth.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchWidth</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.matchHeight">
+                  <Label resid="Btn.MatchHeight.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MatchHeight.Label" />
+                    <Description resid="Btn.MatchHeight.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.matchHeight.16" />
+                    <bt:Image size="32" resid="Icon.matchHeight.32" />
+                    <bt:Image size="80" resid="Icon.matchHeight.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>matchHeight</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.stretchToLeftEdge">
                   <Label resid="Btn.StretchToLeftEdge.Label" />
                   <Supertip>
@@ -219,66 +279,6 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>stretchToBottomEdge</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.matchHeightAndWidth">
-                  <Label resid="Btn.MatchHeightAndWidth.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MatchHeightAndWidth.Label" />
-                    <Description resid="Btn.MatchHeightAndWidth.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.matchHeightAndWidth.16" />
-                    <bt:Image size="32" resid="Icon.matchHeightAndWidth.32" />
-                    <bt:Image size="80" resid="Icon.matchHeightAndWidth.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchHeightAndWidth</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.matchHeight">
-                  <Label resid="Btn.MatchHeight.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MatchHeight.Label" />
-                    <Description resid="Btn.MatchHeight.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.matchHeight.16" />
-                    <bt:Image size="32" resid="Icon.matchHeight.32" />
-                    <bt:Image size="80" resid="Icon.matchHeight.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchHeight</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.matchWidth">
-                  <Label resid="Btn.MatchWidth.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MatchWidth.Label" />
-                    <Description resid="Btn.MatchWidth.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.matchWidth.16" />
-                    <bt:Image size="32" resid="Icon.matchWidth.32" />
-                    <bt:Image size="80" resid="Icon.matchWidth.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>matchWidth</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.swapPositions">
-                  <Label resid="Btn.SwapPositions.Label" />
-                  <Supertip>
-                    <Title resid="Btn.SwapPositions.Label" />
-                    <Description resid="Btn.SwapPositions.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.swapPositions.16" />
-                    <bt:Image size="32" resid="Icon.swapPositions.32" />
-                    <bt:Image size="80" resid="Icon.swapPositions.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>swapPositions</FunctionName>
                   </Action>
                 </Control>
               </Group>
