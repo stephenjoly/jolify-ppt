@@ -35,6 +35,7 @@ import {
   alignCenterHAndGroup,
   alignMiddleVAndGroup,
   centerMiddleAndGroup,
+  distributeHandVAndGroup,
   distributeHAndGroup,
   distributeVAndGroup,
   batchStyleApply,
@@ -182,6 +183,9 @@ export function alignMiddleVAndGroupCommand(event: Office.AddinCommands.Event) {
 export function centerMiddleAndGroupCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, centerMiddleAndGroup);
 }
+export function distributeHandVAndGroupCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, distributeHandVAndGroup);
+}
 export function distributeHAndGroupCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, distributeHAndGroup);
 }
@@ -246,6 +250,7 @@ Office.onReady(() => {});
 (window as any).alignCenterHAndGroup = alignCenterHAndGroupCommand;
 (window as any).alignMiddleVAndGroup = alignMiddleVAndGroupCommand;
 (window as any).centerMiddleAndGroup = centerMiddleAndGroupCommand;
+(window as any).distributeHandVAndGroup = distributeHandVAndGroupCommand;
 (window as any).distributeHAndGroup = distributeHAndGroupCommand;
 (window as any).distributeVAndGroup = distributeVAndGroupCommand;
 (window as any).batchStyleApply = batchStyleApplyCommand;
