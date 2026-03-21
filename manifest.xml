@@ -167,6 +167,8 @@
                     <FunctionName>swapPositions</FunctionName>
                   </Action>
                 </Control>
+                <OfficeControl id="ObjectBringToFront" />
+                <OfficeControl id="ObjectSendToBack" />
               </Group>
 
               <Group id="jolify.Resize">
@@ -418,17 +420,6 @@
                 </Control>
               </Group>
 
-              <Group id="jolify.ArrangeNative">
-                <Label resid="Group.ArrangeNative.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <OfficeControl id="ObjectBringToFront" />
-                <OfficeControl id="ObjectSendToBack" />
-              </Group>
-
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
                 <Icon>
@@ -530,66 +521,6 @@
                 <OfficeControl id="BulletsGallery" />
                 <OfficeControl id="NumberingGallery" />
                 <OfficeControl id="LineSpacingGalleryPowerPoint" />
-                <Control xsi:type="Button" id="btn.mergeTextBoxes">
-                  <Label resid="Btn.MergeTextBoxes.Label" />
-                  <Supertip>
-                    <Title resid="Btn.MergeTextBoxes.Label" />
-                    <Description resid="Btn.MergeTextBoxes.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.mergeTextBoxes.16" />
-                    <bt:Image size="32" resid="Icon.mergeTextBoxes.32" />
-                    <bt:Image size="80" resid="Icon.mergeTextBoxes.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>mergeTextBoxes</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.splitTextBoxByLines">
-                  <Label resid="Btn.SplitTextBoxByLines.Label" />
-                  <Supertip>
-                    <Title resid="Btn.SplitTextBoxByLines.Label" />
-                    <Description resid="Btn.SplitTextBoxByLines.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.splitTextBoxByLines.16" />
-                    <bt:Image size="32" resid="Icon.splitTextBoxByLines.32" />
-                    <bt:Image size="80" resid="Icon.splitTextBoxByLines.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>splitTextBoxByLines</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.removeTextMargins">
-                  <Label resid="Btn.RemoveTextMargins.Label" />
-                  <Supertip>
-                    <Title resid="Btn.RemoveTextMargins.Label" />
-                    <Description resid="Btn.RemoveTextMargins.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.removeTextMargins.16" />
-                    <bt:Image size="32" resid="Icon.removeTextMargins.32" />
-                    <bt:Image size="80" resid="Icon.removeTextMargins.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>removeTextMargins</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.disableTextAutofit">
-                  <Label resid="Btn.DisableTextAutofit.Label" />
-                  <Supertip>
-                    <Title resid="Btn.DisableTextAutofit.Label" />
-                    <Description resid="Btn.DisableTextAutofit.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.disableTextAutofit.16" />
-                    <bt:Image size="32" resid="Icon.disableTextAutofit.32" />
-                    <bt:Image size="80" resid="Icon.disableTextAutofit.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>disableTextAutofit</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <Group id="jolify.Match">
@@ -715,6 +646,66 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>createCenterSticker</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.mergeTextBoxes">
+                  <Label resid="Btn.MergeTextBoxes.Label" />
+                  <Supertip>
+                    <Title resid="Btn.MergeTextBoxes.Label" />
+                    <Description resid="Btn.MergeTextBoxes.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.mergeTextBoxes.16" />
+                    <bt:Image size="32" resid="Icon.mergeTextBoxes.32" />
+                    <bt:Image size="80" resid="Icon.mergeTextBoxes.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mergeTextBoxes</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.splitTextBoxByLines">
+                  <Label resid="Btn.SplitTextBoxByLines.Label" />
+                  <Supertip>
+                    <Title resid="Btn.SplitTextBoxByLines.Label" />
+                    <Description resid="Btn.SplitTextBoxByLines.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.splitTextBoxByLines.16" />
+                    <bt:Image size="32" resid="Icon.splitTextBoxByLines.32" />
+                    <bt:Image size="80" resid="Icon.splitTextBoxByLines.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>splitTextBoxByLines</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.removeTextMargins">
+                  <Label resid="Btn.RemoveTextMargins.Label" />
+                  <Supertip>
+                    <Title resid="Btn.RemoveTextMargins.Label" />
+                    <Description resid="Btn.RemoveTextMargins.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.removeTextMargins.16" />
+                    <bt:Image size="32" resid="Icon.removeTextMargins.32" />
+                    <bt:Image size="80" resid="Icon.removeTextMargins.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>removeTextMargins</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.disableTextAutofit">
+                  <Label resid="Btn.DisableTextAutofit.Label" />
+                  <Supertip>
+                    <Title resid="Btn.DisableTextAutofit.Label" />
+                    <Description resid="Btn.DisableTextAutofit.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.disableTextAutofit.16" />
+                    <bt:Image size="32" resid="Icon.disableTextAutofit.32" />
+                    <bt:Image size="80" resid="Icon.disableTextAutofit.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>disableTextAutofit</FunctionName>
                   </Action>
                 </Control>
               </Group>
@@ -958,7 +949,6 @@
         <bt:String id="Group.Resize.Label" DefaultValue="Resize" />
         <bt:String id="Group.Match.Label" DefaultValue="Style" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
-        <bt:String id="Group.ArrangeNative.Label" DefaultValue="Order" />
         <bt:String id="Group.GroupOps.Label" DefaultValue="Arrange" />
         <bt:String id="Group.Builders.Label" DefaultValue="Insert" />
         <bt:String id="Group.Review.Label" DefaultValue="Slides" />
