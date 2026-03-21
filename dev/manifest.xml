@@ -522,6 +522,7 @@
                 </Icon>
                 <OfficeControl id="Font" />
                 <OfficeControl id="FontSize" />
+                <OfficeControl id="HighlightingStop" />
                 <OfficeControl id="Bold" />
                 <OfficeControl id="Italic" />
                 <OfficeControl id="Underline" />
