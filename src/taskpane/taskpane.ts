@@ -42,6 +42,7 @@ import {
   batchStyleApply,
   // Phase 2 — dialog wrappers
   openGridDialog,
+  openWeekdayRangeDialog,
   openSelectedDeckDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
@@ -93,6 +94,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "batch-style-apply-btn": batchStyleApply,
   // Layout Builders
   "create-grid-btn":    openGridDialog,
+  "weekday-range-btn": openWeekdayRangeDialog,
   // Slides
   "save-selected-deck-btn": openSelectedDeckDialog,
   "move-to-unused-btn": moveToUnusedSection,

@@ -39,6 +39,7 @@ import {
   distributeVAndGroup,
   batchStyleApply,
   openGridDialog,
+  openWeekdayRangeDialog,
   openSelectedDeckDialog,
   moveToUnusedSection,
 } from "../shared/shapeTools";
@@ -192,6 +193,9 @@ export function batchStyleApplyCommand(event: Office.AddinCommands.Event) {
 export function openGridDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openGridDialog);
 }
+export function openWeekdayRangeDialogCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, openWeekdayRangeDialog);
+}
 export function openSelectedDeckDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openSelectedDeckDialog);
 }
@@ -242,5 +246,6 @@ Office.onReady(() => {});
 (window as any).distributeVAndGroup = distributeVAndGroupCommand;
 (window as any).batchStyleApply = batchStyleApplyCommand;
 (window as any).openGridDialog = openGridDialogCommand;
+(window as any).openWeekdayRangeDialog = openWeekdayRangeDialogCommand;
 (window as any).openSelectedDeckDialog = openSelectedDeckDialogCommand;
 (window as any).moveToUnusedSection = moveToUnusedSectionCommand;

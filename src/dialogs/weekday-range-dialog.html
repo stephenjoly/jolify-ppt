@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Weekday Range List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f3f2f1;
+        color: #201f1e;
+      }
+
+      .dialog-shell {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      h1 {
+        font-size: 18px;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .intro {
+        font-size: 13px;
+        line-height: 1.5;
+        margin: 0;
+        color: #323130;
+      }
+
+      .field-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #605e5c;
+      }
+
+      select,
+      input,
+      textarea,
+      button {
+        font: inherit;
+      }
+
+      select,
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid #c8c6c4;
+        border-radius: 4px;
+        padding: 10px 12px;
+        background: #fff;
+        color: #201f1e;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        min-height: 180px;
+        resize: vertical;
+        font-family: SFMono-Regular, Consolas, monospace;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .status {
+        background: #ffffff;
+        border: 1px solid #e1dfdd;
+        border-left: 4px solid #0078d4;
+        border-radius: 6px;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .status strong {
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .status span {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .status.success {
+        border-left-color: #107c10;
+      }
+
+      .status.warning {
+        border-left-color: #d83b01;
+      }
+
+      .status.error {
+        border-left-color: #a4262c;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        flex: 1;
+        padding: 10px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: #0078d4;
+        color: #fff;
+      }
+
+      button.primary:hover:not(:disabled) {
+        background: #106ebe;
+      }
+
+      button.secondary {
+        background: #fff;
+        color: #323130;
+        border: 1px solid #c8c6c4;
+      }
+
+      button.secondary:hover:not(:disabled) {
+        background: #edebe9;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="dialog-shell">
+      <h1>Weekday Range List</h1>
+      <p class="intro">Choose a weekday and a date range. Jolify will count matching dates and print them one per line for easy table pasting.</p>
+
+      <div class="field-grid">
+        <label>
+          Weekday
+          <select id="weekday">
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+            <option value="0">Sunday</option>
+          </select>
+        </label>
+
+        <div></div>
+
+        <label>
+          Start Date
+          <input id="start-date" type="date" />
+        </label>
+
+        <label>
+          End Date
+          <input id="end-date" type="date" />
+        </label>
+      </div>
+
+      <div id="status" class="status info">
+        <strong>Ready</strong>
+        <span>Pick a range and click Generate.</span>
+      </div>
+
+      <label>
+        Results
+        <textarea id="results" readonly placeholder="Matching dates will appear here."></textarea>
+      </label>
+
+      <div class="actions">
+        <button id="run" type="button" class="primary">Generate</button>
+        <button id="copy" type="button" class="secondary">Copy Results</button>
+        <button id="close" type="button" class="secondary">Close</button>
+      </div>
+    </main>
+  </body>
+</html>

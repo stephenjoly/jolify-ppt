@@ -100,17 +100,7 @@ Key acceptance criteria:
 - Output is stable in normal slide-editing workflows.
 - User input and update behavior are documented clearly enough to support maintenance.
 
-11. Monday Range List / Table Generator
-Description:
-Generate every Monday between a user-provided start date and end date, with output formatted either as a simple list or as table-ready values that can be pasted into PowerPoint.
-Key acceptance criteria:
-- User can launch the workflow from the ribbon.
-- User can enter a start date and end date.
-- Jolify returns every Monday within the inclusive range in chronological order.
-- Output can be produced as either a plain list or a table-friendly format.
-- If the range contains no Mondays, Jolify reports that clearly instead of returning empty ambiguous output.
-
-12. Stretch Shapes To Reference Edge
+11. Stretch Shapes To Reference Edge
 Description:
 Provide edge-matching actions where the first selected shape is the reference and the other selected shape(s) are extended or shrunk so their ending edge lands on the same left, right, top, or bottom position as the reference shape.
 Key acceptance criteria:
@@ -123,7 +113,7 @@ Key acceptance criteria:
 
 The ribbon convenience items below are ordered from likely simplest to more involved implementation.
 
-13. Arrange And Group Shortcuts
+12. Arrange And Group Shortcuts
 Description:
 Add direct ribbon buttons for common native shape-arrangement actions, including bring to front, send to back, group, ungroup, and regroup, so users do not need to leave the Jolify tab for routine stacking and grouping work.
 Key acceptance criteria:
@@ -132,7 +122,7 @@ Key acceptance criteria:
 - Actions work on valid selections without requiring the taskpane.
 - Jolify gives a clear error or disabled state when the current selection cannot use the requested action.
 
-14. Layout And Reset Shortcuts
+13. Layout And Reset Shortcuts
 Description:
 Add direct ribbon buttons for slide layout selection and reset slide so common cleanup and template-restoration actions are available from the Jolify tab.
 Key acceptance criteria:
@@ -141,7 +131,7 @@ Key acceptance criteria:
 - Jolify does not override or reinterpret native placeholder/layout logic.
 - User gets a clear error or disabled state when the action is not applicable.
 
-15. Add Page Numbers Across Deck
+14. Add Page Numbers Across Deck
 Description:
 Add a ribbon entrypoint for enabling slide page numbers across the current presentation so numbering can be applied to every slide without switching back to native tabs.
 Key acceptance criteria:
@@ -151,7 +141,7 @@ Key acceptance criteria:
 - Result is consistent with the active theme or master where PowerPoint supports it.
 - User gets a clear success, no-op, or guidance message if numbering cannot be applied as expected.
 
-16. Comment Shortcuts
+15. Comment Shortcuts
 Description:
 Add ribbon buttons for add comment, next comment, and previous comment so users can move through review comments from the Jolify tab.
 Key acceptance criteria:
@@ -160,7 +150,7 @@ Key acceptance criteria:
 - Buttons behave clearly when a deck has no comments or comment navigation is unavailable.
 - Jolify does not interfere with existing review-mode behavior.
 
-17. Add Shape And Edit Shape Shortcuts
+16. Add Shape And Edit Shape Shortcuts
 Description:
 Add ribbon buttons for add shape and edit shape so common shape-creation and native shape-edit workflows are accessible from the Jolify tab.
 Key acceptance criteria:
@@ -169,7 +159,7 @@ Key acceptance criteria:
 - Edit shape is only enabled when the current selection supports it.
 - User gets a clear error or disabled state when no compatible shape is selected.
 
-18. Draw Shortcut
+17. Draw Shortcut
 Description:
 Add a ribbon button for the PowerPoint draw command so users can enter the drawing workflow from the Jolify tab when markup or freehand annotation is needed.
 Key acceptance criteria:
@@ -178,7 +168,7 @@ Key acceptance criteria:
 - Jolify makes it clear whether the button is a launcher, mode switch, or tab shortcut.
 - Behavior is verified in the supported PowerPoint environments because draw features can vary by platform and license state.
 
-19. Normalize Slide Title Case
+18. Normalize Slide Title Case
 Description:
 Add a bulk text action that updates the title on every slide to a chosen casing style, such as title case, uppercase, or sentence case, in one run.
 Key acceptance criteria:
@@ -188,7 +178,7 @@ Key acceptance criteria:
 - The action targets title placeholders or clearly defined title shapes only, rather than rewriting arbitrary body text.
 - User gets a clear report of how many slide titles were updated and which slides were skipped.
 
-20. Normalize Subtitle Ending Periods
+19. Normalize Subtitle Ending Periods
 Description:
 Add a bulk text action that enforces subtitle punctuation consistently across the presentation by either adding a trailing period to every subtitle or removing trailing periods from every subtitle.
 Key acceptance criteria:

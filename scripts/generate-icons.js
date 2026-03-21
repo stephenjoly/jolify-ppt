@@ -41,6 +41,7 @@ const ICON_MAP = {
   alignBottom:          "align_bottom_20_regular",
   distributeH:          "text_align_distributed_evenly_20_regular",
   distributeV:          "text_align_distributed_vertical_20_regular",
+  openWeekdayRangeDialog: "calendar_ltr_20_regular",
   // Text
   splitTextBoxByLines:  "text_column_two_20_regular",
   removeTextMargins:    "textbox_align_top_left_20_regular",

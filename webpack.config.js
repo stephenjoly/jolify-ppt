@@ -20,6 +20,7 @@ module.exports = async (env, options) => {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       commands: "./src/commands/commands.ts",
       selectedDeckDialog: "./src/dialogs/selected-deck-dialog.ts",
+      weekdayRangeDialog: "./src/dialogs/weekday-range-dialog.ts",
       taskpane: "./src/taskpane/taskpane.ts",
     },
     output: {
@@ -123,6 +124,11 @@ module.exports = async (env, options) => {
         filename: "dialogs/selected-deck.html",
         template: "./src/dialogs/selected-deck-dialog.html",
         chunks: ["polyfill", "selectedDeckDialog"],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/weekday-range.html",
+        template: "./src/dialogs/weekday-range-dialog.html",
+        chunks: ["polyfill", "weekdayRangeDialog"],
       }),
     ],
     devServer: {

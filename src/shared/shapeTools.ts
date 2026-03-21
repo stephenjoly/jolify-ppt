@@ -1604,6 +1604,178 @@ export async function openGridDialog(): Promise<ActionResult> {
   return createGrid(params);
 }
 
+export type WeekdayRangeParams = {
+  startDate: string;
+  endDate: string;
+  weekday: number;
+};
+
+type WeekdayRangeResult = {
+  type: ActionResult["type"];
+  message: string;
+  output: string;
+};
+
+const WEEKDAY_NAMES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
+
+function parseLocalDate(value: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return null;
+  }
+
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+function formatLocalDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function buildWeekdayRangeResult(params: WeekdayRangeParams): WeekdayRangeResult {
+  const { startDate, endDate, weekday } = params;
+  const start = parseLocalDate(startDate);
+  const end = parseLocalDate(endDate);
+
+  if (!start || !end) {
+    return {
+      type: "warning",
+      message: "Enter a valid start date and end date.",
+      output: "",
+    };
+  }
+
+  if (!Number.isInteger(weekday) || weekday < 0 || weekday > 6) {
+    return {
+      type: "warning",
+      message: "Choose a valid weekday.",
+      output: "",
+    };
+  }
+
+  if (start.getTime() > end.getTime()) {
+    return {
+      type: "warning",
+      message: "Start date must be on or before end date.",
+      output: "",
+    };
+  }
+
+  const dates: string[] = [];
+  const cursor = new Date(start);
+  const offset = (weekday - cursor.getDay() + 7) % 7;
+  cursor.setDate(cursor.getDate() + offset);
+
+  while (cursor.getTime() <= end.getTime()) {
+    dates.push(formatLocalDate(cursor));
+    cursor.setDate(cursor.getDate() + 7);
+  }
+
+  const weekdayName = WEEKDAY_NAMES[weekday];
+  if (dates.length === 0) {
+    return {
+      type: "info",
+      message: `No ${weekdayName}s found in that range.`,
+      output: "",
+    };
+  }
+
+  return {
+    type: "success",
+    message: `Found ${dates.length} ${weekdayName}${dates.length !== 1 ? "s" : ""} between ${startDate} and ${endDate}.`,
+    output: dates.join("\n"),
+  };
+}
+
+export function openWeekdayRangeDialog(): Promise<ActionResult> {
+  return new Promise((resolve) => {
+    const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}dialogs/weekday-range.html?v=${Date.now()}`;
+
+    Office.context.ui.displayDialogAsync(
+      url,
+      {
+        height: 66,
+        width: 42,
+        displayInIframe: true,
+      },
+      (result) => {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          resolve({
+            type: "error",
+            message: result.error?.message || "Could not open the weekday range dialog.",
+          });
+          return;
+        }
+
+        const dialog = result.value;
+
+        dialog.addEventHandler(Office.EventType.DialogMessageReceived, (args: { message: string }) => {
+          try {
+            const payload = JSON.parse(args.message) as {
+              type?: string;
+              params?: WeekdayRangeParams;
+            };
+
+            if (payload.type === "close") {
+              dialog.close();
+              resolve({ type: "info", message: "Weekday range dialog closed." });
+              return;
+            }
+
+            if (payload.type !== "run" || !payload.params) {
+              return;
+            }
+
+            const computed = buildWeekdayRangeResult(payload.params);
+            dialog.messageChild(
+              JSON.stringify({
+                type: "result",
+                result: computed,
+              }),
+            );
+          } catch (error) {
+            console.error(error);
+            dialog.messageChild(
+              JSON.stringify({
+                type: "result",
+                result: {
+                  type: "error",
+                  message: "Could not process the weekday range request.",
+                  output: "",
+                },
+              }),
+            );
+          }
+        });
+
+        dialog.addEventHandler(Office.EventType.DialogEventReceived, () => {
+          resolve({ type: "info", message: "Weekday range dialog closed." });
+        });
+      },
+    );
+  });
+}
+
 export function openSelectedDeckDialog(): Promise<ActionResult> {
   return new Promise((resolve) => {
     const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}dialogs/selected-deck.html?v=${Date.now()}`;
