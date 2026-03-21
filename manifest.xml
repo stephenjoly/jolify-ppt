@@ -49,25 +49,6 @@
 
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="jolify.Tab">
-              <Group id="jolify.NativeText">
-                <Label resid="Group.NativeText.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <OfficeControl id="Font" />
-                <OfficeControl id="FontSize" />
-                <OfficeControl id="Bold" />
-                <OfficeControl id="Italic" />
-                <OfficeControl id="Underline" />
-                <OfficeControl id="Strikethrough" />
-                <OfficeControl id="BulletsGallery" />
-                <OfficeControl id="NumberingGallery" />
-                <OfficeControl id="LineSpacingGalleryPowerPoint" />
-              </Group>
-
-              <!-- Position & Size -->
               <Group id="jolify.Position">
                 <Label resid="Group.Position.Label" />
                 <Icon>
@@ -171,6 +152,15 @@
                     <FunctionName>pasteSizeOnly</FunctionName>
                   </Action>
                 </Control>
+              </Group>
+
+              <Group id="jolify.Resize">
+                <Label resid="Group.Resize.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
                 <Control xsi:type="Button" id="btn.stretchToLeftEdge">
                   <Label resid="Btn.StretchToLeftEdge.Label" />
                   <Supertip>
@@ -293,96 +283,6 @@
                 </Control>
               </Group>
 
-              <!-- Format -->
-              <Group id="jolify.Match">
-                <Label resid="Group.Match.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <OfficeControl id="FontColorPicker" />
-                <OfficeControl id="ShapeFillColorPicker" />
-                <OfficeControl id="ShapeOutlineColorPicker" />
-                <Control xsi:type="Button" id="btn.copyOutlineStyle">
-                  <Label resid="Btn.CopyOutlineStyle.Label" />
-                  <Supertip>
-                    <Title resid="Btn.CopyOutlineStyle.Label" />
-                    <Description resid="Btn.CopyOutlineStyle.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.copyOutlineStyle.16" />
-                    <bt:Image size="32" resid="Icon.copyOutlineStyle.32" />
-                    <bt:Image size="80" resid="Icon.copyOutlineStyle.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>copyOutlineStyle</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.copyFillStyle">
-                  <Label resid="Btn.CopyFillStyle.Label" />
-                  <Supertip>
-                    <Title resid="Btn.CopyFillStyle.Label" />
-                    <Description resid="Btn.CopyFillStyle.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.copyFillStyle.16" />
-                    <bt:Image size="32" resid="Icon.copyFillStyle.32" />
-                    <bt:Image size="80" resid="Icon.copyFillStyle.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>copyFillStyle</FunctionName>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btn.batchStyleApply">
-                  <Label resid="Btn.BatchStyleApply.Label" />
-                  <Supertip>
-                    <Title resid="Btn.BatchStyleApply.Label" />
-                    <Description resid="Btn.BatchStyleApply.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.batchStyleApply.16" />
-                    <bt:Image size="32" resid="Icon.batchStyleApply.32" />
-                    <bt:Image size="80" resid="Icon.batchStyleApply.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>batchStyleApply</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.clearFill">
-                  <Label resid="Btn.ClearFill.Label" />
-                  <Supertip>
-                    <Title resid="Btn.ClearFill.Label" />
-                    <Description resid="Btn.ClearFill.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.clearFill.16" />
-                    <bt:Image size="32" resid="Icon.clearFill.32" />
-                    <bt:Image size="80" resid="Icon.clearFill.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>clearFill</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.clearOutline">
-                  <Label resid="Btn.ClearOutline.Label" />
-                  <Supertip>
-                    <Title resid="Btn.ClearOutline.Label" />
-                    <Description resid="Btn.ClearOutline.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.clearOutline.16" />
-                    <bt:Image size="32" resid="Icon.clearOutline.32" />
-                    <bt:Image size="80" resid="Icon.clearOutline.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>clearOutline</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
               <!-- Align & Distribute -->
               <Group id="jolify.Align">
                 <Label resid="Group.Align.Label" />
@@ -471,7 +371,6 @@
                     <FunctionName>alignMiddleV</FunctionName>
                   </Action>
                 </Control>
-
                 <Control xsi:type="Button" id="btn.alignBottom">
                   <Label resid="Btn.AlignBottom.Label" />
                   <Supertip>
@@ -487,7 +386,6 @@
                     <FunctionName>alignBottom</FunctionName>
                   </Action>
                 </Control>
-
                 <Control xsi:type="Button" id="btn.distributeH">
                   <Label resid="Btn.DistributeH.Label" />
                   <Supertip>
@@ -503,7 +401,6 @@
                     <FunctionName>distributeH</FunctionName>
                   </Action>
                 </Control>
-
                 <Control xsi:type="Button" id="btn.distributeV">
                   <Label resid="Btn.DistributeV.Label" />
                   <Supertip>
@@ -521,7 +418,6 @@
                 </Control>
               </Group>
 
-              <!-- Group Ops & Text -->
               <Group id="jolify.GroupOps">
                 <Label resid="Group.GroupOps.Label" />
                 <Icon>
@@ -606,6 +502,24 @@
                     <FunctionName>distributeVAndGroup</FunctionName>
                   </Action>
                 </Control>
+              </Group>
+
+              <Group id="jolify.NativeText">
+                <Label resid="Group.NativeText.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <OfficeControl id="Font" />
+                <OfficeControl id="FontSize" />
+                <OfficeControl id="Bold" />
+                <OfficeControl id="Italic" />
+                <OfficeControl id="Underline" />
+                <OfficeControl id="Strikethrough" />
+                <OfficeControl id="BulletsGallery" />
+                <OfficeControl id="NumberingGallery" />
+                <OfficeControl id="LineSpacingGalleryPowerPoint" />
                 <Control xsi:type="Button" id="btn.mergeTextBoxes">
                   <Label resid="Btn.MergeTextBoxes.Label" />
                   <Supertip>
@@ -666,6 +580,118 @@
                     <FunctionName>disableTextAutofit</FunctionName>
                   </Action>
                 </Control>
+              </Group>
+
+              <Group id="jolify.Match">
+                <Label resid="Group.Match.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <OfficeControl id="FontColorPicker" />
+                <OfficeControl id="ShapeFillColorPicker" />
+                <OfficeControl id="ShapeOutlineColorPicker" />
+                <Control xsi:type="Button" id="btn.copyOutlineStyle">
+                  <Label resid="Btn.CopyOutlineStyle.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyOutlineStyle.Label" />
+                    <Description resid="Btn.CopyOutlineStyle.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.copyOutlineStyle.16" />
+                    <bt:Image size="32" resid="Icon.copyOutlineStyle.32" />
+                    <bt:Image size="80" resid="Icon.copyOutlineStyle.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyOutlineStyle</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.copyFillStyle">
+                  <Label resid="Btn.CopyFillStyle.Label" />
+                  <Supertip>
+                    <Title resid="Btn.CopyFillStyle.Label" />
+                    <Description resid="Btn.CopyFillStyle.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.copyFillStyle.16" />
+                    <bt:Image size="32" resid="Icon.copyFillStyle.32" />
+                    <bt:Image size="80" resid="Icon.copyFillStyle.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>copyFillStyle</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.batchStyleApply">
+                  <Label resid="Btn.BatchStyleApply.Label" />
+                  <Supertip>
+                    <Title resid="Btn.BatchStyleApply.Label" />
+                    <Description resid="Btn.BatchStyleApply.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.batchStyleApply.16" />
+                    <bt:Image size="32" resid="Icon.batchStyleApply.32" />
+                    <bt:Image size="80" resid="Icon.batchStyleApply.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>batchStyleApply</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.clearFill">
+                  <Label resid="Btn.ClearFill.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ClearFill.Label" />
+                    <Description resid="Btn.ClearFill.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.clearFill.16" />
+                    <bt:Image size="32" resid="Icon.clearFill.32" />
+                    <bt:Image size="80" resid="Icon.clearFill.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>clearFill</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.clearOutline">
+                  <Label resid="Btn.ClearOutline.Label" />
+                  <Supertip>
+                    <Title resid="Btn.ClearOutline.Label" />
+                    <Description resid="Btn.ClearOutline.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.clearOutline.16" />
+                    <bt:Image size="32" resid="Icon.clearOutline.32" />
+                    <bt:Image size="80" resid="Icon.clearOutline.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>clearOutline</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <Group id="jolify.Builders">
+                <Label resid="Group.Builders.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <OfficeControl id="ShapesInsertGallery" />
+                <Control xsi:type="Button" id="btn.openGridDialog">
+                  <Label resid="Btn.OpenGridDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenGridDialog.Label" />
+                    <Description resid="Btn.OpenGridDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.openGridDialog.16" />
+                    <bt:Image size="32" resid="Icon.openGridDialog.32" />
+                    <bt:Image size="80" resid="Icon.openGridDialog.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openGridDialog</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.createCenterSticker">
                   <Label resid="Btn.CreateCenterSticker.Label" />
                   <Supertip>
@@ -683,35 +709,6 @@
                 </Control>
               </Group>
 
-              <!-- Slide Design -->
-              <Group id="jolify.Builders">
-                <Label resid="Group.Builders.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <OfficeControl id="SlideLayoutGallery" />
-                <OfficeControl id="ShapesInsertGallery" />
-                <OfficeControl id="NumberInsert" />
-                <Control xsi:type="Button" id="btn.openWeekdayRangeDialog">
-                  <Label resid="Btn.OpenWeekdayRangeDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenWeekdayRangeDialog.Label" />
-                    <Description resid="Btn.OpenWeekdayRangeDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openWeekdayRangeDialog.16" />
-                    <bt:Image size="32" resid="Icon.openWeekdayRangeDialog.32" />
-                    <bt:Image size="80" resid="Icon.openWeekdayRangeDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openWeekdayRangeDialog</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- Presentation -->
               <Group id="jolify.Review">
                 <Label resid="Group.Review.Label" />
                 <Icon>
@@ -719,21 +716,8 @@
                   <bt:Image size="32" resid="Icon.32x32" />
                   <bt:Image size="80" resid="Icon.80x80" />
                 </Icon>
-                <Control xsi:type="Button" id="btn.openGridDialog">
-                  <Label resid="Btn.OpenGridDialog.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenGridDialog.Label" />
-                    <Description resid="Btn.OpenGridDialog.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openGridDialog.16" />
-                    <bt:Image size="32" resid="Icon.openGridDialog.32" />
-                    <bt:Image size="80" resid="Icon.openGridDialog.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openGridDialog</FunctionName>
-                  </Action>
-                </Control>
+                <OfficeControl id="SlideLayoutGallery" />
+                <OfficeControl id="NumberInsert" />
                 <Control xsi:type="Button" id="btn.moveToUnusedSection">
                   <Label resid="Btn.MoveToUnusedSection.Label" />
                   <Supertip>
@@ -749,6 +733,21 @@
                     <FunctionName>moveToUnusedSection</FunctionName>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="btn.openSelectedDeckDialog">
+                  <Label resid="Btn.OpenSelectedDeckDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenSelectedDeckDialog.Label" />
+                    <Description resid="Btn.OpenSelectedDeckDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.moveToUnusedSection.16" />
+                    <bt:Image size="32" resid="Icon.moveToUnusedSection.32" />
+                    <bt:Image size="80" resid="Icon.moveToUnusedSection.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSelectedDeckDialog</FunctionName>
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="btn.toggleDraftSticker">
                   <Label resid="Btn.ToggleDraftSticker.Label" />
                   <Supertip>
@@ -762,6 +761,30 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>toggleDraftSticker</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
+              <Group id="jolify.Utilities">
+                <Label resid="Group.Utilities.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <Control xsi:type="Button" id="btn.openWeekdayRangeDialog">
+                  <Label resid="Btn.OpenWeekdayRangeDialog.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenWeekdayRangeDialog.Label" />
+                    <Description resid="Btn.OpenWeekdayRangeDialog.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.openWeekdayRangeDialog.16" />
+                    <bt:Image size="32" resid="Icon.openWeekdayRangeDialog.32" />
+                    <bt:Image size="80" resid="Icon.openWeekdayRangeDialog.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openWeekdayRangeDialog</FunctionName>
                   </Action>
                 </Control>
               </Group>
@@ -903,12 +926,14 @@
       <bt:ShortStrings>
         <bt:String id="Tab.Label" DefaultValue="Jolify" />
         <bt:String id="Group.NativeText.Label" DefaultValue="Text" />
-        <bt:String id="Group.Position.Label" DefaultValue="Position &amp; Size" />
-        <bt:String id="Group.Match.Label" DefaultValue="Format" />
+        <bt:String id="Group.Position.Label" DefaultValue="Clipboard" />
+        <bt:String id="Group.Resize.Label" DefaultValue="Resize" />
+        <bt:String id="Group.Match.Label" DefaultValue="Style" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
-        <bt:String id="Group.GroupOps.Label" DefaultValue="Group Ops &amp; Text" />
-        <bt:String id="Group.Builders.Label" DefaultValue="Slide Design" />
-        <bt:String id="Group.Review.Label" DefaultValue="Presentation" />
+        <bt:String id="Group.GroupOps.Label" DefaultValue="Arrange" />
+        <bt:String id="Group.Builders.Label" DefaultValue="Insert" />
+        <bt:String id="Group.Review.Label" DefaultValue="Slides" />
+        <bt:String id="Group.Utilities.Label" DefaultValue="Utilities" />
         <bt:String id="Btn.AlignCenterHAndGroup.Label" DefaultValue="Center + Group" />
         <bt:String id="Btn.AlignMiddleVAndGroup.Label" DefaultValue="Middle + Group" />
         <bt:String id="Btn.CenterMiddleAndGroup.Label" DefaultValue="Center+Mid+Group" />
@@ -920,6 +945,7 @@
         <bt:String id="Btn.OpenGridDialog.Label" DefaultValue="Create Grid" />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Label" DefaultValue="Weekday Range" />
         <bt:String id="Btn.MoveToUnusedSection.Label" DefaultValue="Move to Unused" />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Label" DefaultValue="Save Selected Deck" />
         <bt:String id="Btn.MergeTextBoxes.Label" DefaultValue="Merge Text Boxes" />
         <bt:String id="Btn.CopyPositionAndSize.Label" DefaultValue="Copy Position &amp; Size" />
         <bt:String id="Btn.PastePositionAndSize.Label" DefaultValue="Paste Position &amp; Size" />
@@ -994,6 +1020,7 @@
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Desc" DefaultValue="Generate a list of matching weekdays between two dates for easy table pasting." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
+        <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
