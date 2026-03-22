@@ -7,8 +7,15 @@ import {
   pastePositionAndSize,
   pastePositionOnly,
   pasteSizeOnly,
-  copyOutlineStyle,
-  copyFillStyle,
+  copyOutlineToClipboard,
+  pasteOutlineFromClipboard,
+  matchOutlineStyle,
+  copyFillToClipboard,
+  pasteFillFromClipboard,
+  matchFillStyle,
+  copyStyleToClipboard,
+  pasteStyleFromClipboard,
+  matchShapeStyle,
   clearFill,
   clearOutline,
   matchHeight,
@@ -37,7 +44,6 @@ import {
   centerMiddleAndGroup,
   distributeHAndGroup,
   distributeVAndGroup,
-  batchStyleApply,
   openGridDialog,
   openWeekdayRangeDialog,
   openSelectedDeckDialog,
@@ -89,12 +95,33 @@ export function pasteSizeOnlyCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, pasteSizeOnly);
 }
 
-// Match
-export function copyOutlineStyleCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyOutlineStyle);
+// Style
+export function copyOutlineToClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, copyOutlineToClipboard);
 }
-export function copyFillStyleCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyFillStyle);
+export function pasteOutlineFromClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, pasteOutlineFromClipboard);
+}
+export function matchOutlineStyleCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, matchOutlineStyle);
+}
+export function copyFillToClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, copyFillToClipboard);
+}
+export function pasteFillFromClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, pasteFillFromClipboard);
+}
+export function matchFillStyleCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, matchFillStyle);
+}
+export function copyStyleToClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, copyStyleToClipboard);
+}
+export function pasteStyleFromClipboardCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, pasteStyleFromClipboard);
+}
+export function matchShapeStyleCommand(event: Office.AddinCommands.Event) {
+  void withCommandEvent(event, matchShapeStyle);
 }
 export function clearFillCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, clearFill);
@@ -188,9 +215,6 @@ export function distributeHAndGroupCommand(event: Office.AddinCommands.Event) {
 export function distributeVAndGroupCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, distributeVAndGroup);
 }
-export function batchStyleApplyCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, batchStyleApply);
-}
 export function openGridDialogCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, openGridDialog);
 }
@@ -218,8 +242,15 @@ Office.onReady(() => {});
 (window as any).pastePositionAndSize = pastePositionAndSizeCommand;
 (window as any).pastePositionOnly = pastePositionOnlyCommand;
 (window as any).pasteSizeOnly = pasteSizeOnlyCommand;
-(window as any).copyOutlineStyle = copyOutlineStyleCommand;
-(window as any).copyFillStyle = copyFillStyleCommand;
+(window as any).copyOutlineToClipboard = copyOutlineToClipboardCommand;
+(window as any).pasteOutlineFromClipboard = pasteOutlineFromClipboardCommand;
+(window as any).matchOutlineStyle = matchOutlineStyleCommand;
+(window as any).copyFillToClipboard = copyFillToClipboardCommand;
+(window as any).pasteFillFromClipboard = pasteFillFromClipboardCommand;
+(window as any).matchFillStyle = matchFillStyleCommand;
+(window as any).copyStyleToClipboard = copyStyleToClipboardCommand;
+(window as any).pasteStyleFromClipboard = pasteStyleFromClipboardCommand;
+(window as any).matchShapeStyle = matchShapeStyleCommand;
 (window as any).clearFill = clearFillCommand;
 (window as any).clearOutline = clearOutlineCommand;
 (window as any).matchHeight = matchHeightCommand;
@@ -248,7 +279,6 @@ Office.onReady(() => {});
 (window as any).centerMiddleAndGroup = centerMiddleAndGroupCommand;
 (window as any).distributeHAndGroup = distributeHAndGroupCommand;
 (window as any).distributeVAndGroup = distributeVAndGroupCommand;
-(window as any).batchStyleApply = batchStyleApplyCommand;
 (window as any).openGridDialog = openGridDialogCommand;
 (window as any).openWeekdayRangeDialog = openWeekdayRangeDialogCommand;
 (window as any).openSelectedDeckDialog = openSelectedDeckDialogCommand;

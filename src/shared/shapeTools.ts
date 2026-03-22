@@ -13,10 +13,43 @@ export type ActionResult = {
   type: "success" | "info" | "warning" | "error";
 };
 
+type SavedFillStyle =
+  | { type: "NoFill" }
+  | { type: "Solid"; foregroundColor: string; transparency: number };
+
+type SavedOutlineStyle = {
+  color: string;
+  dashStyle: string;
+  style: string;
+  transparency: number;
+  visible: boolean;
+  weight: number;
+};
+
+type SavedTextStyle = {
+  bold: boolean | null;
+  color: string;
+  italic: boolean | null;
+  size: number | null;
+  underline: string;
+};
+
+type SavedShapeStyle = {
+  fill: SavedFillStyle;
+  outline: SavedOutlineStyle;
+  text: SavedTextStyle;
+};
+
 let savedPosition: ShapePosition | null = null;
 let savedSize: ShapeSize | null = null;
+let savedFillStyle: SavedFillStyle | null = null;
+let savedOutlineStyle: SavedOutlineStyle | null = null;
+let savedShapeStyle: SavedShapeStyle | null = null;
 const SAVED_POSITION_KEY = "__jolify_saved_position__";
 const SAVED_SIZE_KEY = "__jolify_saved_size__";
+const SAVED_FILL_STYLE_KEY = "__jolify_saved_fill_style__";
+const SAVED_OUTLINE_STYLE_KEY = "__jolify_saved_outline_style__";
+const SAVED_SHAPE_STYLE_KEY = "__jolify_saved_shape_style__";
 
 function getDocumentSettings(): Office.Settings | null {
   return Office.context?.document?.settings ?? null;
@@ -73,6 +106,9 @@ async function loadSavedGeometry(): Promise<void> {
   await refreshDocumentSettings(settings);
   savedPosition = parseStoredValue<ShapePosition>(settings.get(SAVED_POSITION_KEY));
   savedSize = parseStoredValue<ShapeSize>(settings.get(SAVED_SIZE_KEY));
+  savedFillStyle = parseStoredValue<SavedFillStyle>(settings.get(SAVED_FILL_STYLE_KEY));
+  savedOutlineStyle = parseStoredValue<SavedOutlineStyle>(settings.get(SAVED_OUTLINE_STYLE_KEY));
+  savedShapeStyle = parseStoredValue<SavedShapeStyle>(settings.get(SAVED_SHAPE_STYLE_KEY));
 }
 
 async function persistSavedGeometry(): Promise<void> {
@@ -91,6 +127,24 @@ async function persistSavedGeometry(): Promise<void> {
     settings.set(SAVED_SIZE_KEY, savedSize);
   } else {
     settings.remove(SAVED_SIZE_KEY);
+  }
+
+  if (savedFillStyle) {
+    settings.set(SAVED_FILL_STYLE_KEY, savedFillStyle);
+  } else {
+    settings.remove(SAVED_FILL_STYLE_KEY);
+  }
+
+  if (savedOutlineStyle) {
+    settings.set(SAVED_OUTLINE_STYLE_KEY, savedOutlineStyle);
+  } else {
+    settings.remove(SAVED_OUTLINE_STYLE_KEY);
+  }
+
+  if (savedShapeStyle) {
+    settings.set(SAVED_SHAPE_STYLE_KEY, savedShapeStyle);
+  } else {
+    settings.remove(SAVED_SHAPE_STYLE_KEY);
   }
 
   await saveDocumentSettings(settings);
@@ -756,7 +810,92 @@ async function stretchShapesToReferenceEdge(edge: StretchEdge): Promise<ActionRe
   });
 }
 
-export async function copyFillStyle(): Promise<ActionResult> {
+function getSavedFillFromShape(shape: PowerPoint.Shape): SavedFillStyle | null {
+  if (shape.fill.type === "NoFill") {
+    return { type: "NoFill" };
+  }
+
+  if (shape.fill.type === "Solid") {
+    return {
+      type: "Solid",
+      foregroundColor: shape.fill.foregroundColor,
+      transparency: shape.fill.transparency,
+    };
+  }
+
+  return null;
+}
+
+function applySavedFillStyle(shape: PowerPoint.Shape, style: SavedFillStyle): void {
+  if (style.type === "NoFill") {
+    shape.fill.clear();
+    return;
+  }
+
+  shape.fill.setSolidColor(style.foregroundColor);
+  shape.fill.transparency = style.transparency;
+}
+
+function getSavedOutlineFromShape(shape: PowerPoint.Shape): SavedOutlineStyle {
+  return {
+    color: shape.lineFormat.color,
+    dashStyle: String(shape.lineFormat.dashStyle),
+    style: String(shape.lineFormat.style),
+    transparency: shape.lineFormat.transparency,
+    visible: shape.lineFormat.visible,
+    weight: shape.lineFormat.weight,
+  };
+}
+
+function applySavedOutlineStyle(shape: PowerPoint.Shape, style: SavedOutlineStyle): void {
+  shape.lineFormat.visible = style.visible;
+  shape.lineFormat.color = style.color;
+  shape.lineFormat.dashStyle = style.dashStyle as any;
+  shape.lineFormat.style = style.style as any;
+  shape.lineFormat.transparency = style.transparency;
+  shape.lineFormat.weight = style.weight;
+}
+
+function getSavedTextStyleFromShape(shape: PowerPoint.Shape): SavedTextStyle {
+  return {
+    bold: shape.textFrame.textRange.font.bold,
+    color: shape.textFrame.textRange.font.color,
+    italic: shape.textFrame.textRange.font.italic,
+    size: shape.textFrame.textRange.font.size ?? null,
+    underline: String(shape.textFrame.textRange.font.underline),
+  };
+}
+
+function applySavedTextStyle(shape: PowerPoint.Shape, style: SavedTextStyle): void {
+  shape.textFrame.textRange.font.bold = style.bold;
+  shape.textFrame.textRange.font.color = style.color;
+  shape.textFrame.textRange.font.italic = style.italic;
+  if (style.size) {
+    shape.textFrame.textRange.font.size = style.size;
+  }
+  shape.textFrame.textRange.font.underline = style.underline as any;
+}
+
+function getSavedShapeStyleFromShape(shape: PowerPoint.Shape): SavedShapeStyle | null {
+  const fill = getSavedFillFromShape(shape);
+  if (!fill) {
+    return null;
+  }
+
+  return {
+    fill,
+    outline: getSavedOutlineFromShape(shape),
+    text: getSavedTextStyleFromShape(shape),
+  };
+}
+
+function applySavedShapeStyle(shape: PowerPoint.Shape, style: SavedShapeStyle): void {
+  applySavedFillStyle(shape, style.fill);
+  applySavedOutlineStyle(shape, style.outline);
+  applySavedTextStyle(shape, style.text);
+}
+
+export async function matchFillStyle(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
 
@@ -771,31 +910,86 @@ export async function copyFillStyle(): Promise<ActionResult> {
     source.fill.load("type,foregroundColor,transparency");
     await context.sync();
 
-    const fillType = source.fill.type;
-
-    if (fillType !== "NoFill" && fillType !== "Solid") {
+    const savedStyle = getSavedFillFromShape(source);
+    if (!savedStyle) {
       return {
         type: "warning",
-        message: "Only solid color and no-fill can be copied. Gradient, pattern, and picture fills aren't supported by the Office.js API.",
+        message: "Only solid color and no-fill can be matched. Gradient, pattern, and picture fills aren't supported by the Office.js API.",
       };
     }
 
-    const { foregroundColor, transparency } = source.fill;
-
     shapes.slice(1).forEach((shape) => {
-      if (fillType === "NoFill") {
-        shape.fill.clear();
-      } else {
-        shape.fill.setSolidColor(foregroundColor);
-        shape.fill.transparency = transparency;
-      }
+      applySavedFillStyle(shape, savedStyle);
     });
 
     await context.sync();
 
     return {
       type: "success",
-      message: `Copied fill to ${shapes.length - 1} shape${shapes.length - 1 !== 1 ? "s" : ""}.`,
+      message: `Matched fill on ${shapes.length - 1} shape${shapes.length - 1 !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function copyFillToClipboard(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to copy its fill.",
+      };
+    }
+
+    const source = shapes[0];
+    source.fill.load("type,foregroundColor,transparency");
+    await context.sync();
+
+    const savedStyle = getSavedFillFromShape(source);
+    if (!savedStyle) {
+      return {
+        type: "warning",
+        message: "Only solid color and no-fill can be copied. Gradient, pattern, and picture fills aren't supported by the Office.js API.",
+      };
+    }
+
+    savedFillStyle = savedStyle;
+    await persistSavedGeometry();
+
+    return {
+      type: "success",
+      message: "Saved fill from the first selected shape.",
+    };
+  });
+}
+
+export async function pasteFillFromClipboard(): Promise<ActionResult> {
+  await loadSavedGeometry();
+  if (!savedFillStyle) {
+    return {
+      type: "warning",
+      message: "Copy a fill first.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to paste fill onto.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      applySavedFillStyle(shape, savedFillStyle!);
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Pasted fill to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
     };
   });
 }
@@ -878,7 +1072,7 @@ export async function matchHeightAndWidth(): Promise<ActionResult> {
   });
 }
 
-export async function copyOutlineStyle(): Promise<ActionResult> {
+export async function matchOutlineStyle(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
 
@@ -893,22 +1087,72 @@ export async function copyOutlineStyle(): Promise<ActionResult> {
     source.lineFormat.load("color,dashStyle,style,transparency,visible,weight");
     await context.sync();
 
-    const { color, dashStyle, style, transparency, visible, weight } = source.lineFormat;
+    const savedStyle = getSavedOutlineFromShape(source);
 
     shapes.slice(1).forEach((shape) => {
-      shape.lineFormat.visible = visible;
-      shape.lineFormat.color = color;
-      shape.lineFormat.dashStyle = dashStyle;
-      shape.lineFormat.style = style;
-      shape.lineFormat.transparency = transparency;
-      shape.lineFormat.weight = weight;
+      applySavedOutlineStyle(shape, savedStyle);
     });
 
     await context.sync();
 
     return {
       type: "success",
-      message: `Copied outline to ${shapes.length - 1} shape${shapes.length - 1 !== 1 ? "s" : ""}.`,
+      message: `Matched outline on ${shapes.length - 1} shape${shapes.length - 1 !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function copyOutlineToClipboard(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to copy its outline.",
+      };
+    }
+
+    const source = shapes[0];
+    source.lineFormat.load("color,dashStyle,style,transparency,visible,weight");
+    await context.sync();
+
+    savedOutlineStyle = getSavedOutlineFromShape(source);
+    await persistSavedGeometry();
+
+    return {
+      type: "success",
+      message: "Saved outline from the first selected shape.",
+    };
+  });
+}
+
+export async function pasteOutlineFromClipboard(): Promise<ActionResult> {
+  await loadSavedGeometry();
+  if (!savedOutlineStyle) {
+    return {
+      type: "warning",
+      message: "Copy an outline first.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to paste outline onto.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      applySavedOutlineStyle(shape, savedOutlineStyle!);
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Pasted outline to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
     };
   });
 }
@@ -1413,13 +1657,13 @@ export async function centerMiddleAndGroup(): Promise<ActionResult> {
   });
 }
 
-export async function batchStyleApply(): Promise<ActionResult> {
+export async function matchShapeStyle(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
     if (shapes.length < 2) {
       return {
         type: "warning",
-        message: "Select at least 2 shapes — style is copied from the first to the rest.",
+        message: "Select at least 2 shapes — style is matched from the first to the rest.",
       };
     }
 
@@ -1429,43 +1673,88 @@ export async function batchStyleApply(): Promise<ActionResult> {
     source.textFrame.textRange.font.load("bold,color,italic,size,underline");
     await context.sync();
 
-    const fillType = source.fill.type;
-    const { foregroundColor: fillColor, transparency: fillTransp } = source.fill;
-    const { color: lineColor, dashStyle, style: lineStyle, transparency: lineTransp, visible, weight } = source.lineFormat;
-    const { bold, color: fontColor, italic, size: fontSize, underline } = source.textFrame.textRange.font;
+    const savedStyle = getSavedShapeStyleFromShape(source);
+    if (!savedStyle) {
+      return {
+        type: "warning",
+        message: "Only solid color and no-fill can be matched as full style. Gradient, pattern, and picture fills aren't supported by the Office.js API.",
+      };
+    }
 
     shapes.slice(1).forEach((shape) => {
-      // Fill
-      if (fillType === "NoFill") {
-        shape.fill.clear();
-      } else if (fillType === "Solid") {
-        shape.fill.setSolidColor(fillColor);
-        shape.fill.transparency = fillTransp;
-      }
-
-      // Outline
-      shape.lineFormat.visible = visible;
-      if (visible) {
-        shape.lineFormat.color = lineColor;
-        shape.lineFormat.dashStyle = dashStyle;
-        shape.lineFormat.style = lineStyle;
-        shape.lineFormat.transparency = lineTransp;
-        shape.lineFormat.weight = weight;
-      }
-
-      // Font
-      shape.textFrame.textRange.font.bold = bold;
-      shape.textFrame.textRange.font.color = fontColor;
-      shape.textFrame.textRange.font.italic = italic;
-      if (fontSize) shape.textFrame.textRange.font.size = fontSize;
-      shape.textFrame.textRange.font.underline = underline;
+      applySavedShapeStyle(shape, savedStyle);
     });
 
     await context.sync();
 
     return {
       type: "success",
-      message: `Applied style from first shape to ${shapes.length - 1} shape(s).`,
+      message: `Matched style on ${shapes.length - 1} shape${shapes.length - 1 !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function copyStyleToClipboard(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    await loadSavedGeometry();
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to copy its style.",
+      };
+    }
+
+    const source = shapes[0];
+    source.fill.load("type,foregroundColor,transparency");
+    source.lineFormat.load("color,dashStyle,style,transparency,visible,weight");
+    source.textFrame.textRange.font.load("bold,color,italic,size,underline");
+    await context.sync();
+
+    const savedStyle = getSavedShapeStyleFromShape(source);
+    if (!savedStyle) {
+      return {
+        type: "warning",
+        message: "Only solid color and no-fill can be copied as full style. Gradient, pattern, and picture fills aren't supported by the Office.js API.",
+      };
+    }
+
+    savedShapeStyle = savedStyle;
+    await persistSavedGeometry();
+
+    return {
+      type: "success",
+      message: "Saved style from the first selected shape.",
+    };
+  });
+}
+
+export async function pasteStyleFromClipboard(): Promise<ActionResult> {
+  await loadSavedGeometry();
+  if (!savedShapeStyle) {
+    return {
+      type: "warning",
+      message: "Copy a style first.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select at least one shape to paste style onto.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      applySavedShapeStyle(shape, savedShapeStyle!);
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Pasted style to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
     };
   });
 }

@@ -429,13 +429,35 @@
         <section class="card">
           <div class="card-header">
             <div>
-              <h2 class="card-title">Style</h2>
-              <p class="card-copy">Transfer fill and outline treatment without rebuilding shapes by hand.</p>
+              <h2 class="card-title">Style Clipboard</h2>
+              <p class="card-copy">Save a fill, outline, or full style once, then paste it anywhere else.</p>
             </div>
             <span class="card-kicker">Format</span>
           </div>
-          <div class="button-grid single">
-            <button id="batch-style-apply-btn" type="button" class="action-button primary">Copy style from first shape</button>
+          <div class="button-grid">
+            <button id="copy-fill-btn" type="button" class="action-button outline">Copy fill</button>
+            <button id="paste-fill-btn" type="button" class="action-button outline">Paste fill</button>
+            <button id="copy-outline-btn" type="button" class="action-button outline">Copy outline</button>
+            <button id="paste-outline-btn" type="button" class="action-button outline">Paste outline</button>
+            <button id="copy-style-btn" type="button" class="action-button primary">Copy style</button>
+            <button id="paste-style-btn" type="button" class="action-button primary">Paste style</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Match Style</h2>
+              <p class="card-copy">Use the first selected shape as the reference, then apply that treatment to the rest.</p>
+            </div>
+            <span class="card-kicker">Reference</span>
+          </div>
+          <div class="button-grid">
+            <button id="match-fill-btn" type="button" class="action-button teal">Match fill</button>
+            <button id="match-outline-btn" type="button" class="action-button teal">Match outline</button>
+            <button id="match-style-btn" type="button" class="action-button primary">Match style</button>
+            <button id="clear-fill-btn" type="button" class="action-button neutral">No fill</button>
+            <button id="clear-outline-btn" type="button" class="action-button neutral">No outline</button>
           </div>
         </section>
 
