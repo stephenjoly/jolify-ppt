@@ -6,274 +6,483 @@
     <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
     <style>
       :root {
-        color-scheme: light dark;
+        color-scheme: light;
+        --bg: #f5f0e8;
+        --bg-accent: radial-gradient(circle at top right, rgba(228, 146, 74, 0.22), transparent 34%);
+        --surface: rgba(255, 252, 247, 0.88);
+        --surface-strong: #fffdf8;
+        --surface-muted: #f1e8db;
+        --border: rgba(110, 84, 56, 0.16);
+        --text: #2d241c;
+        --muted: #695849;
+        --brand: #c05a1d;
+        --brand-deep: #944113;
+        --teal: #176b65;
+        --gold: #c38a1f;
+        --danger: #9d332c;
+        --shadow: 0 10px 30px rgba(88, 55, 29, 0.09);
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 14px;
+        --radius-sm: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0) 26%),
+          var(--bg-accent),
+          var(--bg);
+        color: var(--text);
+        font-family: Aptos, "Segoe UI Variable", "Avenir Next", sans-serif;
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background: #f3f2f1;
+        padding: 18px 14px 20px;
       }
 
       main {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 18px 18px 16px;
+        border-radius: var(--radius-xl);
+        background:
+          linear-gradient(135deg, rgba(255, 247, 239, 0.98), rgba(250, 239, 226, 0.92)),
+          #fff;
+        border: 1px solid rgba(192, 90, 29, 0.18);
+        box-shadow: var(--shadow);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -48px -58px auto;
+        width: 168px;
+        height: 168px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(192, 90, 29, 0.24), rgba(192, 90, 29, 0));
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(192, 90, 29, 0.1);
+        color: var(--brand-deep);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--brand), #efb170);
+        box-shadow: 0 0 0 4px rgba(192, 90, 29, 0.08);
       }
 
       h1 {
-        font-size: 18px;
-        margin: 0;
-        color: #201f1e;
+        margin: 14px 0 8px;
+        font-family: "Aptos Display", Aptos, "Segoe UI Variable", sans-serif;
+        font-size: 28px;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
       }
 
-      h2 {
+      .hero p {
+        margin: 0;
+        max-width: 28ch;
+        color: var(--muted);
         font-size: 13px;
-        margin: 0 0 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: #605e5c;
+        line-height: 1.45;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .meta-pill {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(110, 84, 56, 0.12);
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .panel-grid {
+        display: grid;
+        gap: 12px;
       }
 
       .card {
-        background: #fff;
-        border-radius: 8px;
-        padding: 16px;
-        border: 1px solid #e1dfdd;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        position: relative;
+        padding: 14px;
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      .card-copy {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .card-kicker {
+        flex-shrink: 0;
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: var(--surface-muted);
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .button-grid {
         display: grid;
         gap: 8px;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .button-grid.tight {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .button-grid.single {
+        grid-template-columns: 1fr;
       }
 
       .action-button {
-        align-items: center;
-        border-radius: 6px;
+        min-height: 46px;
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
         border: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.2;
         cursor: pointer;
-        display: inline-flex;
-        font-size: 13px;
-        font-weight: 600;
-        gap: 8px;
-        justify-content: center;
-        min-height: 36px;
-        padding: 6px 12px;
-        transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+        color: var(--text);
+        transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
       }
 
-      .action-button.primary {
-        background: linear-gradient(135deg, #0078d4, #106ebe);
-        color: #fff;
-      }
-
-      .action-button.primary:hover:not(:disabled) {
-        box-shadow: 0 3px 6px rgba(0, 120, 212, 0.3);
+      .action-button:hover:not(:disabled) {
         transform: translateY(-1px);
-      }
-
-      .action-button.outline {
-        background: #fff;
-        border-color: #d0d0d0;
-        color: #323130;
-      }
-
-      .action-button.outline:hover:not(:disabled) {
-        border-color: #0078d4;
-        color: #0078d4;
-      }
-
-      .action-button.danger {
-        background: #fff5f5;
-        border-color: #d13438;
-        color: #a4262c;
-      }
-
-      .action-button.danger:hover:not(:disabled) {
-        background: #fde7e9;
-        border-color: #a4262c;
-      }
-
-      .action-button.accent {
-        background: #fdeada;
-        border-color: #d08345;
-        color: #8a5022;
-      }
-
-      .action-button.accent:hover:not(:disabled) {
-        background: #ffd7b5;
-        border-color: #c4651a;
-      }
-
-      .action-button.neutral {
-        background: #f9f8f7;
-        border-color: #c8c6c4;
-        color: #323130;
-      }
-
-      .action-button.neutral:hover:not(:disabled) {
-        background: #edebe9;
-        border-color: #a19f9d;
+        box-shadow: 0 8px 18px rgba(88, 55, 29, 0.12);
       }
 
       .action-button:disabled {
         cursor: not-allowed;
         opacity: 0.55;
-        box-shadow: none;
         transform: none;
+        box-shadow: none;
+      }
+
+      .action-button.primary {
+        background: linear-gradient(135deg, var(--brand), #df7c37);
+        color: #fff9f3;
+      }
+
+      .action-button.outline {
+        background: rgba(255, 255, 255, 0.72);
+        border-color: rgba(110, 84, 56, 0.16);
+      }
+
+      .action-button.neutral {
+        background: #f3ece1;
+        border-color: rgba(110, 84, 56, 0.12);
+      }
+
+      .action-button.accent {
+        background: linear-gradient(135deg, #f6e5ca, #efd09d);
+        border-color: rgba(195, 138, 31, 0.28);
+        color: #6b4708;
+      }
+
+      .action-button.danger {
+        background: linear-gradient(135deg, #f9e1dd, #f4c4be);
+        border-color: rgba(157, 51, 44, 0.28);
+        color: #7b221f;
+      }
+
+      .action-button.teal {
+        background: linear-gradient(135deg, #d7efec, #b9e1db);
+        border-color: rgba(23, 107, 101, 0.26);
+        color: #0e5a55;
+      }
+
+      .action-button.wide {
+        grid-column: 1 / -1;
       }
 
       .status-card {
-        background: #ffffff;
-        border-radius: 8px;
-        border: 1px solid #e1dfdd;
-        padding: 14px 16px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        min-height: 48px;
+        position: sticky;
+        bottom: 0;
+        padding: 12px 14px;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 253, 248, 0.94);
+        border: 1px solid var(--border);
+        box-shadow: 0 12px 24px rgba(88, 55, 29, 0.08);
+        backdrop-filter: blur(10px);
+      }
+
+      .status-label {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
       }
 
       #status {
-        font-size: 13px;
         margin: 0;
+        font-size: 12px;
+        line-height: 1.45;
       }
 
       #status strong {
         display: block;
-        font-size: 12px;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
         margin-bottom: 4px;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
       }
 
-      #status.success {
-        color: #107c10;
-      }
+      #status.success { color: #0d6b34; }
+      #status.warning { color: #8e4e00; }
+      #status.error { color: var(--danger); }
+      #status.info { color: var(--text); }
 
-      #status.warning {
-        color: #d83b01;
-      }
+      @media (max-width: 420px) {
+        body {
+          padding: 14px 10px 18px;
+        }
 
-      #status.error {
-        color: #a4262c;
-      }
+        .button-grid,
+        .button-grid.tight {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
 
-      #status.info {
-        color: #323130;
+        h1 {
+          font-size: 24px;
+        }
       }
     </style>
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   </head>
   <body class="ms-Fabric">
     <main>
-      <h1>Jolify</h1>
-
-      <section class="card">
-        <h2>Position &amp; Size</h2>
-        <div class="button-grid">
-          <button id="copy-all-btn" type="button" class="action-button primary">Copy position &amp; size</button>
-          <button id="copy-position-btn" type="button" class="action-button outline">Copy position only</button>
-          <button id="copy-size-btn" type="button" class="action-button outline">Copy size only</button>
-          <button id="paste-all-btn" type="button" class="action-button primary">Paste position &amp; size</button>
-          <button id="paste-position-btn" type="button" class="action-button outline">Paste position only</button>
-          <button id="paste-size-btn" type="button" class="action-button outline">Paste size only</button>
-          <button id="match-size-btn" type="button" class="action-button primary">Match height &amp; width</button>
-          <button id="match-height-btn" type="button" class="action-button outline">Match height</button>
-          <button id="match-width-btn" type="button" class="action-button outline">Match width</button>
-          <button id="swap-btn" type="button" class="action-button neutral">Swap positions</button>
+      <section class="hero">
+        <span class="eyebrow">Jolify Toolkit</span>
+        <h1>Slide utilities that should feel one click away.</h1>
+        <p>Use the task pane for testing, discovery, and the workflows that benefit from seeing everything in one place.</p>
+        <div class="hero-meta">
+          <span class="meta-pill">Geometry</span>
+          <span class="meta-pill">Text cleanup</span>
+          <span class="meta-pill">Deck utilities</span>
         </div>
       </section>
 
-      <section class="card">
-        <h2>Match</h2>
-        <div class="button-grid">
-          <button id="copy-outline-btn"  type="button" class="action-button outline">Copy outline</button>
-          <button id="copy-fill-btn"     type="button" class="action-button outline">Copy fill</button>
-          <button id="clear-fill-btn"    type="button" class="action-button outline">No fill</button>
-          <button id="clear-outline-btn" type="button" class="action-button outline">No outline</button>
-        </div>
-      </section>
+      <div class="panel-grid">
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Clipboard</h2>
+              <p class="card-copy">Save geometry from one shape, then reapply it with fewer clicks.</p>
+            </div>
+            <span class="card-kicker">Core</span>
+          </div>
+          <div class="button-grid">
+            <button id="copy-all-btn" type="button" class="action-button primary">Copy position &amp; size</button>
+            <button id="paste-all-btn" type="button" class="action-button primary">Paste position &amp; size</button>
+            <button id="copy-position-btn" type="button" class="action-button outline">Copy position</button>
+            <button id="paste-position-btn" type="button" class="action-button outline">Paste position</button>
+            <button id="copy-size-btn" type="button" class="action-button outline">Copy size</button>
+            <button id="paste-size-btn" type="button" class="action-button outline">Paste size</button>
+            <button id="swap-btn" type="button" class="action-button neutral wide">Swap positions</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Align</h2>
-        <div class="button-grid" style="grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));">
-          <button id="align-left-btn"   type="button" class="action-button outline">Align Left</button>
-          <button id="align-center-btn" type="button" class="action-button outline">Align Center</button>
-          <button id="align-right-btn"  type="button" class="action-button outline">Align Right</button>
-          <button id="align-top-btn"    type="button" class="action-button outline">Align Top</button>
-          <button id="align-middle-btn" type="button" class="action-button outline">Align Middle</button>
-          <button id="align-bottom-btn" type="button" class="action-button outline">Align Bottom</button>
-          <button id="distribute-h-btn" type="button" class="action-button neutral">Distribute H</button>
-          <button id="distribute-v-btn" type="button" class="action-button neutral">Distribute V</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Resize</h2>
+              <p class="card-copy">Match dimensions fast, or stretch shapes to a reference edge.</p>
+            </div>
+            <span class="card-kicker">Shape</span>
+          </div>
+          <div class="button-grid">
+            <button id="match-size-btn" type="button" class="action-button primary">Match height &amp; width</button>
+            <button id="match-width-btn" type="button" class="action-button outline">Match width</button>
+            <button id="match-height-btn" type="button" class="action-button outline">Match height</button>
+            <button id="stretch-left-btn" type="button" class="action-button neutral">Match left edge</button>
+            <button id="stretch-right-btn" type="button" class="action-button neutral">Match right edge</button>
+            <button id="stretch-top-btn" type="button" class="action-button neutral">Match top edge</button>
+            <button id="stretch-bottom-btn" type="button" class="action-button neutral">Match bottom edge</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Stretch To Edge</h2>
-        <div class="button-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));">
-          <button id="stretch-left-btn" type="button" class="action-button outline">Match Left Edge</button>
-          <button id="stretch-right-btn" type="button" class="action-button outline">Match Right Edge</button>
-          <button id="stretch-top-btn" type="button" class="action-button neutral">Match Top Edge</button>
-          <button id="stretch-bottom-btn" type="button" class="action-button neutral">Match Bottom Edge</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Align</h2>
+              <p class="card-copy">Use this when you want quick cleanup without grouping anything.</p>
+            </div>
+            <span class="card-kicker">Layout</span>
+          </div>
+          <div class="button-grid tight">
+            <button id="align-left-btn" type="button" class="action-button outline">Left</button>
+            <button id="align-center-btn" type="button" class="action-button outline">Center</button>
+            <button id="align-right-btn" type="button" class="action-button outline">Right</button>
+            <button id="align-top-btn" type="button" class="action-button outline">Top</button>
+            <button id="align-middle-btn" type="button" class="action-button outline">Middle</button>
+            <button id="align-bottom-btn" type="button" class="action-button outline">Bottom</button>
+            <button id="distribute-h-btn" type="button" class="action-button teal">Distribute H</button>
+            <button id="distribute-v-btn" type="button" class="action-button teal">Distribute V</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Align &amp; Group</h2>
-        <div class="button-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));">
-          <button id="align-center-group-btn"   type="button" class="action-button outline">Center + Group</button>
-          <button id="align-middle-group-btn"   type="button" class="action-button outline">Middle + Group</button>
-          <button id="center-middle-group-btn"  type="button" class="action-button primary">Center+Middle + Group</button>
-          <button id="distribute-hv-group-btn"  type="button" class="action-button primary">Distribute H+V + Group</button>
-          <button id="distribute-h-group-btn"   type="button" class="action-button neutral">Distribute H + Group</button>
-          <button id="distribute-v-group-btn"   type="button" class="action-button neutral">Distribute V + Group</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Arrange + Group</h2>
+              <p class="card-copy">Compound actions for slides that need structure, not just alignment.</p>
+            </div>
+            <span class="card-kicker">Batch</span>
+          </div>
+          <div class="button-grid">
+            <button id="align-center-group-btn" type="button" class="action-button outline">Center + group</button>
+            <button id="align-middle-group-btn" type="button" class="action-button outline">Middle + group</button>
+            <button id="center-middle-group-btn" type="button" class="action-button primary">Center + middle + group</button>
+            <button id="distribute-h-group-btn" type="button" class="action-button teal">Distribute H + group</button>
+            <button id="distribute-v-group-btn" type="button" class="action-button teal">Distribute V + group</button>
+            <button id="distribute-hv-group-btn" type="button" class="action-button primary">Distribute H + V + group</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Text Tools</h2>
-        <div class="button-grid">
-          <button id="merge-textboxes-btn" type="button" class="action-button outline">Merge text boxes</button>
-          <button id="split-textbox-btn" type="button" class="action-button primary">Split text box by lines</button>
-          <button id="remove-text-margins-btn" type="button" class="action-button outline">Remove text margins</button>
-          <button id="disable-text-autofit-btn" type="button" class="action-button outline">AutoFit Off</button>
-          <button id="create-center-sticker-btn" type="button" class="action-button primary">Create center sticker</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Text + Insert</h2>
+              <p class="card-copy">Cleanup tools and text-box builders that pair naturally together.</p>
+            </div>
+            <span class="card-kicker">Content</span>
+          </div>
+          <div class="button-grid">
+            <button id="merge-textboxes-btn" type="button" class="action-button outline">Merge text boxes</button>
+            <button id="split-textbox-btn" type="button" class="action-button primary">Split text box by lines</button>
+            <button id="remove-text-margins-btn" type="button" class="action-button outline">Remove text margins</button>
+            <button id="disable-text-autofit-btn" type="button" class="action-button outline">AutoFit off</button>
+            <button id="create-center-sticker-btn" type="button" class="action-button accent">Create center sticker</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Style</h2>
-        <div class="button-grid">
-          <button id="batch-style-apply-btn" type="button" class="action-button primary">Copy Style</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Style</h2>
+              <p class="card-copy">Transfer fill and outline treatment without rebuilding shapes by hand.</p>
+            </div>
+            <span class="card-kicker">Format</span>
+          </div>
+          <div class="button-grid single">
+            <button id="batch-style-apply-btn" type="button" class="action-button primary">Copy style from first shape</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Layout Builders</h2>
-        <div class="button-grid">
-          <button id="create-grid-btn"    type="button" class="action-button primary">Create Grid…</button>
-          <button id="weekday-range-btn"  type="button" class="action-button outline">Weekday Range…</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Builders + Utilities</h2>
+              <p class="card-copy">Structured helpers for layout generation and quick date-list output.</p>
+            </div>
+            <span class="card-kicker">Tools</span>
+          </div>
+          <div class="button-grid">
+            <button id="create-grid-btn" type="button" class="action-button primary">Create grid</button>
+            <button id="weekday-range-btn" type="button" class="action-button outline">Weekday range</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Slides</h2>
-        <div class="button-grid">
-          <button id="save-selected-deck-btn" type="button" class="action-button outline">Save Selected Deck</button>
-          <button id="move-to-unused-btn" type="button" class="action-button">Move to Unused</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Slides</h2>
+              <p class="card-copy">Deck-level actions that affect slide organization or export.</p>
+            </div>
+            <span class="card-kicker">Deck</span>
+          </div>
+          <div class="button-grid">
+            <button id="save-selected-deck-btn" type="button" class="action-button outline">Save selected deck</button>
+            <button id="move-to-unused-btn" type="button" class="action-button neutral">Move to unused</button>
+          </div>
+        </section>
 
-      <section class="card">
-        <h2>Branding</h2>
-        <div class="button-grid">
-          <button id="toggle-draft-btn" type="button" class="action-button accent">Toggle draft sticker</button>
-        </div>
-      </section>
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Branding</h2>
+              <p class="card-copy">A compact home for deck watermarking and review-state polish.</p>
+            </div>
+            <span class="card-kicker">Deck</span>
+          </div>
+          <div class="button-grid single">
+            <button id="toggle-draft-btn" type="button" class="action-button danger">Toggle draft sticker</button>
+          </div>
+        </section>
+      </div>
 
       <div class="status-card">
+        <p class="status-label">Status</p>
         <div id="status" role="status" aria-live="polite"></div>
       </div>
     </main>
