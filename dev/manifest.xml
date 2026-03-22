@@ -532,105 +532,6 @@
                 <OfficeControl id="LineSpacingGalleryPowerPoint" />
               </Group>
 
-              <Group id="jolify.StyleClipboard">
-                <Label resid="Group.StyleClipboard.Label" />
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16" />
-                  <bt:Image size="32" resid="Icon.32x32" />
-                  <bt:Image size="80" resid="Icon.80x80" />
-                </Icon>
-                <Control xsi:type="Button" id="btn.copyFillToClipboard">
-                  <Label resid="Btn.CopyFillToClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.CopyFillToClipboard.Label" />
-                    <Description resid="Btn.CopyFillToClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.copyFillToClipboard.16" />
-                    <bt:Image size="32" resid="Icon.copyFillToClipboard.32" />
-                    <bt:Image size="80" resid="Icon.copyFillToClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>copyFillToClipboard</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.pasteFillFromClipboard">
-                  <Label resid="Btn.PasteFillFromClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PasteFillFromClipboard.Label" />
-                    <Description resid="Btn.PasteFillFromClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pasteFillFromClipboard.16" />
-                    <bt:Image size="32" resid="Icon.pasteFillFromClipboard.32" />
-                    <bt:Image size="80" resid="Icon.pasteFillFromClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pasteFillFromClipboard</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.copyOutlineToClipboard">
-                  <Label resid="Btn.CopyOutlineToClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.CopyOutlineToClipboard.Label" />
-                    <Description resid="Btn.CopyOutlineToClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.copyOutlineToClipboard.16" />
-                    <bt:Image size="32" resid="Icon.copyOutlineToClipboard.32" />
-                    <bt:Image size="80" resid="Icon.copyOutlineToClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>copyOutlineToClipboard</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.pasteOutlineFromClipboard">
-                  <Label resid="Btn.PasteOutlineFromClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PasteOutlineFromClipboard.Label" />
-                    <Description resid="Btn.PasteOutlineFromClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pasteOutlineFromClipboard.16" />
-                    <bt:Image size="32" resid="Icon.pasteOutlineFromClipboard.32" />
-                    <bt:Image size="80" resid="Icon.pasteOutlineFromClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pasteOutlineFromClipboard</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.copyStyleToClipboard">
-                  <Label resid="Btn.CopyStyleToClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.CopyStyleToClipboard.Label" />
-                    <Description resid="Btn.CopyStyleToClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.copyStyleToClipboard.16" />
-                    <bt:Image size="32" resid="Icon.copyStyleToClipboard.32" />
-                    <bt:Image size="80" resid="Icon.copyStyleToClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>copyStyleToClipboard</FunctionName>
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.pasteStyleFromClipboard">
-                  <Label resid="Btn.PasteStyleFromClipboard.Label" />
-                  <Supertip>
-                    <Title resid="Btn.PasteStyleFromClipboard.Label" />
-                    <Description resid="Btn.PasteStyleFromClipboard.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.pasteStyleFromClipboard.16" />
-                    <bt:Image size="32" resid="Icon.pasteStyleFromClipboard.32" />
-                    <bt:Image size="80" resid="Icon.pasteStyleFromClipboard.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>pasteStyleFromClipboard</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-
               <Group id="jolify.Match">
                 <Label resid="Group.Match.Label" />
                 <Icon>
@@ -981,24 +882,6 @@
         <bt:Image id="Icon.matchFillStyle.16" DefaultValue="https://localhost:3300/assets/icons/matchFillStyle_16.png" />
         <bt:Image id="Icon.matchFillStyle.32" DefaultValue="https://localhost:3300/assets/icons/matchFillStyle_32.png" />
         <bt:Image id="Icon.matchFillStyle.80" DefaultValue="https://localhost:3300/assets/icons/matchFillStyle_80.png" />
-        <bt:Image id="Icon.copyFillToClipboard.16" DefaultValue="https://localhost:3300/assets/icons/copyFillToClipboard_16.png" />
-        <bt:Image id="Icon.copyFillToClipboard.32" DefaultValue="https://localhost:3300/assets/icons/copyFillToClipboard_32.png" />
-        <bt:Image id="Icon.copyFillToClipboard.80" DefaultValue="https://localhost:3300/assets/icons/copyFillToClipboard_80.png" />
-        <bt:Image id="Icon.pasteFillFromClipboard.16" DefaultValue="https://localhost:3300/assets/icons/pasteFillFromClipboard_16.png" />
-        <bt:Image id="Icon.pasteFillFromClipboard.32" DefaultValue="https://localhost:3300/assets/icons/pasteFillFromClipboard_32.png" />
-        <bt:Image id="Icon.pasteFillFromClipboard.80" DefaultValue="https://localhost:3300/assets/icons/pasteFillFromClipboard_80.png" />
-        <bt:Image id="Icon.copyOutlineToClipboard.16" DefaultValue="https://localhost:3300/assets/icons/copyOutlineToClipboard_16.png" />
-        <bt:Image id="Icon.copyOutlineToClipboard.32" DefaultValue="https://localhost:3300/assets/icons/copyOutlineToClipboard_32.png" />
-        <bt:Image id="Icon.copyOutlineToClipboard.80" DefaultValue="https://localhost:3300/assets/icons/copyOutlineToClipboard_80.png" />
-        <bt:Image id="Icon.pasteOutlineFromClipboard.16" DefaultValue="https://localhost:3300/assets/icons/pasteOutlineFromClipboard_16.png" />
-        <bt:Image id="Icon.pasteOutlineFromClipboard.32" DefaultValue="https://localhost:3300/assets/icons/pasteOutlineFromClipboard_32.png" />
-        <bt:Image id="Icon.pasteOutlineFromClipboard.80" DefaultValue="https://localhost:3300/assets/icons/pasteOutlineFromClipboard_80.png" />
-        <bt:Image id="Icon.copyStyleToClipboard.16" DefaultValue="https://localhost:3300/assets/icons/copyStyleToClipboard_16.png" />
-        <bt:Image id="Icon.copyStyleToClipboard.32" DefaultValue="https://localhost:3300/assets/icons/copyStyleToClipboard_32.png" />
-        <bt:Image id="Icon.copyStyleToClipboard.80" DefaultValue="https://localhost:3300/assets/icons/copyStyleToClipboard_80.png" />
-        <bt:Image id="Icon.pasteStyleFromClipboard.16" DefaultValue="https://localhost:3300/assets/icons/pasteStyleFromClipboard_16.png" />
-        <bt:Image id="Icon.pasteStyleFromClipboard.32" DefaultValue="https://localhost:3300/assets/icons/pasteStyleFromClipboard_32.png" />
-        <bt:Image id="Icon.pasteStyleFromClipboard.80" DefaultValue="https://localhost:3300/assets/icons/pasteStyleFromClipboard_80.png" />
         <bt:Image id="Icon.clearFill.16" DefaultValue="https://localhost:3300/assets/icons/clearFill_16.png" />
         <bt:Image id="Icon.clearFill.32" DefaultValue="https://localhost:3300/assets/icons/clearFill_32.png" />
         <bt:Image id="Icon.clearFill.80" DefaultValue="https://localhost:3300/assets/icons/clearFill_80.png" />
@@ -1099,7 +982,6 @@
         <bt:String id="Group.Position.Label" DefaultValue="Clipboard" />
         <bt:String id="Group.Order.Label" DefaultValue="Order" />
         <bt:String id="Group.Resize.Label" DefaultValue="Resize" />
-        <bt:String id="Group.StyleClipboard.Label" DefaultValue="Style Clipboard" />
         <bt:String id="Group.Match.Label" DefaultValue="Match Style" />
         <bt:String id="Group.Align.Label" DefaultValue="Align &amp; Distribute" />
         <bt:String id="Group.GroupOps.Label" DefaultValue="Arrange" />
@@ -1131,12 +1013,6 @@
         <bt:String id="Btn.SwapPositions.Label" DefaultValue="Swap Positions" />
         <bt:String id="Btn.MatchOutlineStyle.Label" DefaultValue="Match Outline" />
         <bt:String id="Btn.MatchFillStyle.Label" DefaultValue="Match Fill" />
-        <bt:String id="Btn.CopyFillToClipboard.Label" DefaultValue="Copy Fill" />
-        <bt:String id="Btn.PasteFillFromClipboard.Label" DefaultValue="Paste Fill" />
-        <bt:String id="Btn.CopyOutlineToClipboard.Label" DefaultValue="Copy Outline" />
-        <bt:String id="Btn.PasteOutlineFromClipboard.Label" DefaultValue="Paste Outline" />
-        <bt:String id="Btn.CopyStyleToClipboard.Label" DefaultValue="Copy Style" />
-        <bt:String id="Btn.PasteStyleFromClipboard.Label" DefaultValue="Paste Style" />
         <bt:String id="Btn.MatchHeight.Label" DefaultValue="Match Height" />
         <bt:String id="Btn.MatchWidth.Label" DefaultValue="Match Width" />
         <bt:String id="Btn.MatchHeightAndWidth.Label" DefaultValue="Match H+W" />
@@ -1169,12 +1045,6 @@
         <bt:String id="Btn.SwapPositions.Desc" DefaultValue="Swap the positions of exactly two selected shapes." />
         <bt:String id="Btn.MatchOutlineStyle.Desc" DefaultValue="Match outline from the first selected shape onto the rest." />
         <bt:String id="Btn.MatchFillStyle.Desc" DefaultValue="Match fill from the first selected shape onto the rest." />
-        <bt:String id="Btn.CopyFillToClipboard.Desc" DefaultValue="Copy fill from the first selected shape into Jolify's clipboard." />
-        <bt:String id="Btn.PasteFillFromClipboard.Desc" DefaultValue="Paste the copied fill onto the selected shape or shapes." />
-        <bt:String id="Btn.CopyOutlineToClipboard.Desc" DefaultValue="Copy outline from the first selected shape into Jolify's clipboard." />
-        <bt:String id="Btn.PasteOutlineFromClipboard.Desc" DefaultValue="Paste the copied outline onto the selected shape or shapes." />
-        <bt:String id="Btn.CopyStyleToClipboard.Desc" DefaultValue="Copy fill, outline, and text style from the first selected shape into Jolify's clipboard." />
-        <bt:String id="Btn.PasteStyleFromClipboard.Desc" DefaultValue="Paste the copied style onto the selected shape or shapes." />
         <bt:String id="Btn.MatchHeight.Desc" DefaultValue="Match height of selected shapes to the first shape." />
         <bt:String id="Btn.MatchWidth.Desc" DefaultValue="Match width of selected shapes to the first shape." />
         <bt:String id="Btn.MatchHeightAndWidth.Desc" DefaultValue="Match height and width of selected shapes to the first shape." />

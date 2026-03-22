@@ -7,14 +7,8 @@ import {
   pastePositionAndSize,
   pastePositionOnly,
   pasteSizeOnly,
-  copyOutlineToClipboard,
-  pasteOutlineFromClipboard,
   matchOutlineStyle,
-  copyFillToClipboard,
-  pasteFillFromClipboard,
   matchFillStyle,
-  copyStyleToClipboard,
-  pasteStyleFromClipboard,
   matchShapeStyle,
   clearFill,
   clearOutline,
@@ -96,29 +90,11 @@ export function pasteSizeOnlyCommand(event: Office.AddinCommands.Event) {
 }
 
 // Style
-export function copyOutlineToClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyOutlineToClipboard);
-}
-export function pasteOutlineFromClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, pasteOutlineFromClipboard);
-}
 export function matchOutlineStyleCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, matchOutlineStyle);
 }
-export function copyFillToClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyFillToClipboard);
-}
-export function pasteFillFromClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, pasteFillFromClipboard);
-}
 export function matchFillStyleCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, matchFillStyle);
-}
-export function copyStyleToClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, copyStyleToClipboard);
-}
-export function pasteStyleFromClipboardCommand(event: Office.AddinCommands.Event) {
-  void withCommandEvent(event, pasteStyleFromClipboard);
 }
 export function matchShapeStyleCommand(event: Office.AddinCommands.Event) {
   void withCommandEvent(event, matchShapeStyle);
@@ -242,14 +218,8 @@ Office.onReady(() => {});
 (window as any).pastePositionAndSize = pastePositionAndSizeCommand;
 (window as any).pastePositionOnly = pastePositionOnlyCommand;
 (window as any).pasteSizeOnly = pasteSizeOnlyCommand;
-(window as any).copyOutlineToClipboard = copyOutlineToClipboardCommand;
-(window as any).pasteOutlineFromClipboard = pasteOutlineFromClipboardCommand;
 (window as any).matchOutlineStyle = matchOutlineStyleCommand;
-(window as any).copyFillToClipboard = copyFillToClipboardCommand;
-(window as any).pasteFillFromClipboard = pasteFillFromClipboardCommand;
 (window as any).matchFillStyle = matchFillStyleCommand;
-(window as any).copyStyleToClipboard = copyStyleToClipboardCommand;
-(window as any).pasteStyleFromClipboard = pasteStyleFromClipboardCommand;
 (window as any).matchShapeStyle = matchShapeStyleCommand;
 (window as any).clearFill = clearFillCommand;
 (window as any).clearOutline = clearOutlineCommand;
