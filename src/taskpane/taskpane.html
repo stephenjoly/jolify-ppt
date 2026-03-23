@@ -68,9 +68,9 @@
       .tools {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        padding: 10px;
-        padding-bottom: 88px;
+        gap: 8px;
+        padding: 8px;
+        padding-bottom: 84px;
       }
 
       .section {
@@ -90,15 +90,15 @@
       }
 
       .section-body {
-        padding: 10px 10px 12px;
+        padding: 8px 8px 10px;
       }
 
       .subsection + .subsection {
-        margin-top: 10px;
+        margin-top: 8px;
       }
 
       .subsection-label {
-        margin: 0 0 8px;
+        margin: 0 0 6px;
         color: var(--muted);
         font-size: 10px;
         font-weight: 700;
@@ -108,23 +108,24 @@
 
       .icon-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
-        gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+        gap: 6px;
       }
 
       .tool-button {
         position: relative;
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         padding: 0;
         border: 1px solid #ececec;
-        border-radius: 8px;
+        border-radius: 7px;
         background: transparent;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+        transition-delay: 0s;
       }
 
       .tool-button:hover:not(:disabled),
@@ -133,6 +134,7 @@
         border-color: var(--border-strong);
         box-shadow: var(--shadow);
         outline: none;
+        transition-delay: 0.12s;
       }
 
       .tool-button:disabled {
@@ -141,29 +143,29 @@
       }
 
       .tool-button img {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         display: block;
       }
 
       .tool-glyph {
-        width: 24px;
-        height: 24px;
-        border-radius: 8px;
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
         border: 1px solid #cfcfcf;
         background: #f4f4f4;
         color: #4f4f4f;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 700;
         line-height: 1;
         text-transform: uppercase;
       }
 
       .tool-glyph.compact {
-        font-size: 9px;
+        font-size: 8px;
       }
 
       .tool-glyph.danger {
