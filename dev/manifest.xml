@@ -813,9 +813,9 @@
                     <Description resid="Btn.OpenTaskpane.Desc" />
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16" />
-                    <bt:Image size="32" resid="Icon.32x32" />
-                    <bt:Image size="80" resid="Icon.80x80" />
+                    <bt:Image size="16" resid="Icon.openTaskpane.16" />
+                    <bt:Image size="32" resid="Icon.openTaskpane.32" />
+                    <bt:Image size="80" resid="Icon.openTaskpane.80" />
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
                     <TaskpaneId>JolifyTaskpane</TaskpaneId>
@@ -966,6 +966,9 @@
         <bt:Image id="Icon.openWeekdayRangeDialog.16" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_16.png" />
         <bt:Image id="Icon.openWeekdayRangeDialog.32" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_32.png" />
         <bt:Image id="Icon.openWeekdayRangeDialog.80" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_80.png" />
+        <bt:Image id="Icon.openTaskpane.16" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_16.png" />
+        <bt:Image id="Icon.openTaskpane.32" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_32.png" />
+        <bt:Image id="Icon.openTaskpane.80" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_80.png" />
         <bt:Image id="Icon.moveToUnusedSection.16" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_16.png" />
         <bt:Image id="Icon.moveToUnusedSection.32" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_32.png" />
         <bt:Image id="Icon.moveToUnusedSection.80" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_80.png" />
