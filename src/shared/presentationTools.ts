@@ -299,6 +299,20 @@ async function getPresentationStructure(zip: JSZip): Promise<PresentationStructu
   return { slides, presentationDoc, presentationRelsDoc };
 }
 
+async function getPresentationDocuments(zip: JSZip): Promise<{ presentationDoc: XMLDocument; presentationRelsDoc: XMLDocument }> {
+  const presentationXml = await readZipText(zip, "ppt/presentation.xml");
+  const presentationRelsXml = await readZipText(zip, "ppt/_rels/presentation.xml.rels");
+
+  if (!presentationXml || !presentationRelsXml) {
+    throw new Error("The presentation package is missing its core slide index.");
+  }
+
+  return {
+    presentationDoc: parseXml(presentationXml),
+    presentationRelsDoc: parseXml(presentationRelsXml),
+  };
+}
+
 async function getCommentAuthors(zip: JSZip): Promise<Map<string, string>> {
   const authorsXml = await readZipText(zip, "ppt/commentAuthors.xml");
   const authors = new Map<string, string>();
@@ -525,10 +539,26 @@ async function getSelectedSlideIndexes(): Promise<{ indexes: number[]; baseName:
   });
 }
 
-async function buildSelectedSlidesPresentationBase64(bytes: Uint8Array, selectedIndexes: number[]): Promise<string> {
+async function buildSelectedSlidesPresentationBase64(
+  bytes: Uint8Array,
+  selectedIndexes: number[],
+): Promise<{ base64: string; ignoredBrokenSlides: number }> {
   const zip = await JSZip.loadAsync(bytes);
-  const { presentationDoc, presentationRelsDoc } = await getPresentationStructure(zip);
+  const { presentationDoc, presentationRelsDoc } = await getPresentationDocuments(zip);
   const selected = new Set(selectedIndexes);
+  const slideRelationshipIds = new Set<string>();
+
+  Array.from(presentationRelsDoc.getElementsByTagName("*")).forEach((node) => {
+    if (localNameOf(node) !== "Relationship") {
+      return;
+    }
+
+    const type = node.getAttribute("Type") ?? "";
+    const id = node.getAttribute("Id");
+    if (type.endsWith(PptRelationship.slide) && id) {
+      slideRelationshipIds.add(id);
+    }
+  });
 
   const presentationRoot = presentationDoc.documentElement;
   childElements(presentationRoot).forEach((child) => {
@@ -546,13 +576,22 @@ async function buildSelectedSlidesPresentationBase64(bytes: Uint8Array, selected
   }
 
   const keptRelIds = new Set<string>();
+  let ignoredBrokenSlides = 0;
   childElements(slideIdList, "sldId").forEach((slideNode, index) => {
     const slideIndex = index + 1;
+    const relId = getRelationshipId(slideNode);
+
+    if (!relId || !slideRelationshipIds.has(relId)) {
+      slideNode.parentNode?.removeChild(slideNode);
+      ignoredBrokenSlides += 1;
+      return;
+    }
+
     if (!selected.has(slideIndex)) {
       slideNode.parentNode?.removeChild(slideNode);
       return;
     }
-    keptRelIds.add(getRelationshipId(slideNode));
+    keptRelIds.add(relId);
   });
 
   if (keptRelIds.size === 0) {
@@ -573,7 +612,10 @@ async function buildSelectedSlidesPresentationBase64(bytes: Uint8Array, selected
 
   zip.file("ppt/presentation.xml", serializeXml(presentationDoc));
   zip.file("ppt/_rels/presentation.xml.rels", serializeXml(presentationRelsDoc));
-  return zip.generateAsync({ type: "base64" });
+  return {
+    base64: await zip.generateAsync({ type: "base64" }),
+    ignoredBrokenSlides,
+  };
 }
 
 async function maybeCopyToClipboard(text: string): Promise<void> {
@@ -729,8 +771,12 @@ async function exportSelectedSlides(mode: SlideExportMode): Promise<ActionResult
     return { type: "warning", message: "Select one or more slides before exporting them." };
   }
 
-  const base64 = await buildSelectedSlidesPresentationBase64(bytes, selection.indexes);
+  const { base64, ignoredBrokenSlides } = await buildSelectedSlidesPresentationBase64(bytes, selection.indexes);
   const filename = `${sanitizeFilename(selection.baseName)} - ${selection.indexes.length} slides.pptx`;
+  const ignoredBrokenSlidesNote =
+    ignoredBrokenSlides > 0
+      ? ` Ignored ${ignoredBrokenSlides} broken slide reference${ignoredBrokenSlides !== 1 ? "s" : ""} in the source deck.`
+      : "";
 
   if (mode === "local-save" && (await isLocalBridgeAvailable())) {
     await postLocalBridge<{ savedPath: string }>("/native/save-file", {
@@ -741,7 +787,7 @@ async function exportSelectedSlides(mode: SlideExportMode): Promise<ActionResult
 
     return {
       type: "success",
-      message: `Saved a ${selection.indexes.length}-slide deck through the local Jolify bridge.`,
+      message: `Saved a ${selection.indexes.length}-slide deck through the local Jolify bridge.${ignoredBrokenSlidesNote}`,
     };
   }
 
@@ -750,8 +796,8 @@ async function exportSelectedSlides(mode: SlideExportMode): Promise<ActionResult
     type: mode === "local-save" ? "warning" : "success",
     message:
       mode === "local-save"
-        ? `Downloaded a ${selection.indexes.length}-slide deck. Local mode is required for a native Save dialog.`
-        : `Downloaded a ${selection.indexes.length}-slide deck.`,
+        ? `Downloaded a ${selection.indexes.length}-slide deck. Local mode is required for a native Save dialog.${ignoredBrokenSlidesNote}`
+        : `Downloaded a ${selection.indexes.length}-slide deck.${ignoredBrokenSlidesNote}`,
   };
 }
 
