@@ -1181,6 +1181,29 @@ export async function clearFill(): Promise<ActionResult> {
   });
 }
 
+export async function applyFillColor(color: string): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select one or more shapes before applying a fill color.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.fill.setSolidColor(color);
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Applied fill color to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
 export async function clearOutline(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
@@ -1201,6 +1224,54 @@ export async function clearOutline(): Promise<ActionResult> {
     return {
       type: "success",
       message: `Removed outline from ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function applyOutlineColor(color: string): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: "Select one or more shapes before applying an outline color.",
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.lineFormat.visible = true;
+      shape.lineFormat.color = color;
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Applied outline color to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function applyFontColor(color: string): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select one or more text shapes before applying a font color.",
+    );
+
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.textRange.font.color = color;
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Applied font color to ${selected.shapes.length} text shape${selected.shapes.length !== 1 ? "s" : ""}.${getIgnoredShapeNote(selected.skippedCount)}`,
     };
   });
 }

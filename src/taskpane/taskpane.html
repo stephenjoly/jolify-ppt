@@ -7,16 +7,16 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #f7f5f1;
+        --bg: #f4f1eb;
         --surface: #ffffff;
-        --surface-soft: #f5f5f5;
-        --border: #dddddd;
-        --border-strong: #c9c9c9;
+        --surface-soft: #f7f7f7;
+        --border: #ddd7cc;
+        --border-strong: #c6c0b5;
         --text: #262626;
         --muted: #666666;
         --accent: #2a74d7;
         --danger: #b53a31;
-        --shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+        --shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
         --radius: 10px;
       }
 
@@ -48,7 +48,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        padding: 14px 14px 12px;
+        padding: 12px 14px 10px;
         background: var(--surface);
         border-bottom: 1px solid var(--border);
       }
@@ -65,12 +65,20 @@
         font-size: 11px;
       }
 
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 112px;
+        gap: 8px;
+        align-items: start;
+        padding: 8px;
+        padding-bottom: 96px;
+      }
+
       .tools {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        padding: 6px;
-        padding-bottom: 80px;
+        min-width: 0;
       }
 
       .section {
@@ -83,7 +91,7 @@
       .section-header {
         padding: 6px 10px;
         background: var(--surface-soft);
-        border-bottom: 1px solid #ececec;
+        border-bottom: 1px solid #ece8dc;
         color: var(--accent);
         font-size: 12px;
         font-weight: 700;
@@ -117,7 +125,7 @@
         width: 30px;
         height: 30px;
         padding: 0;
-        border: 1px solid #ececec;
+        border: 1px solid #ebe6dc;
         border-radius: 6px;
         background: transparent;
         display: inline-flex;
@@ -130,7 +138,7 @@
 
       .tool-button:hover:not(:disabled),
       .tool-button:focus-visible:not(:disabled) {
-        background: #fafafa;
+        background: #faf8f4;
         border-color: var(--border-strong);
         box-shadow: var(--shadow);
         outline: none;
@@ -152,8 +160,8 @@
         width: 16px;
         height: 16px;
         border-radius: 4px;
-        border: 1px solid #cfcfcf;
-        background: #f4f4f4;
+        border: 1px solid #d3cdc3;
+        background: #f3efe8;
         color: #4f4f4f;
         display: inline-flex;
         align-items: center;
@@ -176,6 +184,115 @@
 
       .tooltip {
         display: none;
+      }
+
+      .palette {
+        position: sticky;
+        top: 8px;
+        align-self: start;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .palette-header {
+        padding: 8px 10px 7px;
+        background: var(--surface-soft);
+        border-bottom: 1px solid #ece8dc;
+      }
+
+      .palette-title {
+        margin: 0;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .palette-copy {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.3;
+      }
+
+      .palette-body {
+        padding: 8px 6px 10px;
+      }
+
+      .palette-columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+      }
+
+      .palette-column {
+        min-width: 0;
+      }
+
+      .palette-column-header {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 6px;
+      }
+
+      .palette-glyph {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        border: 1px solid #d9d3c9;
+        background: #f7f3ec;
+        color: #595959;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .swatch-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .swatch-button {
+        width: 100%;
+        height: 14px;
+        padding: 0;
+        border: 1px solid #d7d0c4;
+        border-radius: 3px;
+        background: transparent;
+        cursor: pointer;
+        transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.08s ease;
+      }
+
+      .swatch-button:hover:not(:disabled),
+      .swatch-button:focus-visible:not(:disabled) {
+        border-color: #8d8d8d;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        outline: none;
+        transform: translateY(-1px);
+      }
+
+      .swatch-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .swatch-chip {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 2px;
+        background: var(--swatch);
+      }
+
+      .palette-note {
+        margin: 8px 2px 0;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.35;
       }
 
       .status-card {
@@ -218,6 +335,28 @@
       #status.warning { color: #8b5400; }
       #status.error { color: var(--danger); }
       #status.info { color: var(--text); }
+
+      @media (max-width: 360px) {
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 96px;
+          gap: 6px;
+          padding: 6px;
+          padding-bottom: 96px;
+        }
+
+        .palette-header {
+          padding: 7px 8px 6px;
+        }
+
+        .palette-body {
+          padding: 7px 5px 8px;
+        }
+
+        .palette-copy,
+        .palette-note {
+          font-size: 9px;
+        }
+      }
     </style>
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   </head>
@@ -230,8 +369,9 @@
         </div>
       </header>
 
-      <main class="tools">
-        <section class="section">
+      <div class="workspace">
+        <main class="tools">
+          <section class="section">
           <div class="section-header">Clipboard</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -267,7 +407,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Resize</div>
           <div class="section-body">
             <div class="subsection">
@@ -312,7 +452,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Align</div>
           <div class="section-body">
             <div class="subsection">
@@ -361,7 +501,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Arrange + Group</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -393,7 +533,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Text + Insert</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -425,7 +565,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Style Clipboard</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -457,7 +597,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Match Style</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -485,7 +625,7 @@
           </div>
         </section>
 
-        <section class="section">
+          <section class="section">
           <div class="section-header">Deck Tools</div>
           <div class="section-body">
             <div class="icon-grid">
@@ -507,8 +647,41 @@
               </button>
             </div>
           </div>
-        </section>
-      </main>
+          </section>
+        </main>
+
+        <aside class="palette" aria-label="Experimental color palette">
+          <div class="palette-header">
+            <p class="palette-title">Colors</p>
+            <p class="palette-copy">Experimental theme-like palette for quick text, outline, and fill changes.</p>
+          </div>
+          <div class="palette-body">
+            <div class="palette-columns">
+              <section class="palette-column">
+                <div class="palette-column-header">
+                  <span class="palette-glyph" data-palette-glyph="font" aria-hidden="true">A</span>
+                </div>
+                <div class="swatch-list" id="font-palette"></div>
+              </section>
+
+              <section class="palette-column">
+                <div class="palette-column-header">
+                  <span class="palette-glyph" data-palette-glyph="outline" aria-hidden="true">O</span>
+                </div>
+                <div class="swatch-list" id="outline-palette"></div>
+              </section>
+
+              <section class="palette-column">
+                <div class="palette-column-header">
+                  <span class="palette-glyph" data-palette-glyph="fill" aria-hidden="true">F</span>
+                </div>
+                <div class="swatch-list" id="fill-palette"></div>
+              </section>
+            </div>
+            <p class="palette-note">Font column applies to selected text. Outline and fill apply to selected shapes.</p>
+          </div>
+        </aside>
+      </div>
 
       <div class="status-card">
         <p class="status-label">Status</p>
