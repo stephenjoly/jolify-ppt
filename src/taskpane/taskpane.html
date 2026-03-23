@@ -247,11 +247,6 @@
         line-height: 1.28;
       }
 
-      .action-button.emphasis {
-        background: linear-gradient(135deg, #fff8f2, #f8e9dc);
-        border-color: rgba(185, 93, 34, 0.3);
-      }
-
       .action-button.danger {
         background: linear-gradient(135deg, #fff8f8, var(--danger-soft));
         border-color: rgba(161, 56, 48, 0.24);
@@ -338,11 +333,11 @@
             <h3 class="subgroup-title">Position + Size</h3>
             <p class="subgroup-copy">These actions store values inside Jolify, then paste them onto the current selection.</p>
             <div class="action-list">
-              <button id="copy-all-btn" type="button" class="action-button emphasis">
+              <button id="copy-all-btn" type="button" class="action-button">
                 <span class="action-label">Copy position and size</span>
                 <span class="action-desc">Save both coordinates and dimensions from the first selected shape.</span>
               </button>
-              <button id="paste-all-btn" type="button" class="action-button emphasis">
+              <button id="paste-all-btn" type="button" class="action-button">
                 <span class="action-label">Paste position and size</span>
                 <span class="action-desc">Apply the saved geometry to every selected target shape.</span>
               </button>
@@ -390,7 +385,7 @@
             <h3 class="subgroup-title">Match Size</h3>
             <p class="subgroup-copy">Fast size normalization when one shape already has the right dimensions.</p>
             <div class="action-list">
-              <button id="match-size-btn" type="button" class="action-button emphasis">
+              <button id="match-size-btn" type="button" class="action-button">
                 <span class="action-label">Match height and width</span>
                 <span class="action-desc">Copy both dimensions from the first selected shape onto the rest.</span>
               </button>
@@ -503,7 +498,7 @@
                 <span class="action-label">Middle and group</span>
                 <span class="action-desc">Align selected shapes to the same middle line, then group them.</span>
               </button>
-              <button id="center-middle-group-btn" type="button" class="action-button emphasis">
+              <button id="center-middle-group-btn" type="button" class="action-button">
                 <span class="action-label">Center, middle, and group</span>
                 <span class="action-desc">Do both center alignments first, then create one group.</span>
               </button>
@@ -521,7 +516,7 @@
                 <span class="action-label">Distribute vertically and group</span>
                 <span class="action-desc">Even out top-to-bottom spacing, then group the result.</span>
               </button>
-              <button id="distribute-hv-group-btn" type="button" class="action-button emphasis">
+              <button id="distribute-hv-group-btn" type="button" class="action-button">
                 <span class="action-label">Distribute both ways and group</span>
                 <span class="action-desc">Use the taskpane version of the combined horizontal and vertical distribute workflow.</span>
               </button>
@@ -545,7 +540,7 @@
                 <span class="action-label">Merge text boxes</span>
                 <span class="action-desc">Combine text from selected text boxes into a single box.</span>
               </button>
-              <button id="split-textbox-btn" type="button" class="action-button emphasis">
+              <button id="split-textbox-btn" type="button" class="action-button">
                 <span class="action-label">Split text box by lines</span>
                 <span class="action-desc">Turn each line in a text box into its own new text box.</span>
               </button>
@@ -563,7 +558,7 @@
           <div class="subgroup">
             <h3 class="subgroup-title">Build</h3>
             <div class="action-list">
-              <button id="create-center-sticker-btn" type="button" class="action-button emphasis">
+              <button id="create-center-sticker-btn" type="button" class="action-button">
                 <span class="action-label">Create center sticker</span>
                 <span class="action-desc">Drop in a centered placeholder sticker at Jolify’s default size.</span>
               </button>
@@ -604,11 +599,11 @@
                 <span class="action-label">Paste outline</span>
                 <span class="action-desc">Apply the saved outline to the current selection.</span>
               </button>
-              <button id="copy-style-btn" type="button" class="action-button emphasis">
+              <button id="copy-style-btn" type="button" class="action-button">
                 <span class="action-label">Copy style</span>
                 <span class="action-desc">Save fill, outline, and text styling from the first selected shape.</span>
               </button>
-              <button id="paste-style-btn" type="button" class="action-button emphasis">
+              <button id="paste-style-btn" type="button" class="action-button">
                 <span class="action-label">Paste style</span>
                 <span class="action-desc">Apply the saved combined style to the selected target shapes.</span>
               </button>
@@ -626,7 +621,7 @@
                 <span class="action-label">Match outline</span>
                 <span class="action-desc">Copy outline from the first selected shape directly onto the rest.</span>
               </button>
-              <button id="match-style-btn" type="button" class="action-button emphasis">
+              <button id="match-style-btn" type="button" class="action-button">
                 <span class="action-label">Match style</span>
                 <span class="action-desc">Apply the first selected shape’s fill, outline, and text styling to the others.</span>
               </button>
