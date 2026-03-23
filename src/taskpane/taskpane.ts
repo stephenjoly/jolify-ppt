@@ -178,7 +178,22 @@ function wireAction(buttonId: string, runner: ActionRunner) {
   });
 }
 
+function applyNativeTooltips() {
+  document.querySelectorAll<HTMLButtonElement>(".tool-button").forEach((button) => {
+    const title = button.querySelector(".tooltip-title")?.textContent?.trim() ?? "";
+    const copy = button.querySelector(".tooltip-copy")?.textContent?.trim() ?? "";
+    const tooltip = copy ? `${title}\n${copy}` : title;
+
+    if (tooltip) {
+      button.title = tooltip;
+      button.setAttribute("aria-description", copy || title);
+    }
+  });
+}
+
 Office.onReady(() => {
+  applyNativeTooltips();
+
   Object.entries(ACTIONS).forEach(([id, runner]) => {
     wireAction(id, runner);
   });
