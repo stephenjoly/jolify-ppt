@@ -34,6 +34,7 @@ type PresentationStructure = {
 export type ThemePalette = {
   source: "deck" | "fallback";
   colors: string[];
+  rowSize: number;
 };
 
 function parseXml(xml: string): XMLDocument {
@@ -457,30 +458,30 @@ export async function getCurrentPresentationThemePalette(): Promise<ThemePalette
     const slideMasterPath =
       findRelationshipTargetByType(presentationRelsDoc, "ppt/presentation.xml", PptRelationship.slideMaster);
     if (!slideMasterPath) {
-      return { source: "fallback", colors: fallback };
+      return { source: "fallback", colors: fallback, rowSize: fallback.length };
     }
 
     const slideMasterRelsPath = `${dirname(slideMasterPath)}/_rels/${fileNameWithoutExtension(slideMasterPath)}.xml.rels`;
     const slideMasterRelsXml = await readZipText(zip, slideMasterRelsPath);
     if (!slideMasterRelsXml) {
-      return { source: "fallback", colors: fallback };
+      return { source: "fallback", colors: fallback, rowSize: fallback.length };
     }
 
     const slideMasterRelsDoc = parseXml(slideMasterRelsXml);
     const themePath = findRelationshipTargetByType(slideMasterRelsDoc, slideMasterPath, PptRelationship.theme);
     if (!themePath) {
-      return { source: "fallback", colors: fallback };
+      return { source: "fallback", colors: fallback, rowSize: fallback.length };
     }
 
     const themeXml = await readZipText(zip, themePath);
     if (!themeXml) {
-      return { source: "fallback", colors: fallback };
+      return { source: "fallback", colors: fallback, rowSize: fallback.length };
     }
 
     const themeDoc = parseXml(themeXml);
     const schemeColors = extractThemeSchemeColors(themeDoc);
     if (schemeColors.length < 6) {
-      return { source: "fallback", colors: fallback };
+      return { source: "fallback", colors: fallback, rowSize: fallback.length };
     }
 
     const palette = flattenThemeRows(schemeColors.map((color) => deriveThemeScale(color)))
@@ -489,11 +490,13 @@ export async function getCurrentPresentationThemePalette(): Promise<ThemePalette
     return {
       source: "deck",
       colors: palette,
+      rowSize: schemeColors.length,
     };
   } catch {
     return {
       source: "fallback",
       colors: fallback,
+      rowSize: fallback.length,
     };
   }
 }
