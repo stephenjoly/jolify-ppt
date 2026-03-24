@@ -1,4 +1,5 @@
 import type { ActionResult } from "../shared/shapeTools";
+import { getCurrentPresentationThemePalette } from "../shared/presentationTools";
 import {
   toggleDraftSticker,
   alignBottom,
@@ -115,43 +116,6 @@ const ACTIONS: Record<string, ActionRunner> = {
   "move-to-unused-btn": moveToUnusedSection,
 };
 
-const EXPERIMENTAL_THEME_SWATCHES = [
-  "#000000",
-  "#FFFFFF",
-  "#1F1F1F",
-  "#EEECE1",
-  "#4472C4",
-  "#ED7D31",
-  "#A5A5A5",
-  "#FFC000",
-  "#5B9BD5",
-  "#70AD47",
-  "#7F7F7F",
-  "#BFBFBF",
-  "#D9E2F3",
-  "#FBE5D6",
-  "#EDEDED",
-  "#FFF2CC",
-  "#DDEBF7",
-  "#E2F0D9",
-  "#595959",
-  "#A6A6A6",
-  "#8FAADC",
-  "#F4B183",
-  "#C9C9C9",
-  "#FFD966",
-  "#9DC3E6",
-  "#A9D18E",
-  "#3F3F3F",
-  "#808080",
-  "#2F5597",
-  "#C55A11",
-  "#7B7B7B",
-  "#BF9000",
-  "#2E75B6",
-  "#548235",
-];
-
 function statusEl() {
   return document.getElementById("status")!;
 }
@@ -244,6 +208,7 @@ function paletteRunner(target: PaletteTarget, color: string): ActionRunner {
 function renderPaletteColumn(
   containerId: string,
   target: PaletteTarget,
+  colors: string[],
   label: string,
   glyph: string,
   description: string
@@ -255,7 +220,7 @@ function renderPaletteColumn(
 
   const fragment = document.createDocumentFragment();
 
-  EXPERIMENTAL_THEME_SWATCHES.forEach((color, index) => {
+  colors.forEach((color, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "swatch-button";
@@ -298,10 +263,20 @@ function renderPaletteColumn(
   }
 }
 
-Office.onReady(() => {
-  renderPaletteColumn("font-palette", "font", "Font", "A", "Apply a color to the selected text.");
-  renderPaletteColumn("outline-palette", "outline", "Outline", "O", "Apply a color to shape outlines.");
-  renderPaletteColumn("fill-palette", "fill", "Fill", "F", "Apply a color to shape fills.");
+async function setupPalette() {
+  const palette = await getCurrentPresentationThemePalette();
+  const sourceBadge = document.getElementById("palette-source");
+  if (sourceBadge) {
+    sourceBadge.textContent = palette.source === "deck" ? "Deck theme" : "Fallback palette";
+  }
+
+  renderPaletteColumn("font-palette", "font", palette.colors, "Font", "A", "Apply a color to the selected text.");
+  renderPaletteColumn("outline-palette", "outline", palette.colors, "Outline", "O", "Apply a color to shape outlines.");
+  renderPaletteColumn("fill-palette", "fill", palette.colors, "Fill", "F", "Apply a color to shape fills.");
+}
+
+Office.onReady(async () => {
+  await setupPalette();
   applyNativeTooltips();
 
   Object.entries(ACTIONS).forEach(([id, runner]) => {

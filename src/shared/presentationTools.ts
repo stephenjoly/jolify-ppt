@@ -9,6 +9,8 @@ const PptRelationship = {
   notesSlide: "/relationships/notesSlide",
   slide: "/relationships/slide",
   commentAuthors: "/relationships/commentAuthors",
+  slideMaster: "/relationships/slideMaster",
+  theme: "/relationships/theme",
 } as const;
 
 type SlideExportMode = "download" | "local-save";
@@ -27,6 +29,11 @@ type PresentationStructure = {
   slides: SlidePartInfo[];
   presentationDoc: XMLDocument;
   presentationRelsDoc: XMLDocument;
+};
+
+export type ThemePalette = {
+  source: "deck" | "fallback";
+  colors: string[];
 };
 
 function parseXml(xml: string): XMLDocument {
@@ -148,6 +155,51 @@ function sanitizeFilename(filename: string): string {
 
 function buildMarkdownSection(title: string, body: string): string {
   return `## ${title}\n\n${body.trim()}\n`;
+}
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const normalized = hex.replace("#", "").trim();
+  if (!/^[0-9a-fA-F]{6}$/.test(normalized)) {
+    return null;
+  }
+
+  return {
+    r: parseInt(normalized.slice(0, 2), 16),
+    g: parseInt(normalized.slice(2, 4), 16),
+    b: parseInt(normalized.slice(4, 6), 16),
+  };
+}
+
+function rgbToHex(r: number, g: number, b: number): string {
+  const clamp = (value: number) => Math.max(0, Math.min(255, Math.round(value)));
+  return `#${[clamp(r), clamp(g), clamp(b)].map((value) => value.toString(16).padStart(2, "0")).join("").toUpperCase()}`;
+}
+
+function mixHex(baseHex: string, targetHex: string, amount: number): string | null {
+  const base = hexToRgb(baseHex);
+  const target = hexToRgb(targetHex);
+  if (!base || !target) {
+    return null;
+  }
+
+  return rgbToHex(
+    base.r + (target.r - base.r) * amount,
+    base.g + (target.g - base.g) * amount,
+    base.b + (target.b - base.b) * amount,
+  );
+}
+
+function deriveThemeScale(baseHex: string): string[] {
+  const lighterMixes = [0.82, 0.64, 0.46, 0.28];
+  const darkerMixes = [0.18, 0.36, 0.54, 0.72];
+  const lighter = lighterMixes
+    .map((amount) => mixHex(baseHex, "#FFFFFF", amount))
+    .filter((color): color is string => !!color);
+  const darker = darkerMixes
+    .map((amount) => mixHex(baseHex, "#000000", amount))
+    .filter((color): color is string => !!color);
+
+  return [...lighter, baseHex.toUpperCase(), ...darker];
 }
 
 function readFileSlice(file: Office.File, index: number): Promise<Uint8Array> {
@@ -311,6 +363,127 @@ async function getPresentationDocuments(zip: JSZip): Promise<{ presentationDoc: 
     presentationDoc: parseXml(presentationXml),
     presentationRelsDoc: parseXml(presentationRelsXml),
   };
+}
+
+function findRelationshipTargetByType(
+  relsDoc: XMLDocument,
+  basePath: string,
+  relationshipSuffix: string,
+): string | null {
+  for (const node of Array.from(relsDoc.getElementsByTagName("*"))) {
+    if (localNameOf(node) !== "Relationship") {
+      continue;
+    }
+
+    const type = node.getAttribute("Type") ?? "";
+    const target = node.getAttribute("Target");
+    if (type.endsWith(relationshipSuffix) && target) {
+      return resolvePartPath(basePath, target);
+    }
+  }
+
+  return null;
+}
+
+function extractThemeSchemeColors(themeDoc: XMLDocument): string[] {
+  const colorOrder = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
+  const schemeNode = Array.from(themeDoc.getElementsByTagName("*")).find((node): node is Element => localNameOf(node) === "clrScheme");
+  if (!schemeNode) {
+    return [];
+  }
+
+  const colors: string[] = [];
+
+  colorOrder.forEach((name) => {
+    const colorNode = childElements(schemeNode).find((child) => localNameOf(child) === name);
+    if (!colorNode) {
+      return;
+    }
+
+    const valueNode = childElements(colorNode).find((child) => {
+      const local = localNameOf(child);
+      return local === "srgbClr" || local === "sysClr";
+    });
+
+    if (!valueNode) {
+      return;
+    }
+
+    const value =
+      valueNode.getAttribute("val") ??
+      valueNode.getAttribute("lastClr") ??
+      valueNode.getAttribute("lastColor");
+
+    if (value && /^[0-9a-fA-F]{6}$/.test(value)) {
+      colors.push(`#${value.toUpperCase()}`);
+    }
+  });
+
+  return colors;
+}
+
+export async function getCurrentPresentationThemePalette(): Promise<ThemePalette> {
+  const fallback = [
+    "#000000",
+    "#FFFFFF",
+    "#1F1F1F",
+    "#EEECE1",
+    "#4472C4",
+    "#ED7D31",
+    "#A5A5A5",
+    "#FFC000",
+    "#5B9BD5",
+    "#70AD47",
+  ];
+
+  try {
+    const bytes = await getPresentationBytes();
+    const zip = await JSZip.loadAsync(bytes);
+    const { presentationRelsDoc } = await getPresentationDocuments(zip);
+
+    const slideMasterPath =
+      findRelationshipTargetByType(presentationRelsDoc, "ppt/presentation.xml", PptRelationship.slideMaster);
+    if (!slideMasterPath) {
+      return { source: "fallback", colors: fallback };
+    }
+
+    const slideMasterRelsPath = `${dirname(slideMasterPath)}/_rels/${fileNameWithoutExtension(slideMasterPath)}.xml.rels`;
+    const slideMasterRelsXml = await readZipText(zip, slideMasterRelsPath);
+    if (!slideMasterRelsXml) {
+      return { source: "fallback", colors: fallback };
+    }
+
+    const slideMasterRelsDoc = parseXml(slideMasterRelsXml);
+    const themePath = findRelationshipTargetByType(slideMasterRelsDoc, slideMasterPath, PptRelationship.theme);
+    if (!themePath) {
+      return { source: "fallback", colors: fallback };
+    }
+
+    const themeXml = await readZipText(zip, themePath);
+    if (!themeXml) {
+      return { source: "fallback", colors: fallback };
+    }
+
+    const themeDoc = parseXml(themeXml);
+    const schemeColors = extractThemeSchemeColors(themeDoc);
+    if (schemeColors.length < 6) {
+      return { source: "fallback", colors: fallback };
+    }
+
+    const palette = schemeColors
+      .flatMap((color) => deriveThemeScale(color))
+      .filter((color, index, array) => array.indexOf(color) === index);
+
+    return {
+      source: "deck",
+      colors: palette,
+    };
+  } catch {
+    return {
+      source: "fallback",
+      colors: fallback,
+    };
+  }
 }
 
 async function getCommentAuthors(zip: JSZip): Promise<Map<string, string>> {
@@ -818,7 +991,7 @@ export async function attachSelectedSlidesToEmail(): Promise<ActionResult> {
     };
   }
 
-  const base64 = await buildSelectedSlidesPresentationBase64(bytes, selection.indexes);
+  const { base64 } = await buildSelectedSlidesPresentationBase64(bytes, selection.indexes);
   const filename = `${sanitizeFilename(selection.baseName)} - ${selection.indexes.length} slides.pptx`;
   const saveResult = await postLocalBridge<{ savedPath: string }>("/native/save-file", {
     base64File: base64,
