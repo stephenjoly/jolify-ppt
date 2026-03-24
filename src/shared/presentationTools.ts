@@ -190,16 +190,29 @@ function mixHex(baseHex: string, targetHex: string, amount: number): string | nu
 }
 
 function deriveThemeScale(baseHex: string): string[] {
-  const lighterMixes = [0.82, 0.64, 0.46, 0.28];
-  const darkerMixes = [0.18, 0.36, 0.54, 0.72];
-  const lighter = lighterMixes
-    .map((amount) => mixHex(baseHex, "#FFFFFF", amount))
-    .filter((color): color is string => !!color);
-  const darker = darkerMixes
-    .map((amount) => mixHex(baseHex, "#000000", amount))
-    .filter((color): color is string => !!color);
+  const top = baseHex.toUpperCase();
+  const row2 = mixHex(baseHex, "#FFFFFF", 0.68);
+  const row3 = mixHex(baseHex, "#FFFFFF", 0.38);
+  const row4 = mixHex(baseHex, "#000000", 0.22);
+  const row5 = mixHex(baseHex, "#000000", 0.46);
 
-  return [...lighter, baseHex.toUpperCase(), ...darker];
+  return [top, row2, row3, row4, row5].filter((color): color is string => !!color);
+}
+
+function flattenThemeRows(scales: string[][]): string[] {
+  const rowCount = Math.max(...scales.map((scale) => scale.length), 0);
+  const ordered: string[] = [];
+
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+    scales.forEach((scale) => {
+      const color = scale[rowIndex];
+      if (color) {
+        ordered.push(color);
+      }
+    });
+  }
+
+  return ordered;
 }
 
 function readFileSlice(file: Office.File, index: number): Promise<Uint8Array> {
@@ -470,8 +483,7 @@ export async function getCurrentPresentationThemePalette(): Promise<ThemePalette
       return { source: "fallback", colors: fallback };
     }
 
-    const palette = schemeColors
-      .flatMap((color) => deriveThemeScale(color))
+    const palette = flattenThemeRows(schemeColors.map((color) => deriveThemeScale(color)))
       .filter((color, index, array) => array.indexOf(color) === index);
 
     return {
