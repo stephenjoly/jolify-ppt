@@ -222,12 +222,16 @@ function renderPaletteColumn(
   const fragment = document.createDocumentFragment();
 
   colors.forEach((color, index) => {
+    if (rowSize > 0 && index >= rowSize && index % rowSize === 0) {
+      const spacer = document.createElement("div");
+      spacer.className = "swatch-row-gap";
+      spacer.setAttribute("aria-hidden", "true");
+      fragment.appendChild(spacer);
+    }
+
     const button = document.createElement("button");
     button.type = "button";
     button.className = "swatch-button";
-    if (rowSize > 0 && index >= rowSize && index % rowSize === 0) {
-      button.classList.add("row-break");
-    }
     button.style.setProperty("--swatch", color);
     button.setAttribute("aria-label", `${label} color ${index + 1}`);
     button.title = `${label}\n${description}\n${color}`;
