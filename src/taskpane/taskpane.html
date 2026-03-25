@@ -390,37 +390,62 @@
       <div class="workspace">
         <main class="tools">
           <section class="section">
-          <div class="section-header">Clipboard</div>
+          <div class="section-header">Other</div>
           <div class="section-body">
-            <div class="icon-grid">
-              <button id="copy-all-btn" type="button" class="tool-button" aria-label="Copy position and size">
-                <img src="../../assets/icons/copyPositionAndSize_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Copy position and size</span><span class="tooltip-copy">Save both coordinates and dimensions from the first selected shape.</span></span>
-              </button>
-              <button id="paste-all-btn" type="button" class="tool-button" aria-label="Paste position and size">
-                <img src="../../assets/icons/pastePositionAndSize_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Paste position and size</span><span class="tooltip-copy">Apply the saved geometry to every selected target shape.</span></span>
-              </button>
-              <button id="copy-position-btn" type="button" class="tool-button" aria-label="Copy position">
-                <img src="../../assets/icons/copyPositionOnly_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Copy position</span><span class="tooltip-copy">Save only the left and top coordinates from the first selected shape.</span></span>
-              </button>
-              <button id="paste-position-btn" type="button" class="tool-button" aria-label="Paste position">
-                <img src="../../assets/icons/pastePositionOnly_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Paste position</span><span class="tooltip-copy">Move the current selection to the saved coordinates.</span></span>
-              </button>
-              <button id="copy-size-btn" type="button" class="tool-button" aria-label="Copy size">
-                <img src="../../assets/icons/copySizeOnly_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Copy size</span><span class="tooltip-copy">Save only width and height from the first selected shape.</span></span>
-              </button>
-              <button id="paste-size-btn" type="button" class="tool-button" aria-label="Paste size">
-                <img src="../../assets/icons/pasteSizeOnly_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Paste size</span><span class="tooltip-copy">Apply the saved width and height to every selected target.</span></span>
-              </button>
-              <button id="swap-btn" type="button" class="tool-button" aria-label="Swap positions">
-                <img src="../../assets/icons/swapPositions_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Swap positions</span><span class="tooltip-copy">Exchange the positions of exactly two selected shapes.</span></span>
-              </button>
+            <div class="subsection">
+              <p class="subsection-label">Pick Geometry</p>
+              <div class="icon-grid">
+                <button id="copy-all-btn" type="button" class="tool-button" aria-label="Copy position and size">
+                  <img src="../../assets/icons/copyPositionAndSize_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Copy position and size</span><span class="tooltip-copy">Save both coordinates and dimensions from the first selected shape.</span></span>
+                </button>
+                <button id="paste-all-btn" type="button" class="tool-button" aria-label="Paste position and size">
+                  <img src="../../assets/icons/pastePositionAndSize_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Paste position and size</span><span class="tooltip-copy">Apply the saved geometry to every selected target shape.</span></span>
+                </button>
+                <button id="copy-position-btn" type="button" class="tool-button" aria-label="Copy position">
+                  <img src="../../assets/icons/copyPositionOnly_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Copy position</span><span class="tooltip-copy">Save only the left and top coordinates from the first selected shape.</span></span>
+                </button>
+                <button id="paste-position-btn" type="button" class="tool-button" aria-label="Paste position">
+                  <img src="../../assets/icons/pastePositionOnly_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Paste position</span><span class="tooltip-copy">Move the current selection to the saved coordinates.</span></span>
+                </button>
+                <button id="copy-size-btn" type="button" class="tool-button" aria-label="Copy size">
+                  <img src="../../assets/icons/copySizeOnly_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Copy size</span><span class="tooltip-copy">Save only width and height from the first selected shape.</span></span>
+                </button>
+                <button id="paste-size-btn" type="button" class="tool-button" aria-label="Paste size">
+                  <img src="../../assets/icons/pasteSizeOnly_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Paste size</span><span class="tooltip-copy">Apply the saved width and height to every selected target.</span></span>
+                </button>
+                <button id="swap-btn" type="button" class="tool-button" aria-label="Swap positions">
+                  <img src="../../assets/icons/swapPositions_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Swap positions</span><span class="tooltip-copy">Exchange the positions of exactly two selected shapes.</span></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <p class="subsection-label">Deck</p>
+              <div class="icon-grid">
+                <button id="save-selected-deck-btn" type="button" class="tool-button" aria-label="Save selected deck">
+                  <span class="tool-glyph compact">SD</span>
+                  <span class="tooltip"><span class="tooltip-title">Save selected deck</span><span class="tooltip-copy">Export the selected slides into a new presentation.</span></span>
+                </button>
+                <button id="move-to-unused-btn" type="button" class="tool-button" aria-label="Move to unused">
+                  <img src="../../assets/icons/moveToUnusedSection_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Move to unused</span><span class="tooltip-copy">Move the selected slides into the deck’s unused section.</span></span>
+                </button>
+                <button id="weekday-range-btn" type="button" class="tool-button" aria-label="Weekday range">
+                  <img src="../../assets/icons/openWeekdayRangeDialog_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Weekday range</span><span class="tooltip-copy">Generate a clean list of Mondays, Tuesdays, or any weekday across a date range.</span></span>
+                </button>
+                <button id="toggle-draft-btn" type="button" class="tool-button" aria-label="Toggle draft sticker">
+                  <span class="tool-glyph compact danger">DR</span>
+                  <span class="tooltip"><span class="tooltip-title">Toggle draft sticker</span><span class="tooltip-copy">Add or remove Jolify’s draft marker across the presentation.</span></span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -520,39 +545,42 @@
         </section>
 
           <section class="section">
-          <div class="section-header">Arrange + Group</div>
+          <div class="section-header">Align</div>
           <div class="section-body">
-            <div class="icon-grid">
-              <button id="align-center-group-btn" type="button" class="tool-button" aria-label="Center and group">
-                <img src="../../assets/icons/alignCenterHAndGroup_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Center and group</span><span class="tooltip-copy">Align selected shapes to the same center, then group them.</span></span>
-              </button>
-              <button id="align-middle-group-btn" type="button" class="tool-button" aria-label="Middle and group">
-                <img src="../../assets/icons/alignMiddleVAndGroup_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Middle and group</span><span class="tooltip-copy">Align selected shapes to the same middle line, then group them.</span></span>
-              </button>
-              <button id="center-middle-group-btn" type="button" class="tool-button" aria-label="Center, middle, and group">
-                <img src="../../assets/icons/centerMiddleAndGroup_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Center, middle, and group</span><span class="tooltip-copy">Do both center alignments first, then create one group.</span></span>
-              </button>
-              <button id="distribute-h-group-btn" type="button" class="tool-button" aria-label="Distribute horizontally and group">
-                <img src="../../assets/icons/distributeHAndGroup_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Distribute horizontally and group</span><span class="tooltip-copy">Even out left-to-right spacing, then group the result.</span></span>
-              </button>
-              <button id="distribute-v-group-btn" type="button" class="tool-button" aria-label="Distribute vertically and group">
-                <img src="../../assets/icons/distributeVAndGroup_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Distribute vertically and group</span><span class="tooltip-copy">Even out top-to-bottom spacing, then group the result.</span></span>
-              </button>
-              <button id="distribute-hv-group-btn" type="button" class="tool-button" aria-label="Distribute both ways and group">
-                <span class="tool-glyph compact">HV</span>
-                <span class="tooltip"><span class="tooltip-title">Distribute both ways and group</span><span class="tooltip-copy">Use the taskpane version of the combined horizontal and vertical distribute workflow.</span></span>
-              </button>
+            <div class="subsection">
+              <p class="subsection-label">Compound</p>
+              <div class="icon-grid">
+                <button id="align-center-group-btn" type="button" class="tool-button" aria-label="Center and group">
+                  <img src="../../assets/icons/alignCenterHAndGroup_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Center and group</span><span class="tooltip-copy">Align selected shapes to the same center, then group them.</span></span>
+                </button>
+                <button id="align-middle-group-btn" type="button" class="tool-button" aria-label="Middle and group">
+                  <img src="../../assets/icons/alignMiddleVAndGroup_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Middle and group</span><span class="tooltip-copy">Align selected shapes to the same middle line, then group them.</span></span>
+                </button>
+                <button id="center-middle-group-btn" type="button" class="tool-button" aria-label="Center, middle, and group">
+                  <img src="../../assets/icons/centerMiddleAndGroup_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Center, middle, and group</span><span class="tooltip-copy">Do both center alignments first, then create one group.</span></span>
+                </button>
+                <button id="distribute-h-group-btn" type="button" class="tool-button" aria-label="Distribute horizontally and group">
+                  <img src="../../assets/icons/distributeHAndGroup_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Distribute horizontally and group</span><span class="tooltip-copy">Even out left-to-right spacing, then group the result.</span></span>
+                </button>
+                <button id="distribute-v-group-btn" type="button" class="tool-button" aria-label="Distribute vertically and group">
+                  <img src="../../assets/icons/distributeVAndGroup_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Distribute vertically and group</span><span class="tooltip-copy">Even out top-to-bottom spacing, then group the result.</span></span>
+                </button>
+                <button id="distribute-hv-group-btn" type="button" class="tool-button" aria-label="Distribute both ways and group">
+                  <span class="tool-glyph compact">HV</span>
+                  <span class="tooltip"><span class="tooltip-title">Distribute both ways and group</span><span class="tooltip-copy">Use the taskpane version of the combined horizontal and vertical distribute workflow.</span></span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
           <section class="section">
-          <div class="section-header">Text + Insert</div>
+          <div class="section-header">Text</div>
           <div class="section-body">
             <div class="icon-grid">
               <button id="merge-textboxes-btn" type="button" class="tool-button" aria-label="Merge text boxes">
@@ -571,6 +599,14 @@
                 <img src="../../assets/icons/disableTextAutofit_32.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">AutoFit off</span><span class="tooltip-copy">Disable PowerPoint auto-fitting so text stops resizing itself.</span></span>
               </button>
+            </div>
+          </div>
+        </section>
+
+          <section class="section">
+          <div class="section-header">Insert</div>
+          <div class="section-body">
+            <div class="icon-grid">
               <button id="create-center-sticker-btn" type="button" class="tool-button" aria-label="Create center sticker">
                 <img src="../../assets/icons/createCenterSticker_32.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">Create center sticker</span><span class="tooltip-copy">Drop in a centered placeholder sticker at Jolify’s default size.</span></span>
@@ -584,85 +620,62 @@
         </section>
 
           <section class="section">
-          <div class="section-header">Style Clipboard</div>
+          <div class="section-header">Outline + Style</div>
           <div class="section-body">
-            <div class="icon-grid">
-              <button id="copy-fill-btn" type="button" class="tool-button" aria-label="Copy fill">
-                <span class="tool-glyph compact">CF</span>
-                <span class="tooltip"><span class="tooltip-title">Copy fill</span><span class="tooltip-copy">Save the fill from the first selected shape into Jolify’s clipboard.</span></span>
-              </button>
-              <button id="paste-fill-btn" type="button" class="tool-button" aria-label="Paste fill">
-                <span class="tool-glyph compact">PF</span>
-                <span class="tooltip"><span class="tooltip-title">Paste fill</span><span class="tooltip-copy">Apply the saved fill to the selected target shape or shapes.</span></span>
-              </button>
-              <button id="copy-outline-btn" type="button" class="tool-button" aria-label="Copy outline">
-                <span class="tool-glyph compact">CO</span>
-                <span class="tooltip"><span class="tooltip-title">Copy outline</span><span class="tooltip-copy">Save outline settings from the first selected shape.</span></span>
-              </button>
-              <button id="paste-outline-btn" type="button" class="tool-button" aria-label="Paste outline">
-                <span class="tool-glyph compact">PO</span>
-                <span class="tooltip"><span class="tooltip-title">Paste outline</span><span class="tooltip-copy">Apply the saved outline to the current selection.</span></span>
-              </button>
-              <button id="copy-style-btn" type="button" class="tool-button" aria-label="Copy style">
-                <span class="tool-glyph compact">CS</span>
-                <span class="tooltip"><span class="tooltip-title">Copy style</span><span class="tooltip-copy">Save fill, outline, and text styling from the first selected shape.</span></span>
-              </button>
-              <button id="paste-style-btn" type="button" class="tool-button" aria-label="Paste style">
-                <span class="tool-glyph compact">PS</span>
-                <span class="tooltip"><span class="tooltip-title">Paste style</span><span class="tooltip-copy">Apply the saved combined style to the selected target shapes.</span></span>
-              </button>
+            <div class="subsection">
+              <p class="subsection-label">Clipboard</p>
+              <div class="icon-grid">
+                <button id="copy-fill-btn" type="button" class="tool-button" aria-label="Copy fill">
+                  <span class="tool-glyph compact">CF</span>
+                  <span class="tooltip"><span class="tooltip-title">Copy fill</span><span class="tooltip-copy">Save the fill from the first selected shape into Jolify’s clipboard.</span></span>
+                </button>
+                <button id="paste-fill-btn" type="button" class="tool-button" aria-label="Paste fill">
+                  <span class="tool-glyph compact">PF</span>
+                  <span class="tooltip"><span class="tooltip-title">Paste fill</span><span class="tooltip-copy">Apply the saved fill to the selected target shape or shapes.</span></span>
+                </button>
+                <button id="copy-outline-btn" type="button" class="tool-button" aria-label="Copy outline">
+                  <span class="tool-glyph compact">CO</span>
+                  <span class="tooltip"><span class="tooltip-title">Copy outline</span><span class="tooltip-copy">Save outline settings from the first selected shape.</span></span>
+                </button>
+                <button id="paste-outline-btn" type="button" class="tool-button" aria-label="Paste outline">
+                  <span class="tool-glyph compact">PO</span>
+                  <span class="tooltip"><span class="tooltip-title">Paste outline</span><span class="tooltip-copy">Apply the saved outline to the current selection.</span></span>
+                </button>
+                <button id="copy-style-btn" type="button" class="tool-button" aria-label="Copy style">
+                  <span class="tool-glyph compact">CS</span>
+                  <span class="tooltip"><span class="tooltip-title">Copy style</span><span class="tooltip-copy">Save fill, outline, and text styling from the first selected shape.</span></span>
+                </button>
+                <button id="paste-style-btn" type="button" class="tool-button" aria-label="Paste style">
+                  <span class="tool-glyph compact">PS</span>
+                  <span class="tooltip"><span class="tooltip-title">Paste style</span><span class="tooltip-copy">Apply the saved combined style to the selected target shapes.</span></span>
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
 
-          <section class="section">
-          <div class="section-header">Match Style</div>
-          <div class="section-body">
-            <div class="icon-grid">
-              <button id="match-fill-btn" type="button" class="tool-button" aria-label="Match fill">
-                <img src="../../assets/icons/matchFillStyle_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Match fill</span><span class="tooltip-copy">Copy fill from the first selected shape directly onto the rest.</span></span>
-              </button>
-              <button id="match-outline-btn" type="button" class="tool-button" aria-label="Match outline">
-                <img src="../../assets/icons/matchOutlineStyle_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Match outline</span><span class="tooltip-copy">Copy outline from the first selected shape directly onto the rest.</span></span>
-              </button>
-              <button id="match-style-btn" type="button" class="tool-button" aria-label="Match style">
-                <img src="../../assets/icons/matchShapeStyle_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Match style</span><span class="tooltip-copy">Apply the first selected shape’s fill, outline, and text styling to the others.</span></span>
-              </button>
-              <button id="clear-fill-btn" type="button" class="tool-button" aria-label="No fill">
-                <img src="../../assets/icons/clearFill_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">No fill</span><span class="tooltip-copy">Remove fill from the selected shapes.</span></span>
-              </button>
-              <button id="clear-outline-btn" type="button" class="tool-button" aria-label="No outline">
-                <img src="../../assets/icons/clearOutline_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">No outline</span><span class="tooltip-copy">Remove outlines from the selected shapes.</span></span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-          <section class="section">
-          <div class="section-header">Deck Tools</div>
-          <div class="section-body">
-            <div class="icon-grid">
-              <button id="save-selected-deck-btn" type="button" class="tool-button" aria-label="Save selected deck">
-                <span class="tool-glyph compact">SD</span>
-                <span class="tooltip"><span class="tooltip-title">Save selected deck</span><span class="tooltip-copy">Export the selected slides into a new presentation.</span></span>
-              </button>
-              <button id="move-to-unused-btn" type="button" class="tool-button" aria-label="Move to unused">
-                <img src="../../assets/icons/moveToUnusedSection_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Move to unused</span><span class="tooltip-copy">Move the selected slides into the deck’s unused section.</span></span>
-              </button>
-              <button id="weekday-range-btn" type="button" class="tool-button" aria-label="Weekday range">
-                <img src="../../assets/icons/openWeekdayRangeDialog_32.png" alt="" />
-                <span class="tooltip"><span class="tooltip-title">Weekday range</span><span class="tooltip-copy">Generate a clean list of Mondays, Tuesdays, or any weekday across a date range.</span></span>
-              </button>
-              <button id="toggle-draft-btn" type="button" class="tool-button" aria-label="Toggle draft sticker">
-                <span class="tool-glyph compact danger">DR</span>
-                <span class="tooltip"><span class="tooltip-title">Toggle draft sticker</span><span class="tooltip-copy">Add or remove Jolify’s draft marker across the presentation.</span></span>
-              </button>
+            <div class="subsection">
+              <p class="subsection-label">Match</p>
+              <div class="icon-grid">
+                <button id="match-fill-btn" type="button" class="tool-button" aria-label="Match fill">
+                  <img src="../../assets/icons/matchFillStyle_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Match fill</span><span class="tooltip-copy">Copy fill from the first selected shape directly onto the rest.</span></span>
+                </button>
+                <button id="match-outline-btn" type="button" class="tool-button" aria-label="Match outline">
+                  <img src="../../assets/icons/matchOutlineStyle_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Match outline</span><span class="tooltip-copy">Copy outline from the first selected shape directly onto the rest.</span></span>
+                </button>
+                <button id="match-style-btn" type="button" class="tool-button" aria-label="Match style">
+                  <img src="../../assets/icons/matchShapeStyle_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Match style</span><span class="tooltip-copy">Apply the first selected shape’s fill, outline, and text styling to the others.</span></span>
+                </button>
+                <button id="clear-fill-btn" type="button" class="tool-button" aria-label="No fill">
+                  <img src="../../assets/icons/clearFill_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">No fill</span><span class="tooltip-copy">Remove fill from the selected shapes.</span></span>
+                </button>
+                <button id="clear-outline-btn" type="button" class="tool-button" aria-label="No outline">
+                  <img src="../../assets/icons/clearOutline_32.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">No outline</span><span class="tooltip-copy">Remove outlines from the selected shapes.</span></span>
+                </button>
+              </div>
             </div>
           </div>
           </section>
