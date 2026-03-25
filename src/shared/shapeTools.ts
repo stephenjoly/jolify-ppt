@@ -1254,6 +1254,20 @@ export async function applyOutlineColor(color: string): Promise<ActionResult> {
 
 export async function applyFontColor(color: string): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
+    const selectedTextRange = context.presentation.getSelectedTextRangeOrNullObject();
+    selectedTextRange.load("isNullObject");
+    await context.sync();
+
+    if (!selectedTextRange.isNullObject) {
+      selectedTextRange.font.color = color;
+      await context.sync();
+
+      return {
+        type: "success",
+        message: "Applied font color to the selected text.",
+      };
+    }
+
     const selected = await getSelectedTextShapes(
       context,
       "Select one or more text shapes before applying a font color.",
