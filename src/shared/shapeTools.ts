@@ -501,6 +501,9 @@ const INSERTED_LINE_HEIGHT = 48;
 const INSERTED_SYMBOL_BOX_WIDTH = 64;
 const INSERTED_SYMBOL_BOX_HEIGHT = 64;
 const INSERTED_SYMBOL_FONT_SIZE = 28;
+const HARVEY_BALL_TEXT = "◔";
+const HARVEY_BALL_SIZE = 54;
+const HARVEY_BALL_FONT_SIZE = 38;
 const STACK_GAP = 12;
 const DISTRIBUTE_RESIZE_GAP = 12;
 const OUTLINE_WEIGHT_PRESETS = [0.75, 1.5, 2.25, 3];
@@ -1844,6 +1847,39 @@ export async function insertSymbol(params: SymbolInsertParams): Promise<ActionRe
     }
 
     return insertSymbolTextBox(context, symbol, params.label);
+  });
+}
+
+export async function insertHarveyBall(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const slide = await getCurrentSlide(context);
+    if (!slide) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const position = centerPosition(HARVEY_BALL_SIZE, HARVEY_BALL_SIZE);
+    const shape = slide.shapes.addTextBox(HARVEY_BALL_TEXT, {
+      left: position.left,
+      top: position.top,
+      width: HARVEY_BALL_SIZE,
+      height: HARVEY_BALL_SIZE,
+    });
+
+    applyDefaultTextContainerStyle(shape, {
+      clearFill: true,
+      clearOutline: true,
+    });
+    shape.textFrame.wordWrap = false;
+    shape.textFrame.textRange.font.size = HARVEY_BALL_FONT_SIZE;
+    shape.textFrame.textRange.font.name = "Segoe UI Symbol";
+    shape.textFrame.textRange.paragraphFormat.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
+
+    return selectShapeAndReport(
+      context,
+      slide,
+      shape,
+      "Inserted a quarter-filled Harvey ball.",
+    );
   });
 }
 

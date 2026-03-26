@@ -38,6 +38,7 @@ import {
   distributeH,
   distributeV,
   groupSelectedShapes,
+  insertHarveyBall,
   insertArrow,
   insertElbowLine,
   insertOval,
@@ -172,6 +173,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "insert-line-btn": insertStraightLine,
   "insert-elbow-line-btn": insertElbowLine,
   "insert-symbol-btn": openSymbolPickerDialog,
+  "insert-harvey-ball-btn": insertHarveyBall,
   "create-center-sticker-btn": createCenterSticker,
   "insert-rounded-rectangle-btn": insertRoundedRectangle,
   // Layout Builders

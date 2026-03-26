@@ -17,7 +17,7 @@ Checkbox legend:
 | Both | Insert line | Insert a line | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
 | Both | Insert elbow line | Insert an elbow line | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
 | Both | Insert symbol | Insert a symbol | ☑ | ☑ | Jolify now exposes a bounded symbol picker in the taskpane. |
-| Templafy | Insert Harvey ball | Insert a Harvey ball helper | ☐ | ☑ | No Jolify equivalent. |
+| Both | Insert Harvey ball | Insert a Harvey ball helper | ◐ | ☑ | Jolify now inserts a bounded quarter-filled Harvey ball, but not the richer Templafy cycling model. |
 | Templafy | Insert placeholder | Insert a placeholder shape | ☐ | ☑ | No Jolify equivalent. |
 | Jolify | Create grid | Create a structured shape grid | ☑ | ☐ | Jolify-specific utility. |
 | Jolify | Create center sticker | Insert Jolify center sticker | ☑ | ☐ | Jolify-specific utility. |
