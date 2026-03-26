@@ -1,5 +1,5 @@
 import type { ActionResult } from "../shared/shapeTools";
-import { exportPresentationAsPptx, getCurrentPresentationThemePalette } from "../shared/presentationTools";
+import { exportPresentationAsPdf, exportPresentationAsPptx, getCurrentPresentationThemePalette } from "../shared/presentationTools";
 import {
   toggleDraftSticker,
   alignBottom,
@@ -173,6 +173,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "weekday-range-btn": openWeekdayRangeDialog,
   // Slides
   "save-presentation-pptx-btn": exportPresentationAsPptx,
+  "save-presentation-pdf-btn": exportPresentationAsPdf,
   "save-selected-deck-btn": openSelectedDeckDialog,
   "move-to-unused-btn": moveToUnusedSection,
 };

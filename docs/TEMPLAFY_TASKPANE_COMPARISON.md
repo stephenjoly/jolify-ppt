@@ -124,7 +124,7 @@ Checkbox legend:
 | **Group** | **Share** | Templafy section divider | — | — | Original Templafy grouping |
 | Templafy | Clean-up | Cleanup workflow before sharing | ☐ | ☑ | No Jolify equivalent today. |
 | Templafy | Presentation as PPTX | Save full deck as PPTX | ☑ | ☑ | Jolify now exposes a direct full-deck PPTX export in the Share section. |
-| Templafy | Presentation as PDF | Save full deck as PDF | ☐ | ☑ | No dedicated Jolify export control. |
+| Templafy | Presentation as PDF | Save full deck as PDF | ☑ | ☑ | Jolify now exposes a direct full-deck PDF export in the Share section. |
 | Both | Selected slides as PPTX | Export selected slides as deck | ☑ | ☑ | Jolify `Save Selected Deck` overlaps this strongly. |
 | Templafy | Selected slides as PDF | Export selected slides as PDF | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Email presentation as PPTX | Send full presentation as PPTX | ☐ | ☑ | No Jolify equivalent. |

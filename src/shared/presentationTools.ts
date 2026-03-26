@@ -235,9 +235,9 @@ function readFileSlice(file: Office.File, index: number): Promise<Uint8Array> {
   });
 }
 
-async function getPresentationBytes(): Promise<Uint8Array> {
+async function getDocumentBytes(fileType: Office.FileType = Office.FileType.Compressed): Promise<Uint8Array> {
   const file = await new Promise<Office.File>((resolve, reject) => {
-    Office.context.document.getFileAsync(Office.FileType.Compressed, { sliceSize: 65536 }, (result) => {
+    Office.context.document.getFileAsync(fileType, { sliceSize: 65536 }, (result) => {
       if (result.status === Office.AsyncResultStatus.Failed) {
         reject(result.error);
         return;
@@ -451,7 +451,7 @@ export async function getCurrentPresentationThemePalette(): Promise<ThemePalette
   ];
 
   try {
-    const bytes = await getPresentationBytes();
+    const bytes = await getDocumentBytes();
     const zip = await JSZip.loadAsync(bytes);
     const { presentationRelsDoc } = await getPresentationDocuments(zip);
 
@@ -840,7 +840,7 @@ async function postLocalBridge<T>(path: string, body: Record<string, unknown>): 
 }
 
 async function exportMarkdown(kind: "comments" | "notes"): Promise<{ markdown: string; count: number; baseName: string }> {
-  const [bytes, fileProps] = await Promise.all([getPresentationBytes(), getFileProperties()]);
+  const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
   const zip = await JSZip.loadAsync(bytes);
   const result = kind === "comments" ? await extractCommentsMarkdownFromZip(zip) : await extractNotesMarkdownFromZip(zip);
   return {
@@ -851,7 +851,7 @@ async function exportMarkdown(kind: "comments" | "notes"): Promise<{ markdown: s
 }
 
 async function cleanDeck(kind: "comments" | "notes"): Promise<{ base64: string; removedCount: number; baseName: string }> {
-  const [bytes, fileProps] = await Promise.all([getPresentationBytes(), getFileProperties()]);
+  const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
   const cleaned = await buildCleanedPresentationBase64(bytes, kind);
   return {
     ...cleaned,
@@ -860,7 +860,7 @@ async function cleanDeck(kind: "comments" | "notes"): Promise<{ base64: string; 
 }
 
 export async function exportPresentationAsPptx(): Promise<ActionResult> {
-  const [bytes, fileProps] = await Promise.all([getPresentationBytes(), getFileProperties()]);
+  const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
   const baseName = getBaseNameFromUrl(fileProps.url);
   const filename = `${sanitizeFilename(baseName)}.pptx`;
 
@@ -881,6 +881,31 @@ export async function exportPresentationAsPptx(): Promise<ActionResult> {
   return {
     type: "success",
     message: "Downloaded a PPTX copy of the current presentation.",
+  };
+}
+
+export async function exportPresentationAsPdf(): Promise<ActionResult> {
+  const [bytes, fileProps] = await Promise.all([getDocumentBytes(Office.FileType.Pdf), getFileProperties()]);
+  const baseName = getBaseNameFromUrl(fileProps.url);
+  const filename = `${sanitizeFilename(baseName)}.pdf`;
+
+  if (await isLocalBridgeAvailable()) {
+    await postLocalBridge<{ savedPath: string }>("/native/save-file", {
+      base64File: toBase64(bytes),
+      suggestedFilename: filename,
+      openInPowerPoint: false,
+    });
+
+    return {
+      type: "success",
+      message: "Saved a PDF copy of the current presentation through the local Jolify bridge.",
+    };
+  }
+
+  downloadFile(filename, "application/pdf", bytes);
+  return {
+    type: "success",
+    message: "Downloaded a PDF copy of the current presentation.",
   };
 }
 
@@ -979,7 +1004,7 @@ export async function cleanNotesDeck(): Promise<ActionResult> {
 }
 
 async function exportSelectedSlides(mode: SlideExportMode): Promise<ActionResult> {
-  const [bytes, selection] = await Promise.all([getPresentationBytes(), getSelectedSlideIndexes()]);
+  const [bytes, selection] = await Promise.all([getDocumentBytes(), getSelectedSlideIndexes()]);
   if (selection.indexes.length === 0) {
     return { type: "warning", message: "Select one or more slides before exporting them." };
   }
@@ -1019,7 +1044,7 @@ export function createDeckFromSelectedSlides(): Promise<ActionResult> {
 }
 
 export async function attachSelectedSlidesToEmail(): Promise<ActionResult> {
-  const [bytes, selection] = await Promise.all([getPresentationBytes(), getSelectedSlideIndexes()]);
+  const [bytes, selection] = await Promise.all([getDocumentBytes(), getSelectedSlideIndexes()]);
   if (selection.indexes.length === 0) {
     return { type: "warning", message: "Select one or more slides before attaching them to an email." };
   }
