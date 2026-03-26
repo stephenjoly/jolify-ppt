@@ -3149,7 +3149,16 @@ export function openCleanupDialog(): Promise<ActionResult> {
 
         dialog.addEventHandler(Office.EventType.DialogMessageReceived, async (args: { message: string }) => {
           let payload:
-            | { type?: string; options?: { removeComments?: boolean; removeNotes?: boolean } }
+            | {
+                type?: string;
+                options?: {
+                  removeComments?: boolean;
+                  removeNotes?: boolean;
+                  removeHiddenSlides?: boolean;
+                  removeUnusedSlides?: boolean;
+                  removeAllSections?: boolean;
+                };
+              }
             | null = null;
           try {
             payload = JSON.parse(args.message) as typeof payload;
@@ -3179,6 +3188,9 @@ export function openCleanupDialog(): Promise<ActionResult> {
             const actionResult = await presentationTools.cleanPresentationDeck({
               removeComments: !!payload.options.removeComments,
               removeNotes: !!payload.options.removeNotes,
+              removeHiddenSlides: !!payload.options.removeHiddenSlides,
+              removeUnusedSlides: !!payload.options.removeUnusedSlides,
+              removeAllSections: !!payload.options.removeAllSections,
             });
 
             if (typeof dialog.messageChild === "function") {

@@ -12,12 +12,17 @@ const PptRelationship = {
   slideMaster: "/relationships/slideMaster",
   theme: "/relationships/theme",
 } as const;
+const UNUSED_DIVIDER_TAG = "JOLIFY_UNUSED_DIVIDER";
+const UNUSED_SECTION_NAME = "Unused Slides";
 
 type SlideExportMode = "download" | "local-save";
 type CleanupMode = "comments" | "notes";
 type CleanupOptions = {
   removeComments: boolean;
   removeNotes: boolean;
+  removeHiddenSlides: boolean;
+  removeUnusedSlides: boolean;
+  removeAllSections: boolean;
 };
 
 type SlidePartInfo = {
@@ -26,6 +31,8 @@ type SlidePartInfo = {
   relId: string;
   target: string;
   title: string;
+  hidden: boolean;
+  isUnusedDivider: boolean;
   commentsTarget?: string;
   notesTarget?: string;
 };
@@ -94,6 +101,23 @@ function getRelationshipId(element: Element): string {
   return element.getAttributeNS(REL_NS, "id") ?? element.getAttribute("r:id") ?? "";
 }
 
+function getBooleanLikeAttribute(element: Element, name: string): boolean | null {
+  const value = element.getAttribute(name);
+  if (value == null) {
+    return null;
+  }
+
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "0" || normalized === "false" || normalized === "off") {
+    return false;
+  }
+  if (normalized === "1" || normalized === "true" || normalized === "on") {
+    return true;
+  }
+
+  return null;
+}
+
 function collectText(element: Element): string[] {
   const texts: string[] = [];
   const walker = element.ownerDocument.createTreeWalker(element, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
@@ -115,6 +139,35 @@ function collectText(element: Element): string[] {
 function getFirstMeaningfulText(element: Element): string {
   const texts = collectText(element);
   return texts.find((text) => text.trim() !== "") ?? "";
+}
+
+function isHiddenSlide(slideDoc: XMLDocument): boolean {
+  const root = slideDoc.documentElement;
+  const explicitShow = getBooleanLikeAttribute(root, "show");
+  if (explicitShow !== null) {
+    return explicitShow === false;
+  }
+
+  const explicitHidden = getBooleanLikeAttribute(root, "hidden");
+  if (explicitHidden !== null) {
+    return explicitHidden === true;
+  }
+
+  return false;
+}
+
+function isUnusedDividerSlide(slideDoc: XMLDocument, slideXml: string): boolean {
+  if (slideXml.includes(UNUSED_DIVIDER_TAG)) {
+    return true;
+  }
+
+  const texts = collectText(slideDoc.documentElement).map((text) => text.trim()).filter(Boolean);
+  if (texts.length === 0) {
+    return false;
+  }
+
+  const normalized = texts.map((text) => text.toLowerCase());
+  return normalized.length === 1 && normalized[0] === UNUSED_SECTION_NAME.toLowerCase();
 }
 
 async function readZipText(zip: JSZip, path: string): Promise<string | null> {
@@ -344,6 +397,8 @@ async function getPresentationStructure(zip: JSZip): Promise<PresentationStructu
 
       const slideDoc = parseXml(slideXml);
       const title = getFirstMeaningfulText(slideDoc.documentElement) || `Slide ${index + 1}`;
+      const hidden = isHiddenSlide(slideDoc);
+      const isUnusedDivider = isUnusedDividerSlide(slideDoc, slideXml);
       const slideRelsPath = `${dirname(target)}/_rels/${fileNameWithoutExtension(target)}.xml.rels`;
       const slideRelsXml = await readZipText(zip, slideRelsPath);
 
@@ -379,6 +434,8 @@ async function getPresentationStructure(zip: JSZip): Promise<PresentationStructu
         relId,
         target,
         title,
+        hidden,
+        isUnusedDivider,
         commentsTarget,
         notesTarget,
       };
@@ -668,10 +725,73 @@ function removeContentTypeOverrides(contentTypesDoc: XMLDocument, partNames: str
   });
 }
 
+function getPresentationSectionList(presentationDoc: XMLDocument): Element | null {
+  return Array.from(presentationDoc.getElementsByTagName("*")).find((node): node is Element => {
+    return localNameOf(node) === "sectionLst";
+  }) ?? null;
+}
+
+function pruneSectionsForRemovedSlides(presentationDoc: XMLDocument, removedSlideIds: Set<string>): number {
+  const sectionList = getPresentationSectionList(presentationDoc);
+  if (!sectionList) {
+    return 0;
+  }
+
+  let removedSectionCount = 0;
+  childElements(sectionList, "section").forEach((sectionNode) => {
+    const slideIdList = childElements(sectionNode).find((node) => localNameOf(node) === "sldIdLst");
+    if (!slideIdList) {
+      return;
+    }
+
+    childElements(slideIdList, "sldId").forEach((slideIdNode) => {
+      const slideId = slideIdNode.getAttribute("id");
+      if (slideId && removedSlideIds.has(slideId)) {
+        slideIdNode.parentNode?.removeChild(slideIdNode);
+      }
+    });
+
+    if (childElements(slideIdList, "sldId").length === 0) {
+      sectionNode.parentNode?.removeChild(sectionNode);
+      removedSectionCount += 1;
+    }
+  });
+
+  if (childElements(sectionList, "section").length === 0) {
+    const extNode = sectionList.parentNode as Element | null;
+    sectionList.parentNode?.removeChild(sectionList);
+    if (extNode && localNameOf(extNode) === "ext" && childElements(extNode).length === 0) {
+      extNode.parentNode?.removeChild(extNode);
+    }
+  }
+
+  return removedSectionCount;
+}
+
+function stripAllSections(presentationDoc: XMLDocument): boolean {
+  const sectionList = getPresentationSectionList(presentationDoc);
+  if (!sectionList) {
+    return false;
+  }
+
+  const extNode = sectionList.parentNode as Element | null;
+  sectionList.parentNode?.removeChild(sectionList);
+  if (extNode && localNameOf(extNode) === "ext" && childElements(extNode).length === 0) {
+    extNode.parentNode?.removeChild(extNode);
+  }
+  return true;
+}
+
 async function buildCleanedPresentationBase64(
   bytes: Uint8Array,
   options: CleanupOptions,
-): Promise<{ base64: string; removedCounts: Record<CleanupMode, number> }> {
+): Promise<{
+  base64: string;
+  removedCounts: Record<CleanupMode, number>;
+  removedHiddenSlides: number;
+  removedUnusedSlides: number;
+  removedSections: boolean;
+}> {
   const zip = await JSZip.loadAsync(bytes);
   const contentTypesXml = await readZipText(zip, "[Content_Types].xml");
   if (!contentTypesXml) {
@@ -688,8 +808,102 @@ async function buildCleanedPresentationBase64(
     comments: [PptRelationship.comments],
     notes: [PptRelationship.notesSlide],
   };
+  const slidesByRelId = new Map(structure.slides.map((slide) => [slide.relId, slide] as const));
+  const slideIdList = Array.from(structure.presentationDoc.getElementsByTagName("*")).find((node): node is Element => {
+    return localNameOf(node) === "sldIdLst";
+  });
+
+  if (!slideIdList) {
+    throw new Error("The presentation package is missing its slide list.");
+  }
+
+  const removedSlideIds = new Set<string>();
+  const removedSlideRelIds = new Set<string>();
+  const slidesToRemoveByUnused = new Set<string>();
+  let removedUnusedSlides = 0;
+  let removedHiddenSlides = 0;
+  let reachedUnusedDivider = false;
+
+  structure.slides.forEach((slide) => {
+    if (options.removeUnusedSlides && (reachedUnusedDivider || slide.isUnusedDivider)) {
+      reachedUnusedDivider = true;
+      slidesToRemoveByUnused.add(slide.id);
+    }
+  });
+
+  const slidesToRemoveByHidden = new Set<string>();
+  structure.slides.forEach((slide) => {
+    if (!options.removeHiddenSlides) {
+      return;
+    }
+
+    if (slidesToRemoveByUnused.has(slide.id)) {
+      return;
+    }
+
+    if (slide.hidden) {
+      slidesToRemoveByHidden.add(slide.id);
+    }
+  });
+
+  childElements(slideIdList, "sldId").forEach((slideNode) => {
+    const slideId = slideNode.getAttribute("id") ?? "";
+    const relId = getRelationshipId(slideNode);
+    const slide = relId ? slidesByRelId.get(relId) : null;
+    if (!slide) {
+      return;
+    }
+
+    const removeForUnused = slidesToRemoveByUnused.has(slideId);
+    const removeForHidden = slidesToRemoveByHidden.has(slideId);
+    if (!removeForUnused && !removeForHidden) {
+      return;
+    }
+
+    removedSlideIds.add(slideId);
+    removedSlideRelIds.add(slide.relId);
+    if (removeForUnused) {
+      removedUnusedSlides += 1;
+    } else if (removeForHidden) {
+      removedHiddenSlides += 1;
+    }
+
+    removedParts.add(slide.target);
+    removedParts.add(`${dirname(slide.target)}/_rels/${fileNameWithoutExtension(slide.target)}.xml.rels`);
+    if (slide.commentsTarget) {
+      removedParts.add(slide.commentsTarget);
+    }
+    if (slide.notesTarget) {
+      removedParts.add(slide.notesTarget);
+      removedParts.add(`${dirname(slide.notesTarget)}/_rels/${fileNameWithoutExtension(slide.notesTarget)}.xml.rels`);
+    }
+    slideNode.parentNode?.removeChild(slideNode);
+  });
+
+  Array.from(structure.presentationRelsDoc.getElementsByTagName("*")).forEach((node) => {
+    if (localNameOf(node) !== "Relationship") {
+      return;
+    }
+
+    const type = node.getAttribute("Type") ?? "";
+    const id = node.getAttribute("Id") ?? "";
+    if (type.endsWith(PptRelationship.slide) && removedSlideRelIds.has(id)) {
+      node.parentNode?.removeChild(node);
+    }
+  });
+
+  let removedSections = false;
+  if (options.removeAllSections) {
+    removedSections = stripAllSections(structure.presentationDoc);
+  } else if (removedSlideIds.size > 0) {
+    pruneSectionsForRemovedSlides(structure.presentationDoc, removedSlideIds);
+  }
 
   for (const slide of structure.slides) {
+    if (removedSlideIds.has(slide.id)) {
+      continue;
+    }
+
     const slideRelsPath = `${dirname(slide.target)}/_rels/${fileNameWithoutExtension(slide.target)}.xml.rels`;
     const slideRelsXml = await readZipText(zip, slideRelsPath);
     if (!slideRelsXml) {
@@ -731,12 +945,14 @@ async function buildCleanedPresentationBase64(
     }
   }
 
+  zip.file("ppt/presentation.xml", serializeXml(structure.presentationDoc));
+  zip.file("ppt/_rels/presentation.xml.rels", serializeXml(structure.presentationRelsDoc));
   removeContentTypeOverrides(contentTypesDoc, Array.from(removedParts));
   zip.file("[Content_Types].xml", serializeXml(contentTypesDoc));
 
   removedParts.forEach((part) => zip.remove(part));
   const base64 = await zip.generateAsync({ type: "base64" });
-  return { base64, removedCounts };
+  return { base64, removedCounts, removedHiddenSlides, removedUnusedSlides, removedSections };
 }
 
 async function getSelectedSlideIndexes(): Promise<{ indexes: number[]; baseName: string }> {
@@ -887,6 +1103,9 @@ async function cleanDeck(kind: "comments" | "notes"): Promise<{ base64: string; 
   const cleaned = await buildCleanedPresentationBase64(bytes, {
     removeComments: kind === "comments",
     removeNotes: kind === "notes",
+    removeHiddenSlides: false,
+    removeUnusedSlides: false,
+    removeAllSections: false,
   });
   return {
     base64: cleaned.base64,
@@ -909,8 +1128,44 @@ function describeCleanupCounts(removedCounts: Record<CleanupMode, number>, optio
   return parts.join(" and ");
 }
 
+function describeCleanupSummary(
+  cleaned: {
+    removedCounts: Record<CleanupMode, number>;
+    removedHiddenSlides: number;
+    removedUnusedSlides: number;
+    removedSections: boolean;
+  },
+  options: CleanupOptions,
+): string {
+  const parts: string[] = [];
+  const commentAndNotes = describeCleanupCounts(cleaned.removedCounts, options);
+  if (commentAndNotes) {
+    parts.push(commentAndNotes);
+  }
+
+  if (options.removeHiddenSlides && cleaned.removedHiddenSlides > 0) {
+    parts.push(`${cleaned.removedHiddenSlides} hidden slide${cleaned.removedHiddenSlides === 1 ? "" : "s"}`);
+  }
+
+  if (options.removeUnusedSlides && cleaned.removedUnusedSlides > 0) {
+    parts.push(`${cleaned.removedUnusedSlides} unused slide${cleaned.removedUnusedSlides === 1 ? "" : "s"}`);
+  }
+
+  if (options.removeAllSections && cleaned.removedSections) {
+    parts.push("section metadata");
+  }
+
+  return parts.join(" and ");
+}
+
 export async function cleanPresentationDeck(options: CleanupOptions): Promise<ActionResult> {
-  if (!options.removeComments && !options.removeNotes) {
+  if (
+    !options.removeComments &&
+    !options.removeNotes &&
+    !options.removeHiddenSlides &&
+    !options.removeUnusedSlides &&
+    !options.removeAllSections
+  ) {
     return {
       type: "warning",
       message: "Choose at least one cleanup target before creating a cleaned copy.",
@@ -920,17 +1175,22 @@ export async function cleanPresentationDeck(options: CleanupOptions): Promise<Ac
   const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
   const cleaned = await buildCleanedPresentationBase64(bytes, options);
   const baseName = getBaseNameFromUrl(fileProps.url);
-  const totalRemoved = cleaned.removedCounts.comments + cleaned.removedCounts.notes;
+  const totalRemoved =
+    cleaned.removedCounts.comments +
+    cleaned.removedCounts.notes +
+    cleaned.removedHiddenSlides +
+    cleaned.removedUnusedSlides +
+    (cleaned.removedSections ? 1 : 0);
 
   if (totalRemoved === 0) {
     return {
       type: "info",
-      message: "No comments or speaker notes were found for the selected cleanup options.",
+      message: "Nothing matched the selected cleanup options.",
     };
   }
 
   const filename = `${sanitizeFilename(baseName)} - cleaned.pptx`;
-  const removedSummary = describeCleanupCounts(cleaned.removedCounts, options);
+  const removedSummary = describeCleanupSummary(cleaned, options);
 
   if (await isLocalBridgeAvailable()) {
     await postLocalBridge<{ savedPath: string }>("/native/save-file", {

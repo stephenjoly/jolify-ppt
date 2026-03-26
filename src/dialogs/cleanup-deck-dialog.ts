@@ -35,12 +35,21 @@ function setBusy(isBusy: boolean) {
 function getOptions() {
   const removeComments = (document.getElementById("remove-comments") as HTMLInputElement | null)?.checked ?? false;
   const removeNotes = (document.getElementById("remove-notes") as HTMLInputElement | null)?.checked ?? false;
-  return { removeComments, removeNotes };
+  const removeHiddenSlides = (document.getElementById("remove-hidden-slides") as HTMLInputElement | null)?.checked ?? false;
+  const removeUnusedSlides = (document.getElementById("remove-unused-slides") as HTMLInputElement | null)?.checked ?? false;
+  const removeAllSections = (document.getElementById("remove-all-sections") as HTMLInputElement | null)?.checked ?? false;
+  return { removeComments, removeNotes, removeHiddenSlides, removeUnusedSlides, removeAllSections };
 }
 
 function runCleanup() {
   const options = getOptions();
-  if (!options.removeComments && !options.removeNotes) {
+  if (
+    !options.removeComments &&
+    !options.removeNotes &&
+    !options.removeHiddenSlides &&
+    !options.removeUnusedSlides &&
+    !options.removeAllSections
+  ) {
     setStatus("warning", "Heads up", "Choose at least one cleanup target before creating a cleaned copy.");
     return;
   }
