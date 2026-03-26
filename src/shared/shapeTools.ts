@@ -485,6 +485,8 @@ const CENTER_STICKER_TEXT = "Placeholder text";
 const CENTER_STICKER_FILL_COLOR = "#D9D9D9";
 const CENTER_STICKER_OUTLINE_COLOR = "#BFBFBF";
 const CENTER_STICKER_CASCADE_OFFSET = 10;
+const INSERTED_ROUNDED_RECTANGLE_WIDTH = 144;
+const INSERTED_ROUNDED_RECTANGLE_HEIGHT = 84;
 const POSITION_TOLERANCE = 0.5;
 
 async function fetchImageAsBase64(url: string): Promise<string> {
@@ -1540,6 +1542,33 @@ export async function createCenterSticker(): Promise<ActionResult> {
         cascadeIndex === 0
           ? "Created a centered sticker."
           : `Created a centered sticker with a ${cascadeIndex * CENTER_STICKER_CASCADE_OFFSET}pt cascade offset.`,
+    };
+  });
+}
+
+export async function insertRoundedRectangle(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selectedSlides = context.presentation.getSelectedSlides();
+    selectedSlides.load("items");
+    await context.sync();
+
+    if (selectedSlides.items.length === 0) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const slide = selectedSlides.items[0];
+    slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.roundedRectangle, {
+      left: (SLIDE_WIDTH - INSERTED_ROUNDED_RECTANGLE_WIDTH) / 2,
+      top: (SLIDE_HEIGHT - INSERTED_ROUNDED_RECTANGLE_HEIGHT) / 2,
+      width: INSERTED_ROUNDED_RECTANGLE_WIDTH,
+      height: INSERTED_ROUNDED_RECTANGLE_HEIGHT,
+    });
+
+    await context.sync();
+
+    return {
+      type: "success",
+      message: "Inserted a centered rounded rectangle on the current slide.",
     };
   });
 }

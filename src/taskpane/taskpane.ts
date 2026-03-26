@@ -41,6 +41,7 @@ import {
   removeTextMargins,
   disableTextAutofit,
   createCenterSticker,
+  insertRoundedRectangle,
   swapPositions,
   // Phase 1 — new
   mergeTextBoxes,
@@ -108,6 +109,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "remove-text-margins-btn": removeTextMargins,
   "disable-text-autofit-btn": disableTextAutofit,
   "create-center-sticker-btn": createCenterSticker,
+  "insert-rounded-rectangle-btn": insertRoundedRectangle,
   // Layout Builders
   "create-grid-btn":    openGridDialog,
   "weekday-range-btn": openWeekdayRangeDialog,
