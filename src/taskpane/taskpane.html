@@ -156,32 +156,6 @@
         display: block;
       }
 
-      .tool-glyph {
-        width: 16px;
-        height: 16px;
-        border-radius: 4px;
-        border: 1px solid #d3cdc3;
-        background: #f3efe8;
-        color: #4f4f4f;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 7px;
-        font-weight: 700;
-        line-height: 1;
-        text-transform: uppercase;
-      }
-
-      .tool-glyph.compact {
-        font-size: 6px;
-      }
-
-      .tool-glyph.danger {
-        border-color: #dfb3ae;
-        background: #f9ecea;
-        color: var(--danger);
-      }
-
       .tooltip {
         display: none;
       }
@@ -431,11 +405,11 @@
                 <span class="tooltip"><span class="tooltip-title">Insert Harvey ball</span><span class="tooltip-copy">Insert a centered quarter-filled Harvey ball as a bounded Jolify starting point.</span></span>
               </button>
               <button id="create-center-sticker-btn" type="button" class="tool-button" aria-label="Create center sticker">
-                <img src="../../assets/sample-icons/Insert/Placeholder_n.png" alt="" />
+                <img src="../../assets/icons/createCenterSticker_32.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">Create center sticker</span><span class="tooltip-copy">Drop in a centered placeholder sticker at Jolify’s default size.</span></span>
               </button>
               <button id="create-grid-btn" type="button" class="tool-button" aria-label="Create grid">
-                <img src="../../assets/sample-icons/Other/Shapes_n.png" alt="" />
+                <img src="../../assets/icons/openGridDialog_32.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">Create grid</span><span class="tooltip-copy">Open the grid builder for structured multi-shape layouts.</span></span>
               </button>
             </div>
@@ -621,11 +595,11 @@
               <p class="subsection-label">Size Clipboard</p>
               <div class="icon-grid">
                 <button id="copy-size-btn" type="button" class="tool-button" aria-label="Copy size">
-                  <img src="../../assets/sample-icons/Other/PipetteUp_n-1.png" alt="" />
+                  <img src="../../assets/icons/copySizeOnly_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Copy size</span><span class="tooltip-copy">Save only width and height from the first selected shape.</span></span>
                 </button>
                 <button id="paste-size-btn" type="button" class="tool-button" aria-label="Paste size">
-                  <img src="../../assets/sample-icons/Other/PipetteDown_n.png" alt="" />
+                  <img src="../../assets/icons/pasteSizeOnly_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Paste size</span><span class="tooltip-copy">Apply the saved width and height to every selected target.</span></span>
                 </button>
               </div>
@@ -692,11 +666,11 @@
               <p class="subsection-label">Position Clipboard</p>
               <div class="icon-grid">
                 <button id="copy-position-btn" type="button" class="tool-button" aria-label="Copy position">
-                  <img src="../../assets/sample-icons/Other/PipetteUp_n.png" alt="" />
+                  <img src="../../assets/icons/copyPositionOnly_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Copy position</span><span class="tooltip-copy">Save only the left and top coordinates from the first selected shape.</span></span>
                 </button>
                 <button id="paste-position-btn" type="button" class="tool-button" aria-label="Paste position">
-                  <img src="../../assets/sample-icons/Other/PipetteDown_n.png" alt="" />
+                  <img src="../../assets/icons/pastePositionOnly_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Paste position</span><span class="tooltip-copy">Move the current selection to the saved coordinates.</span></span>
                 </button>
               </div>
@@ -726,7 +700,7 @@
                   <span class="tooltip"><span class="tooltip-title">Distribute vertically and group</span><span class="tooltip-copy">Even out top-to-bottom spacing, then group the result.</span></span>
                 </button>
                 <button id="distribute-hv-group-btn" type="button" class="tool-button" aria-label="Distribute both ways and group">
-                  <span class="tool-glyph compact">HV</span>
+                  <img src="../../assets/icons/distributeHVAndGroupSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Distribute both ways and group</span><span class="tooltip-copy">Use the taskpane version of the combined horizontal and vertical distribute workflow.</span></span>
                 </button>
               </div>
@@ -803,15 +777,15 @@
               <p class="subsection-label">Margins</p>
               <div class="icon-grid">
                 <button id="text-margins-none-btn" type="button" class="tool-button" aria-label="Set text margins to none">
-                  <span class="tool-glyph compact">M0</span>
+                  <img src="../../assets/icons/textMarginsNoneSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Margins none</span><span class="tooltip-copy">Set all text margins to zero.</span></span>
                 </button>
                 <button id="text-margins-tight-btn" type="button" class="tool-button" aria-label="Set text margins to tight">
-                  <span class="tool-glyph compact">MT</span>
+                  <img src="../../assets/icons/textMarginsTightSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Margins tight</span><span class="tooltip-copy">Set all text margins to a tight preset.</span></span>
                 </button>
                 <button id="text-margins-roomy-btn" type="button" class="tool-button" aria-label="Set text margins to roomy">
-                  <span class="tool-glyph compact">MR</span>
+                  <img src="../../assets/icons/textMarginsRoomySemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Margins roomy</span><span class="tooltip-copy">Set all text margins to a roomy preset.</span></span>
                 </button>
               </div>
@@ -821,15 +795,15 @@
               <p class="subsection-label">Auto-size</p>
               <div class="icon-grid">
                 <button id="autofit-off-btn" type="button" class="tool-button" aria-label="AutoFit off">
-                  <span class="tool-glyph compact">A0</span>
+                  <img src="../../assets/icons/autofitOffSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">AutoFit off</span><span class="tooltip-copy">Disable automatic text sizing.</span></span>
                 </button>
                 <button id="autofit-text-btn" type="button" class="tool-button" aria-label="Shrink text to fit shape">
-                  <span class="tool-glyph compact">AT</span>
+                  <img src="../../assets/icons/autofitTextSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Shrink text to fit shape</span><span class="tooltip-copy">Resize text so it fits inside the current shape.</span></span>
                 </button>
                 <button id="autofit-shape-btn" type="button" class="tool-button" aria-label="Resize shape to fit text">
-                  <span class="tool-glyph compact">AS</span>
+                  <img src="../../assets/icons/autofitShapeSemantic_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Resize shape to fit text</span><span class="tooltip-copy">Resize the shape so it fits the current text.</span></span>
                 </button>
               </div>
@@ -844,11 +818,11 @@
               <p class="subsection-label">Geometry Clipboard</p>
               <div class="icon-grid">
                 <button id="copy-all-btn" type="button" class="tool-button" aria-label="Copy position and size">
-                  <img src="../../assets/sample-icons/Other/PipetteUp_n-2.png" alt="" />
+                  <img src="../../assets/icons/copyPositionAndSize_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Copy position and size</span><span class="tooltip-copy">Save both coordinates and dimensions from the first selected shape.</span></span>
                 </button>
                 <button id="paste-all-btn" type="button" class="tool-button" aria-label="Paste position and size">
-                  <img src="../../assets/sample-icons/Other/PipetteDown_n.png" alt="" />
+                  <img src="../../assets/icons/pastePositionAndSize_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Paste position and size</span><span class="tooltip-copy">Apply the saved geometry to every selected target shape.</span></span>
                 </button>
               </div>
@@ -866,7 +840,7 @@
                   <span class="tooltip"><span class="tooltip-title">Weekday range</span><span class="tooltip-copy">Generate a clean list of Mondays, Tuesdays, or any weekday across a date range.</span></span>
                 </button>
                 <button id="toggle-draft-btn" type="button" class="tool-button" aria-label="Toggle draft sticker">
-                  <span class="tool-glyph compact danger">DR</span>
+                  <img src="../../assets/icons/addDraftSticker_32.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Toggle draft sticker</span><span class="tooltip-copy">Add or remove Jolify’s draft marker across the presentation.</span></span>
                 </button>
               </div>
