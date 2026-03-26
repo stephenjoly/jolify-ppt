@@ -393,9 +393,33 @@
           <div class="section-header">Insert</div>
           <div class="section-body">
             <div class="icon-grid">
+              <button id="insert-textbox-btn" type="button" class="tool-button" aria-label="Insert text box">
+                <img src="../../assets/sample-icons/Insert/TextBox_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert text box</span><span class="tooltip-copy">Insert a centered text box with Jolify’s default text-box formatting.</span></span>
+              </button>
+              <button id="insert-rectangle-btn" type="button" class="tool-button" aria-label="Insert rectangle">
+                <img src="../../assets/sample-icons/Insert/Rectangle_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert rectangle</span><span class="tooltip-copy">Insert a centered rectangle with placeholder text.</span></span>
+              </button>
               <button id="insert-rounded-rectangle-btn" type="button" class="tool-button" aria-label="Insert rounded rectangle">
                 <img src="../../assets/sample-icons/Insert/RoundedRectangle_n.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">Insert rounded rectangle</span><span class="tooltip-copy">Drop a centered rounded rectangle onto the current slide.</span></span>
+              </button>
+              <button id="insert-arrow-btn" type="button" class="tool-button" aria-label="Insert arrow">
+                <img src="../../assets/sample-icons/Insert/ArrowRight_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert arrow</span><span class="tooltip-copy">Insert a centered right arrow with placeholder text.</span></span>
+              </button>
+              <button id="insert-oval-btn" type="button" class="tool-button" aria-label="Insert oval">
+                <img src="../../assets/sample-icons/Insert/Oval_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert oval</span><span class="tooltip-copy">Insert a centered oval with placeholder text.</span></span>
+              </button>
+              <button id="insert-line-btn" type="button" class="tool-button" aria-label="Insert line">
+                <img src="../../assets/sample-icons/Insert/Line_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert line</span><span class="tooltip-copy">Insert a centered straight line.</span></span>
+              </button>
+              <button id="insert-elbow-line-btn" type="button" class="tool-button" aria-label="Insert elbow line">
+                <img src="../../assets/sample-icons/Insert/ElbowLine_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Insert elbow line</span><span class="tooltip-copy">Insert a centered elbow connector.</span></span>
               </button>
               <button id="create-center-sticker-btn" type="button" class="tool-button" aria-label="Create center sticker">
                 <img src="../../assets/sample-icons/Insert/Placeholder_n.png" alt="" />
@@ -412,6 +436,28 @@
           <section class="section">
           <div class="section-header">Outline + Style</div>
           <div class="section-body">
+            <div class="subsection">
+              <p class="subsection-label">Outline</p>
+              <div class="icon-grid">
+                <button id="outline-weight-btn" type="button" class="tool-button" aria-label="Cycle outline weight">
+                  <img src="../../assets/sample-icons/Outline/OutlineWeight_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Cycle outline weight</span><span class="tooltip-copy">Cycle the selection through Jolify’s fixed outline weight presets.</span></span>
+                </button>
+                <button id="outline-dash-btn" type="button" class="tool-button" aria-label="Cycle outline dash style">
+                  <img src="../../assets/sample-icons/Outline/LineStyle_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Cycle outline dash style</span><span class="tooltip-copy">Cycle the selection through Jolify’s fixed outline dash presets.</span></span>
+                </button>
+                <button id="line-vertical-btn" type="button" class="tool-button" aria-label="Make lines vertical">
+                  <img src="../../assets/sample-icons/Outline/LineToVertical_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Make lines vertical</span><span class="tooltip-copy">Normalize selected line shapes to a vertical orientation.</span></span>
+                </button>
+                <button id="line-horizontal-btn" type="button" class="tool-button" aria-label="Make lines horizontal">
+                  <img src="../../assets/sample-icons/Outline/LineToHorizontal_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Make lines horizontal</span><span class="tooltip-copy">Normalize selected line shapes to a horizontal orientation.</span></span>
+                </button>
+              </div>
+            </div>
+
             <div class="subsection">
               <p class="subsection-label">Clipboard</p>
               <div class="icon-grid">
@@ -496,6 +542,28 @@
             </div>
 
             <div class="subsection">
+              <p class="subsection-label">Resize-aware</p>
+              <div class="icon-grid">
+                <button id="distribute-resize-h-btn" type="button" class="tool-button" aria-label="Distribute horizontally with resize">
+                  <img src="../../assets/sample-icons/Align/DistributeResizeHorizontal_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Distribute horizontally with resize</span><span class="tooltip-copy">Even out the selection horizontally and resize each shape to a common width.</span></span>
+                </button>
+                <button id="distribute-resize-v-btn" type="button" class="tool-button" aria-label="Distribute vertically with resize">
+                  <img src="../../assets/sample-icons/Align/DistributeResizeVertical_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Distribute vertically with resize</span><span class="tooltip-copy">Even out the selection vertically and resize each shape to a common height.</span></span>
+                </button>
+                <button id="stack-h-btn" type="button" class="tool-button" aria-label="Stack horizontally">
+                  <img src="../../assets/sample-icons/Align/StackHorizontal_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Stack horizontally</span><span class="tooltip-copy">Stack selected shapes left to right using Jolify’s fixed default gap.</span></span>
+                </button>
+                <button id="stack-v-btn" type="button" class="tool-button" aria-label="Stack vertically">
+                  <img src="../../assets/sample-icons/Align/StackVertical_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Stack vertically</span><span class="tooltip-copy">Stack selected shapes top to bottom using Jolify’s fixed default gap.</span></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="subsection">
               <p class="subsection-label">Vertical</p>
               <div class="icon-grid">
                 <button id="align-top-btn" type="button" class="tool-button" aria-label="Align top">
@@ -568,6 +636,36 @@
           <div class="section-header">Arrange</div>
           <div class="section-body">
             <div class="subsection">
+              <p class="subsection-label">Order</p>
+              <div class="icon-grid">
+                <button id="bring-to-front-btn" type="button" class="tool-button" aria-label="Bring to front">
+                  <img src="../../assets/sample-icons/Arrange/BringToFront_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Bring to front</span><span class="tooltip-copy">Move the selection to the front of the z-order.</span></span>
+                </button>
+                <button id="send-to-back-btn" type="button" class="tool-button" aria-label="Send to back">
+                  <img src="../../assets/sample-icons/Arrange/SendToBack_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Send to back</span><span class="tooltip-copy">Move the selection to the back of the z-order.</span></span>
+                </button>
+                <button id="bring-forward-btn" type="button" class="tool-button" aria-label="Bring forward">
+                  <img src="../../assets/sample-icons/Arrange/BringForward_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Bring forward</span><span class="tooltip-copy">Move the selection one step forward in the z-order.</span></span>
+                </button>
+                <button id="send-backward-btn" type="button" class="tool-button" aria-label="Send backward">
+                  <img src="../../assets/sample-icons/Arrange/SendBackward_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Send backward</span><span class="tooltip-copy">Move the selection one step backward in the z-order.</span></span>
+                </button>
+                <button id="group-btn" type="button" class="tool-button" aria-label="Group">
+                  <img src="../../assets/sample-icons/Arrange/ObjectsGroup_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Group</span><span class="tooltip-copy">Group the selected shapes.</span></span>
+                </button>
+                <button id="ungroup-btn" type="button" class="tool-button" aria-label="Ungroup">
+                  <img src="../../assets/sample-icons/Arrange/ObjectsUnGroup_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Ungroup</span><span class="tooltip-copy">Ungroup the selected grouped shapes.</span></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="subsection">
               <p class="subsection-label">Compound</p>
               <div class="icon-grid">
                 <button id="align-center-group-btn" type="button" class="tool-button" aria-label="Center and group">
@@ -603,9 +701,17 @@
           <div class="section-header">Swap</div>
           <div class="section-body">
             <div class="icon-grid">
-                <button id="swap-btn" type="button" class="tool-button" aria-label="Swap positions">
+              <button id="swap-btn" type="button" class="tool-button" aria-label="Swap positions">
                 <img src="../../assets/sample-icons/Swap/SwitchPosition_n.png" alt="" />
                 <span class="tooltip"><span class="tooltip-title">Swap positions</span><span class="tooltip-copy">Exchange the positions of exactly two selected shapes.</span></span>
+              </button>
+              <button id="swap-x-btn" type="button" class="tool-button" aria-label="Swap X positions">
+                <img src="../../assets/sample-icons/Swap/SwitchPositionX_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Swap X positions</span><span class="tooltip-copy">Swap only the horizontal positions of two selected shapes.</span></span>
+              </button>
+              <button id="swap-y-btn" type="button" class="tool-button" aria-label="Swap Y positions">
+                <img src="../../assets/sample-icons/Swap/SwitchPositionY_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Swap Y positions</span><span class="tooltip-copy">Swap only the vertical positions of two selected shapes.</span></span>
               </button>
             </div>
           </div>
@@ -615,8 +721,16 @@
           <div class="section-header">Text</div>
           <div class="section-body">
             <div class="subsection">
-              <p class="subsection-label">Text Boxes</p>
+              <p class="subsection-label">Format</p>
               <div class="icon-grid">
+                <button id="default-textbox-format-btn" type="button" class="tool-button" aria-label="Apply default textbox format">
+                  <img src="../../assets/sample-icons/Text/TextBoxFormat_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Apply default textbox format</span><span class="tooltip-copy">Apply Jolify’s default text-box format to the selected text boxes.</span></span>
+                </button>
+                <button id="word-wrap-btn" type="button" class="tool-button" aria-label="Toggle word wrap">
+                  <img src="../../assets/sample-icons/Text/TextBoxWordWrap_l.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Toggle word wrap</span><span class="tooltip-copy">Turn word wrap on or off for the selected text boxes.</span></span>
+                </button>
                 <button id="merge-textboxes-btn" type="button" class="tool-button" aria-label="Merge text boxes">
                   <img src="../../assets/sample-icons/Text/TextBoxMerge_n.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Merge text boxes</span><span class="tooltip-copy">Combine text from selected text boxes into a single box.</span></span>
@@ -625,13 +739,45 @@
                   <img src="../../assets/sample-icons/Text/TextBoxSplit_n.png" alt="" />
                   <span class="tooltip"><span class="tooltip-title">Split text box by lines</span><span class="tooltip-copy">Turn each line in a text box into its own new text box.</span></span>
                 </button>
-                <button id="remove-text-margins-btn" type="button" class="tool-button" aria-label="Remove text margins">
-                  <img src="../../assets/sample-icons/Text/TextBoxMarginDialog_n.png" alt="" />
-                  <span class="tooltip"><span class="tooltip-title">Remove text margins</span><span class="tooltip-copy">Set text margins to zero on the selected text boxes.</span></span>
+                <button id="swap-text-btn" type="button" class="tool-button" aria-label="Swap text">
+                  <img src="../../assets/sample-icons/Text/SwitchText_n.png" alt="" />
+                  <span class="tooltip"><span class="tooltip-title">Swap text</span><span class="tooltip-copy">Swap the text contents of exactly two selected text boxes.</span></span>
                 </button>
-                <button id="disable-text-autofit-btn" type="button" class="tool-button" aria-label="AutoFit off">
-                  <img src="../../assets/sample-icons/Text/TextBoxAutoSize_n.png" alt="" />
-                  <span class="tooltip"><span class="tooltip-title">AutoFit off</span><span class="tooltip-copy">Disable PowerPoint auto-fitting so text stops resizing itself.</span></span>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <p class="subsection-label">Margins</p>
+              <div class="icon-grid">
+                <button id="text-margins-none-btn" type="button" class="tool-button" aria-label="Set text margins to none">
+                  <span class="tool-glyph compact">M0</span>
+                  <span class="tooltip"><span class="tooltip-title">Margins none</span><span class="tooltip-copy">Set all text margins to zero.</span></span>
+                </button>
+                <button id="text-margins-tight-btn" type="button" class="tool-button" aria-label="Set text margins to tight">
+                  <span class="tool-glyph compact">MT</span>
+                  <span class="tooltip"><span class="tooltip-title">Margins tight</span><span class="tooltip-copy">Set all text margins to a tight preset.</span></span>
+                </button>
+                <button id="text-margins-roomy-btn" type="button" class="tool-button" aria-label="Set text margins to roomy">
+                  <span class="tool-glyph compact">MR</span>
+                  <span class="tooltip"><span class="tooltip-title">Margins roomy</span><span class="tooltip-copy">Set all text margins to a roomy preset.</span></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <p class="subsection-label">Auto-size</p>
+              <div class="icon-grid">
+                <button id="autofit-off-btn" type="button" class="tool-button" aria-label="AutoFit off">
+                  <span class="tool-glyph compact">A0</span>
+                  <span class="tooltip"><span class="tooltip-title">AutoFit off</span><span class="tooltip-copy">Disable automatic text sizing.</span></span>
+                </button>
+                <button id="autofit-text-btn" type="button" class="tool-button" aria-label="Shrink text to fit shape">
+                  <span class="tool-glyph compact">AT</span>
+                  <span class="tooltip"><span class="tooltip-title">Shrink text to fit shape</span><span class="tooltip-copy">Resize text so it fits inside the current shape.</span></span>
+                </button>
+                <button id="autofit-shape-btn" type="button" class="tool-button" aria-label="Resize shape to fit text">
+                  <span class="tool-glyph compact">AS</span>
+                  <span class="tooltip"><span class="tooltip-title">Resize shape to fit text</span><span class="tooltip-copy">Resize the shape so it fits the current text.</span></span>
                 </button>
               </div>
             </div>

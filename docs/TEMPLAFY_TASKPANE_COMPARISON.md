@@ -8,25 +8,25 @@ Checkbox legend:
 | Origin | Capability | Description | Jolify | Templafy | Comments |
 | --- | --- | --- | --- | --- | --- |
 | **Group** | **Insert** | Templafy section divider | — | — | Original Templafy grouping |
-| Both | Insert text box | Insert a new text box | ◐ | ☑ | Jolify can reach this through native `Shapes Insert Gallery`, but not as a dedicated Jolify action. |
-| Both | Insert rectangle | Insert a rectangle | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
-| Both | Insert rounded rectangle | Insert a rounded rectangle | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
+| Both | Insert text box | Insert a new text box | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
+| Both | Insert rectangle | Insert a rectangle | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
+| Both | Insert rounded rectangle | Insert a rounded rectangle | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
 | Templafy | Insert flow | Insert a flow / multi-click flow shape | ☐ | ☑ | No Jolify equivalent. |
-| Both | Insert arrow | Insert an arrow | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
-| Both | Insert oval | Insert an oval | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
-| Both | Insert line | Insert a line | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
-| Both | Insert elbow line | Insert an elbow line | ◐ | ☑ | Covered indirectly via native `Shapes Insert Gallery`. |
+| Both | Insert arrow | Insert an arrow | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
+| Both | Insert oval | Insert an oval | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
+| Both | Insert line | Insert a line | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
+| Both | Insert elbow line | Insert an elbow line | ☑ | ☑ | Jolify now has a dedicated taskpane insert action. |
 | Templafy | Insert symbol | Insert a symbol | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Insert Harvey ball | Insert a Harvey ball helper | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Insert placeholder | Insert a placeholder shape | ☐ | ☑ | No Jolify equivalent. |
 | Jolify | Create grid | Create a structured shape grid | ☑ | ☐ | Jolify-specific utility. |
 | Jolify | Create center sticker | Insert Jolify center sticker | ☑ | ☐ | Jolify-specific utility. |
 | **Group** | **Outline** | Templafy section divider | — | — | Original Templafy grouping |
-| Templafy | Outline weight | Change line weight | ☐ | ☑ | Jolify can reuse outline styles, but not directly edit line weight via a dedicated tool. |
-| Templafy | Outline dash style | Change line dash pattern | ☐ | ☑ | No dedicated Jolify control. |
+| Templafy | Outline weight | Change line weight | ☑ | ☑ | Jolify now exposes a preset-cycle outline weight tool. |
+| Templafy | Outline dash style | Change line dash pattern | ☑ | ☑ | Jolify now exposes a preset-cycle dash-style tool. |
 | Templafy | Outline arrow style | Change line arrowheads | ☐ | ☑ | No dedicated Jolify control. |
-| Templafy | Make lines vertical | Normalize selected lines vertically | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Make lines horizontal | Normalize selected lines horizontally | ☐ | ☑ | No Jolify equivalent. |
+| Templafy | Make lines vertical | Normalize selected lines vertically | ☑ | ☑ | Jolify now exposes a line-orientation normalization tool. |
+| Templafy | Make lines horizontal | Normalize selected lines horizontally | ☑ | ☑ | Jolify now exposes a line-orientation normalization tool. |
 | Jolify | Match outline | Apply outline from one shape to others | ☑ | ☐ | Jolify-specific match workflow. |
 | Jolify | Copy outline | Save outline styling for later apply | ☑ | ☐ | Available in taskpane only right now. |
 | Jolify | Paste outline | Apply saved outline styling | ☑ | ☐ | Available in taskpane only right now. |
@@ -40,10 +40,10 @@ Checkbox legend:
 | Both | Align bottom | Align selected shapes bottom | ☑ | ☑ | Strong parity. |
 | Both | Distribute horizontally | Even horizontal spacing | ☑ | ☑ | Strong parity. |
 | Both | Distribute vertically | Even vertical spacing | ☑ | ☑ | Strong parity. |
-| Templafy | Distribute horizontally with resize | Resize-aware horizontal distribution | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Distribute vertically with resize | Resize-aware vertical distribution | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Stack horizontally | Stack shapes horizontally | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Stack vertically | Stack shapes vertically | ☐ | ☑ | No Jolify equivalent. |
+| Templafy | Distribute horizontally with resize | Resize-aware horizontal distribution | ☑ | ☑ | Jolify now exposes a fixed-gap resize-aware horizontal distribute action. |
+| Templafy | Distribute vertically with resize | Resize-aware vertical distribution | ☑ | ☑ | Jolify now exposes a fixed-gap resize-aware vertical distribute action. |
+| Templafy | Stack horizontally | Stack shapes horizontally | ☑ | ☑ | Jolify now exposes a fixed-gap horizontal stack action. |
+| Templafy | Stack vertically | Stack shapes vertically | ☑ | ☑ | Jolify now exposes a fixed-gap vertical stack action. |
 | Templafy | Select similar | Select similar shapes | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Unify adjustments | Normalize shape adjustments | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Super size | Scale or enlarge shapes with a dedicated tool | ☐ | ☑ | No Jolify equivalent. |
@@ -62,12 +62,12 @@ Checkbox legend:
 | Both | Stretch top | Stretch to reference top edge | ☑ | ☑ | Strong parity. |
 | Both | Stretch bottom | Stretch to reference bottom edge | ☑ | ☑ | Strong parity. |
 | **Group** | **Arrange** | Templafy section divider | — | — | Original Templafy grouping |
-| Templafy | Group | Group selected objects | ☐ | ☑ | No current standalone Jolify control. |
-| Templafy | Ungroup | Ungroup selected objects | ☐ | ☑ | No current Jolify control. |
+| Templafy | Group | Group selected objects | ☑ | ☑ | Jolify now exposes Group in the taskpane. |
+| Templafy | Ungroup | Ungroup selected objects | ☑ | ☑ | Jolify now exposes Ungroup in the taskpane. |
 | Both | Send to back | Send object to back | ☑ | ☑ | Available on ribbon. |
 | Both | Bring to front | Bring object to front | ☑ | ☑ | Available on ribbon. |
-| Templafy | Send backward | Move one layer back | ☐ | ☑ | No current Jolify control. |
-| Templafy | Bring forward | Move one layer forward | ☐ | ☑ | No current Jolify control. |
+| Templafy | Send backward | Move one layer back | ☑ | ☑ | Jolify now exposes Send Backward in the taskpane. |
+| Templafy | Bring forward | Move one layer forward | ☑ | ☑ | Jolify now exposes Bring Forward in the taskpane. |
 | **Group** | **Rotate** | Templafy section divider | — | — | Original Templafy grouping |
 | Templafy | Rotate right 90 | Rotate object right 90 degrees | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Rotate left 90 | Rotate object left 90 degrees | ☐ | ☑ | No Jolify equivalent. |
@@ -76,19 +76,19 @@ Checkbox legend:
 | Templafy | More rotation options | Open rotation options | ☐ | ☑ | No Jolify equivalent. |
 | **Group** | **Swap** | Templafy section divider | — | — | Original Templafy grouping |
 | Both | Swap position | Swap full positions | ☑ | ☑ | Jolify supports full swap. |
-| Templafy | Swap X-position | Swap horizontal position only | ☐ | ☑ | Not in Jolify. |
-| Templafy | Swap Y-position | Swap vertical position only | ☐ | ☑ | Not in Jolify. |
+| Templafy | Swap X-position | Swap horizontal position only | ☑ | ☑ | Jolify now exposes an X-only swap action. |
+| Templafy | Swap Y-position | Swap vertical position only | ☑ | ☑ | Jolify now exposes a Y-only swap action. |
 | **Group** | **Text** | Templafy section divider | — | — | Original Templafy grouping |
-| Templafy | Apply default textbox format | Apply a standard text-box style | ☐ | ☑ | No Jolify equivalent. |
-| Both | Text margins | Edit text margins | ☑ | ☑ | Jolify supports `Remove Text Margins`, but not a full dialog-like editor. |
-| Both | Auto-size | Toggle or control text auto-size | ◐ | ☑ | Jolify has `AutoFit Off`, but not the broader Templafy autosize control set. |
-| Templafy | Word-wrap | Toggle word wrap | ☐ | ☑ | No Jolify equivalent. |
+| Templafy | Apply default textbox format | Apply a standard text-box style | ☑ | ☑ | Jolify now exposes a default text-box preset action. |
+| Both | Text margins | Edit text margins | ☑ | ☑ | Jolify now exposes bounded text-margin presets in the taskpane. |
+| Both | Auto-size | Toggle or control text auto-size | ☑ | ☑ | Jolify now exposes a bounded autosize control set in the taskpane. |
+| Templafy | Word-wrap | Toggle word wrap | ☑ | ☑ | Jolify now exposes a word-wrap toggle. |
 | Both | Increase line spacing | Raise line spacing | ◐ | ☑ | Native PowerPoint line spacing controls are available in ribbon, but not as a dedicated Jolify tool. |
 | Both | Decrease line spacing | Lower line spacing | ◐ | ☑ | Same note as above. |
 | Both | Split text box | Split text into separate boxes | ☑ | ☑ | Strong parity. |
 | Both | Merge text boxes | Merge text boxes | ☑ | ☑ | Strong parity. |
 | Templafy | Split table to text boxes | Convert table cells to text boxes | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Swap text | Swap text contents | ☐ | ☑ | No Jolify equivalent. |
+| Templafy | Swap text | Swap text contents | ☑ | ☑ | Jolify now exposes a taskpane swap-text action. |
 | Templafy | Footnotes | Insert or manage footnotes | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Set language | Set proofing language | ☐ | ☑ | No Jolify equivalent. |
 | Jolify | Match fill | Apply fill from one shape to others | ☑ | ☐ | Jolify-specific match workflow. |

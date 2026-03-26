@@ -485,8 +485,33 @@ const CENTER_STICKER_TEXT = "Placeholder text";
 const CENTER_STICKER_FILL_COLOR = "#D9D9D9";
 const CENTER_STICKER_OUTLINE_COLOR = "#BFBFBF";
 const CENTER_STICKER_CASCADE_OFFSET = 10;
+const PLACEHOLDER_TEXT = "Placeholder text";
 const INSERTED_ROUNDED_RECTANGLE_WIDTH = 144;
 const INSERTED_ROUNDED_RECTANGLE_HEIGHT = 84;
+const INSERTED_TEXTBOX_WIDTH = 180;
+const INSERTED_TEXTBOX_HEIGHT = 72;
+const INSERTED_RECTANGLE_WIDTH = 144;
+const INSERTED_RECTANGLE_HEIGHT = 84;
+const INSERTED_OVAL_WIDTH = 144;
+const INSERTED_OVAL_HEIGHT = 84;
+const INSERTED_ARROW_WIDTH = 164;
+const INSERTED_ARROW_HEIGHT = 80;
+const INSERTED_LINE_WIDTH = 160;
+const INSERTED_LINE_HEIGHT = 48;
+const STACK_GAP = 12;
+const DISTRIBUTE_RESIZE_GAP = 12;
+const OUTLINE_WEIGHT_PRESETS = [0.75, 1.5, 2.25, 3];
+const OUTLINE_DASH_PRESETS: Array<PowerPoint.ShapeLineDashStyle | "Solid" | "Dash" | "LongDash" | "DashDot"> = [
+  PowerPoint.ShapeLineDashStyle.solid,
+  PowerPoint.ShapeLineDashStyle.dash,
+  PowerPoint.ShapeLineDashStyle.longDash,
+  PowerPoint.ShapeLineDashStyle.dashDot,
+];
+const TEXT_MARGIN_PRESETS = {
+  none: 0,
+  tight: 4,
+  roomy: 12,
+} as const;
 const POSITION_TOLERANCE = 0.5;
 
 async function fetchImageAsBase64(url: string): Promise<string> {
@@ -625,6 +650,137 @@ const SLIDE_HEIGHT = 540; // points, widescreen default
 
 type AlignType = "left" | "centerH" | "right" | "top" | "middleV" | "bottom" | "distributeH" | "distributeV";
 type StretchEdge = "left" | "right" | "top" | "bottom";
+type DistributeResizeAxis = "horizontal" | "vertical";
+type MarginPreset = keyof typeof TEXT_MARGIN_PRESETS;
+
+function supportsPowerPointApi(version: string): boolean {
+  return Office.context.requirements.isSetSupported("PowerPointApi", version);
+}
+
+function getCurrentSlide(context: PowerPoint.RequestContext): Promise<PowerPoint.Slide | null> {
+  const selectedSlides = context.presentation.getSelectedSlides();
+  selectedSlides.load("items");
+  return context.sync().then(() => (selectedSlides.items.length > 0 ? selectedSlides.items[0] : null));
+}
+
+function centerPosition(width: number, height: number): ShapePosition {
+  return {
+    left: (SLIDE_WIDTH - width) / 2,
+    top: (SLIDE_HEIGHT - height) / 2,
+  };
+}
+
+function applyDefaultTextContainerStyle(
+  shape: PowerPoint.Shape,
+  options?: {
+    clearFill?: boolean;
+    clearOutline?: boolean;
+    setPlaceholderText?: boolean;
+  },
+): void {
+  if (options?.setPlaceholderText) {
+    shape.textFrame.textRange.text = PLACEHOLDER_TEXT;
+  }
+
+  if (options?.clearFill) {
+    shape.fill.clear();
+  }
+
+  if (options?.clearOutline) {
+    shape.lineFormat.visible = false;
+  }
+
+  shape.textFrame.leftMargin = 0;
+  shape.textFrame.rightMargin = 0;
+  shape.textFrame.topMargin = 0;
+  shape.textFrame.bottomMargin = 0;
+  shape.textFrame.autoSizeSetting = PowerPoint.ShapeAutoSize.autoSizeNone;
+  shape.textFrame.verticalAlignment = PowerPoint.TextVerticalAlignment.middle;
+  shape.textFrame.wordWrap = true;
+}
+
+async function selectShapeAndReport(
+  context: PowerPoint.RequestContext,
+  slide: PowerPoint.Slide,
+  shape: PowerPoint.Shape,
+  message: string,
+): Promise<ActionResult> {
+  shape.load("id");
+  await context.sync();
+  slide.setSelectedShapes([shape.id]);
+  await context.sync();
+  return { type: "success", message };
+}
+
+async function insertTextCapableShape(
+  geometricShapeType:
+    | PowerPoint.GeometricShapeType
+    | "Rectangle"
+    | "RoundRectangle"
+    | "Ellipse"
+    | "RightArrow",
+  width: number,
+  height: number,
+  successMessage: string,
+): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const slide = await getCurrentSlide(context);
+    if (!slide) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const position = centerPosition(width, height);
+    const shape = slide.shapes.addGeometricShape(geometricShapeType, {
+      left: position.left,
+      top: position.top,
+      width,
+      height,
+    });
+
+    applyDefaultTextContainerStyle(shape, { setPlaceholderText: true });
+
+    return selectShapeAndReport(context, slide, shape, successMessage);
+  });
+}
+
+async function insertLineShape(
+  connectorType: PowerPoint.ConnectorType | "Straight" | "Elbow",
+  width: number,
+  height: number,
+  successMessage: string,
+): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const slide = await getCurrentSlide(context);
+    if (!slide) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const position = centerPosition(width, height);
+    const shape = slide.shapes.addLine(connectorType, {
+      left: position.left,
+      top: position.top,
+      width,
+      height,
+    });
+
+    shape.lineFormat.visible = true;
+
+    return selectShapeAndReport(context, slide, shape, successMessage);
+  });
+}
+
+function getNextPresetValue<T>(
+  presets: readonly T[],
+  current: T,
+  comparator: (left: T, right: T) => boolean,
+): T {
+  const currentIndex = presets.findIndex((preset) => comparator(preset, current));
+  if (currentIndex === -1) {
+    return presets[0];
+  }
+
+  return presets[(currentIndex + 1) % presets.length];
+}
 
 async function alignShapes(type: AlignType): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
@@ -1547,28 +1703,573 @@ export async function createCenterSticker(): Promise<ActionResult> {
 }
 
 export async function insertRoundedRectangle(): Promise<ActionResult> {
-  return PowerPoint.run(async (context) => {
-    const selectedSlides = context.presentation.getSelectedSlides();
-    selectedSlides.load("items");
-    await context.sync();
+  return insertTextCapableShape(
+    PowerPoint.GeometricShapeType.roundedRectangle,
+    INSERTED_ROUNDED_RECTANGLE_WIDTH,
+    INSERTED_ROUNDED_RECTANGLE_HEIGHT,
+    "Inserted a centered rounded rectangle on the current slide.",
+  );
+}
 
-    if (selectedSlides.items.length === 0) {
+export async function insertTextBox(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const slide = await getCurrentSlide(context);
+    if (!slide) {
       return { type: "error", message: "Could not determine the current slide." };
     }
 
-    const slide = selectedSlides.items[0];
-    slide.shapes.addGeometricShape(PowerPoint.GeometricShapeType.roundedRectangle, {
-      left: (SLIDE_WIDTH - INSERTED_ROUNDED_RECTANGLE_WIDTH) / 2,
-      top: (SLIDE_HEIGHT - INSERTED_ROUNDED_RECTANGLE_HEIGHT) / 2,
-      width: INSERTED_ROUNDED_RECTANGLE_WIDTH,
-      height: INSERTED_ROUNDED_RECTANGLE_HEIGHT,
+    const position = centerPosition(INSERTED_TEXTBOX_WIDTH, INSERTED_TEXTBOX_HEIGHT);
+    const shape = slide.shapes.addTextBox(PLACEHOLDER_TEXT, {
+      left: position.left,
+      top: position.top,
+      width: INSERTED_TEXTBOX_WIDTH,
+      height: INSERTED_TEXTBOX_HEIGHT,
     });
+
+    applyDefaultTextContainerStyle(shape, {
+      clearFill: true,
+      clearOutline: true,
+    });
+
+    return selectShapeAndReport(context, slide, shape, "Inserted a centered text box on the current slide.");
+  });
+}
+
+export async function insertRectangle(): Promise<ActionResult> {
+  return insertTextCapableShape(
+    PowerPoint.GeometricShapeType.rectangle,
+    INSERTED_RECTANGLE_WIDTH,
+    INSERTED_RECTANGLE_HEIGHT,
+    "Inserted a centered rectangle on the current slide.",
+  );
+}
+
+export async function insertOval(): Promise<ActionResult> {
+  return insertTextCapableShape(
+    PowerPoint.GeometricShapeType.ellipse,
+    INSERTED_OVAL_WIDTH,
+    INSERTED_OVAL_HEIGHT,
+    "Inserted a centered oval on the current slide.",
+  );
+}
+
+export async function insertArrow(): Promise<ActionResult> {
+  return insertTextCapableShape(
+    PowerPoint.GeometricShapeType.rightArrow,
+    INSERTED_ARROW_WIDTH,
+    INSERTED_ARROW_HEIGHT,
+    "Inserted a centered arrow on the current slide.",
+  );
+}
+
+export async function insertStraightLine(): Promise<ActionResult> {
+  return insertLineShape(
+    PowerPoint.ConnectorType.straight,
+    INSERTED_LINE_WIDTH,
+    0,
+    "Inserted a centered line on the current slide.",
+  );
+}
+
+export async function insertElbowLine(): Promise<ActionResult> {
+  return insertLineShape(
+    PowerPoint.ConnectorType.elbow,
+    INSERTED_LINE_WIDTH,
+    INSERTED_LINE_HEIGHT,
+    "Inserted a centered elbow line on the current slide.",
+  );
+}
+
+export async function cycleOutlineWeight(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return { type: "warning", message: "Select at least one shape to change its outline weight." };
+    }
+
+    shapes[0].lineFormat.load("weight");
+    await context.sync();
+
+    const nextWeight = getNextPresetValue(
+      OUTLINE_WEIGHT_PRESETS,
+      shapes[0].lineFormat.weight,
+      (left, right) => Math.abs(left - right) <= POSITION_TOLERANCE,
+    );
+
+    shapes.forEach((shape) => {
+      shape.lineFormat.visible = true;
+      shape.lineFormat.weight = nextWeight;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Set outline weight to ${nextWeight}pt on ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export async function cycleOutlineDashStyle(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return { type: "warning", message: "Select at least one shape to change its outline dash style." };
+    }
+
+    shapes[0].lineFormat.load("dashStyle");
+    await context.sync();
+
+    const nextDashStyle = getNextPresetValue(
+      OUTLINE_DASH_PRESETS,
+      shapes[0].lineFormat.dashStyle ?? PowerPoint.ShapeLineDashStyle.solid,
+      (left, right) => String(left) === String(right),
+    );
+
+    shapes.forEach((shape) => {
+      shape.lineFormat.visible = true;
+      shape.lineFormat.dashStyle = nextDashStyle;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `Set outline dash style to ${String(nextDashStyle)} on ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+async function normalizeLinesOrientation(orientation: "horizontal" | "vertical"): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: `Select at least one line to make ${orientation}.`,
+      };
+    }
+
+    shapes.forEach((shape) => shape.load("type,left,top,width,height"));
+    await context.sync();
+
+    const lineShapes = shapes.filter((shape) => shape.type === PowerPoint.ShapeType.line || shape.type === "Line");
+    if (lineShapes.length < 1) {
+      return {
+        type: "warning",
+        message: `Select at least one line shape to make ${orientation}.`,
+      };
+    }
+
+    lineShapes.forEach((shape) => {
+      if (orientation === "horizontal") {
+        shape.top += shape.height / 2;
+        shape.height = 0;
+        return;
+      }
+
+      shape.left += shape.width / 2;
+      shape.width = 0;
+    });
+    await context.sync();
+
+    const ignoredCount = shapes.length - lineShapes.length;
+    const ignoredNote =
+      ignoredCount > 0 ? ` Ignored ${ignoredCount} non-line shape${ignoredCount !== 1 ? "s" : ""}.` : "";
+
+    return {
+      type: "success",
+      message: `Made ${lineShapes.length} line${lineShapes.length !== 1 ? "s" : ""} ${orientation}.${ignoredNote}`,
+    };
+  });
+}
+
+export const makeLinesHorizontal = (): Promise<ActionResult> => normalizeLinesOrientation("horizontal");
+export const makeLinesVertical = (): Promise<ActionResult> => normalizeLinesOrientation("vertical");
+
+function stackShapesOnAxis(
+  shapes: PowerPoint.Shape[],
+  axis: "horizontal" | "vertical",
+  gap: number,
+): void {
+  const sorted = [...shapes].sort((a, b) => (axis === "horizontal" ? a.left - b.left : a.top - b.top));
+  let cursor = axis === "horizontal" ? sorted[0].left : sorted[0].top;
+
+  sorted.forEach((shape) => {
+    if (axis === "horizontal") {
+      shape.left = cursor;
+      cursor += shape.width + gap;
+      return;
+    }
+
+    shape.top = cursor;
+    cursor += shape.height + gap;
+  });
+}
+
+function distributeResizeShapesOnAxis(
+  shapes: PowerPoint.Shape[],
+  axis: DistributeResizeAxis,
+  gap: number,
+): void {
+  const sorted = [...shapes].sort((a, b) => (axis === "horizontal" ? a.left - b.left : a.top - b.top));
+
+  if (axis === "horizontal") {
+    const first = sorted[0];
+    const last = sorted[sorted.length - 1];
+    const span = last.left + last.width - first.left;
+    const targetWidth = Math.max(1, (span - gap * (sorted.length - 1)) / sorted.length);
+    let cursor = first.left;
+    sorted.forEach((shape) => {
+      shape.left = cursor;
+      shape.width = targetWidth;
+      cursor += targetWidth + gap;
+    });
+    return;
+  }
+
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  const span = last.top + last.height - first.top;
+  const targetHeight = Math.max(1, (span - gap * (sorted.length - 1)) / sorted.length);
+  let cursor = first.top;
+  sorted.forEach((shape) => {
+    shape.top = cursor;
+    shape.height = targetHeight;
+    cursor += targetHeight + gap;
+  });
+}
+
+async function runAxisLayoutAction(
+  axis: DistributeResizeAxis,
+  mode: "stack" | "distributeResize",
+): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 2) {
+      return {
+        type: "warning",
+        message: `Select at least 2 shapes to ${mode === "stack" ? "stack" : "distribute with resize"}.`,
+      };
+    }
+
+    shapes.forEach((shape) => shape.load("left,top,width,height"));
+    await context.sync();
+
+    if (mode === "stack") {
+      stackShapesOnAxis(shapes, axis, STACK_GAP);
+    } else {
+      distributeResizeShapesOnAxis(shapes, axis, DISTRIBUTE_RESIZE_GAP);
+    }
+
+    await context.sync();
+
+    const axisLabel = axis === "horizontal" ? "horizontally" : "vertically";
+    return {
+      type: "success",
+      message:
+        mode === "stack"
+          ? `Stacked ${shapes.length} shapes ${axisLabel}.`
+          : `Distributed and resized ${shapes.length} shapes ${axisLabel}.`,
+    };
+  });
+}
+
+export const distributeResizeHorizontal = (): Promise<ActionResult> => runAxisLayoutAction("horizontal", "distributeResize");
+export const distributeResizeVertical = (): Promise<ActionResult> => runAxisLayoutAction("vertical", "distributeResize");
+export const stackHorizontal = (): Promise<ActionResult> => runAxisLayoutAction("horizontal", "stack");
+export const stackVertical = (): Promise<ActionResult> => runAxisLayoutAction("vertical", "stack");
+
+async function setSelectedShapesZOrder(
+  position: PowerPoint.ShapeZOrder | "BringForward" | "BringToFront" | "SendBackward" | "SendToBack",
+  message: string,
+): Promise<ActionResult> {
+  if (!supportsPowerPointApi("1.8")) {
+    return {
+      type: "error",
+      message: "This order action requires PowerPointApi 1.8.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return { type: "warning", message: "Select at least one shape first." };
+    }
+
+    shapes.forEach((shape) => {
+      shape.setZOrder(position);
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: message.replace("{count}", `${shapes.length}`),
+    };
+  });
+}
+
+export const bringShapesToFront = (): Promise<ActionResult> =>
+  setSelectedShapesZOrder(PowerPoint.ShapeZOrder.bringToFront, "Brought {count} shape(s) to the front.");
+export const sendShapesToBack = (): Promise<ActionResult> =>
+  setSelectedShapesZOrder(PowerPoint.ShapeZOrder.sendToBack, "Sent {count} shape(s) to the back.");
+export const bringShapesForward = (): Promise<ActionResult> =>
+  setSelectedShapesZOrder(PowerPoint.ShapeZOrder.bringForward, "Brought {count} shape(s) forward.");
+export const sendShapesBackward = (): Promise<ActionResult> =>
+  setSelectedShapesZOrder(PowerPoint.ShapeZOrder.sendBackward, "Sent {count} shape(s) backward.");
+
+export async function groupSelectedShapes(): Promise<ActionResult> {
+  if (!supportsPowerPointApi("1.8")) {
+    return {
+      type: "error",
+      message: "Grouping requires PowerPointApi 1.8.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 2) {
+      return { type: "warning", message: "Select at least 2 shapes to group." };
+    }
+
+    const slide = await getCurrentSlide(context);
+    if (!slide) {
+      return { type: "error", message: "Could not determine the current slide." };
+    }
+
+    const group = slide.shapes.addGroup(shapes);
+    return selectShapeAndReport(context, slide, group, `Grouped ${shapes.length} shapes.`);
+  });
+}
+
+export async function ungroupSelectedShapes(): Promise<ActionResult> {
+  if (!supportsPowerPointApi("1.8")) {
+    return {
+      type: "error",
+      message: "Ungroup requires PowerPointApi 1.8.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return { type: "warning", message: "Select at least one group to ungroup." };
+    }
+
+    shapes.forEach((shape) => shape.load("type"));
+    await context.sync();
+
+    const groups = shapes.filter((shape) => shape.type === PowerPoint.ShapeType.group || shape.type === "Group");
+    if (groups.length < 1) {
+      return { type: "warning", message: "Select at least one grouped shape to ungroup." };
+    }
+
+    groups.forEach((shape) => {
+      shape.ungroup();
+    });
+    await context.sync();
+
+    const ignoredCount = shapes.length - groups.length;
+    const ignoredNote =
+      ignoredCount > 0 ? ` Ignored ${ignoredCount} non-group shape${ignoredCount !== 1 ? "s" : ""}.` : "";
+
+    return {
+      type: "success",
+      message: `Ungrouped ${groups.length} group${groups.length !== 1 ? "s" : ""}.${ignoredNote}`,
+    };
+  });
+}
+
+async function swapAxisPosition(axis: "x" | "y"): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length !== 2) {
+      return {
+        type: "warning",
+        message: `Select exactly two shapes to swap their ${axis === "x" ? "X" : "Y"} positions.`,
+      };
+    }
+
+    const [first, second] = shapes;
+    first.load("left,top");
+    second.load("left,top");
+    await context.sync();
+
+    if (axis === "x") {
+      const originalLeft = first.left;
+      first.left = second.left;
+      second.left = originalLeft;
+    } else {
+      const originalTop = first.top;
+      first.top = second.top;
+      second.top = originalTop;
+    }
 
     await context.sync();
 
     return {
       type: "success",
-      message: "Inserted a centered rounded rectangle on the current slide.",
+      message: `Swapped the ${axis === "x" ? "X" : "Y"} positions of the two selected shapes.`,
+    };
+  });
+}
+
+export const swapXPositions = (): Promise<ActionResult> => swapAxisPosition("x");
+export const swapYPositions = (): Promise<ActionResult> => swapAxisPosition("y");
+
+export async function applyDefaultTextboxFormat(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select at least one text box to apply the default Jolify text-box format.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes.forEach((shape) => {
+      applyDefaultTextContainerStyle(shape, {
+        clearFill: true,
+        clearOutline: true,
+      });
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `Applied the default Jolify text-box format to ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+export async function toggleWordWrap(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select at least one text box to toggle word wrap.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes[0].textFrame.load("wordWrap");
+    await context.sync();
+
+    const nextValue = !selected.shapes[0].textFrame.wordWrap;
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.wordWrap = nextValue;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `${nextValue ? "Enabled" : "Disabled"} word wrap on ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+async function setTextMargins(preset: MarginPreset): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select at least one text box to update its text margins.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    const margin = TEXT_MARGIN_PRESETS[preset];
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.leftMargin = margin;
+      shape.textFrame.rightMargin = margin;
+      shape.textFrame.topMargin = margin;
+      shape.textFrame.bottomMargin = margin;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `Set text margins to ${margin}pt on ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+export const setTextMarginsNone = (): Promise<ActionResult> => setTextMargins("none");
+export const setTextMarginsTight = (): Promise<ActionResult> => setTextMargins("tight");
+export const setTextMarginsRoomy = (): Promise<ActionResult> => setTextMargins("roomy");
+
+async function setTextAutofitMode(
+  mode:
+    | PowerPoint.ShapeAutoSize
+    | "AutoSizeNone"
+    | "AutoSizeTextToFitShape"
+    | "AutoSizeShapeToFitText",
+  label: string,
+): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      `Select at least one text box to set ${label}.`,
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    selected.shapes.forEach((shape) => {
+      shape.textFrame.autoSizeSetting = mode;
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message:
+        `Set ${label} on ${selected.shapes.length} shape${selected.shapes.length !== 1 ? "s" : ""}.` +
+        getIgnoredShapeNote(selected.skippedCount),
+    };
+  });
+}
+
+export const setTextAutofitOff = (): Promise<ActionResult> =>
+  setTextAutofitMode(PowerPoint.ShapeAutoSize.autoSizeNone, "AutoFit Off");
+export const setTextAutofitTextToFitShape = (): Promise<ActionResult> =>
+  setTextAutofitMode(PowerPoint.ShapeAutoSize.autoSizeTextToFitShape, "Shrink Text to Fit Shape");
+export const setTextAutofitShapeToFitText = (): Promise<ActionResult> =>
+  setTextAutofitMode(PowerPoint.ShapeAutoSize.autoSizeShapeToFitText, "Resize Shape to Fit Text");
+
+export async function swapTextOnly(): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const selected = await getSelectedTextShapes(
+      context,
+      "Select exactly two text boxes to swap their text.",
+    );
+    if ("type" in selected) {
+      return selected;
+    }
+
+    if (selected.shapes.length !== 2) {
+      return {
+        type: "warning",
+        message: "Select exactly two text boxes to swap their text.",
+      };
+    }
+
+    const [first, second] = selected.shapes;
+    first.textFrame.textRange.load("text");
+    second.textFrame.textRange.load("text");
+    await context.sync();
+
+    const firstText = first.textFrame.textRange.text;
+    first.textFrame.textRange.text = second.textFrame.textRange.text;
+    second.textFrame.textRange.text = firstText;
+    await context.sync();
+
+    return {
+      type: "success",
+      message: "Swapped text between the two selected text boxes.",
     };
   });
 }
