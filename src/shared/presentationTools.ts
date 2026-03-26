@@ -154,6 +154,24 @@ function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:*?"<>|]/g, "-").trim() || "Jolify Export";
 }
 
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error(`Could not read ${file.name}.`));
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result !== "string") {
+        reject(new Error(`Could not read ${file.name}.`));
+        return;
+      }
+
+      const commaIndex = result.indexOf(",");
+      resolve(commaIndex === -1 ? result : result.slice(commaIndex + 1));
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function buildMarkdownSection(title: string, body: string): string {
   return `## ${title}\n\n${body.trim()}\n`;
 }
@@ -1041,6 +1059,48 @@ async function exportSelectedSlides(mode: SlideExportMode): Promise<ActionResult
 
 export function createDeckFromSelectedSlides(): Promise<ActionResult> {
   return exportSelectedSlides("local-save");
+}
+
+export async function createPresentationFromPictures(files: File[]): Promise<ActionResult> {
+  if (files.length === 0) {
+    return {
+      type: "warning",
+      message: "Choose one or more image files first.",
+    };
+  }
+
+  if (!(await isLocalBridgeAvailable())) {
+    return {
+      type: "warning",
+      message: "Create Presentation from Pictures currently needs local mode.",
+    };
+  }
+
+  const supportedFiles = files.filter((file) => /^image\/(png|jpe?g|svg\+xml)$/i.test(file.type));
+  if (supportedFiles.length === 0) {
+    return {
+      type: "warning",
+      message: "Choose PNG, JPG, JPEG, or SVG image files.",
+    };
+  }
+
+  const images = await Promise.all(
+    supportedFiles.map(async (file) => ({
+      filename: file.name,
+      base64Image: await fileToBase64(file),
+    })),
+  );
+
+  const suggestedFilename = `${sanitizeFilename(supportedFiles[0].name.replace(/\.[^.]+$/, ""))} - pictures.pptx`;
+  await postLocalBridge<{ savedPath: string }>("/native/create-presentation-from-pictures", {
+    images,
+    suggestedFilename,
+  });
+
+  return {
+    type: "success",
+    message: `Created and opened a new ${supportedFiles.length}-slide presentation from the selected picture${supportedFiles.length !== 1 ? "s" : ""}.`,
+  };
 }
 
 export async function attachSelectedSlidesToEmail(): Promise<ActionResult> {

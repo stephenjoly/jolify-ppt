@@ -101,7 +101,7 @@ Checkbox legend:
 | **Group** | **Picture** | Templafy section divider | — | — | Original Templafy grouping |
 | Templafy | Compress pictures | Compress picture assets | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Crop fill fit | Crop / fill / fit pictures | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Create presentation from pictures | Build slides from images | ☐ | ☑ | No Jolify equivalent. |
+| Both | Create presentation from pictures | Build slides from images | ◐ | ☑ | Jolify now supports a local-mode multi-image import that creates one fitted image slide per file. |
 | **Group** | **Stickers** | Templafy section divider | — | — | Original Templafy grouping |
 | Templafy | Add comments | Add comments | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Next comment | Jump to next comment | ☐ | ☑ | No Jolify equivalent. |

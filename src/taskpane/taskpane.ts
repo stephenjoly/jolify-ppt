@@ -1,5 +1,5 @@
 import type { ActionResult } from "../shared/shapeTools";
-import { exportPresentationAsPdf, exportPresentationAsPptx, getCurrentPresentationThemePalette } from "../shared/presentationTools";
+import { createPresentationFromPictures, exportPresentationAsPdf, exportPresentationAsPptx, getCurrentPresentationThemePalette } from "../shared/presentationTools";
 import {
   toggleDraftSticker,
   alignBottom,
@@ -251,6 +251,45 @@ function wireAction(buttonId: string, runner: ActionRunner) {
   });
 }
 
+function wirePictureDeckButton() {
+  const button = document.getElementById("presentation-from-pictures-btn") as HTMLButtonElement | null;
+  const input = document.getElementById("pictures-file-input") as HTMLInputElement | null;
+  if (!button || !input) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    input.value = "";
+    input.click();
+  });
+
+  input.addEventListener("change", async () => {
+    const files = Array.from(input.files ?? []);
+    if (files.length === 0) {
+      setStatus({
+        type: "info",
+        message: "Picture import cancelled.",
+      });
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const result = await createPresentationFromPictures(files);
+      setStatus(result);
+    } catch (error) {
+      console.error(error);
+      setStatus({
+        type: "error",
+        message: error instanceof Error ? error.message : "Something went wrong.",
+      });
+    } finally {
+      setBusy(false);
+      input.value = "";
+    }
+  });
+}
+
 function applyNativeTooltips() {
   document.querySelectorAll<HTMLButtonElement>(".tool-button").forEach((button) => {
     const title = button.querySelector(".tooltip-title")?.textContent?.trim() ?? "";
@@ -366,6 +405,7 @@ Office.onReady(async () => {
   Object.entries(ACTIONS).forEach(([id, runner]) => {
     wireAction(id, runner);
   });
+  wirePictureDeckButton();
 
   await setupPalette();
 

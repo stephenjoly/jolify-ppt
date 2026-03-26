@@ -389,6 +389,7 @@
 
       <div class="workspace">
         <main class="tools">
+          <input id="pictures-file-input" type="file" accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml" multiple hidden />
           <section class="section">
           <div class="section-header">Insert</div>
           <div class="section-body">
@@ -857,6 +858,18 @@
                   <span class="tooltip"><span class="tooltip-title">Toggle draft sticker</span><span class="tooltip-copy">Add or remove Jolify’s draft marker across the presentation.</span></span>
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">Picture</div>
+          <div class="section-body">
+            <div class="icon-grid">
+              <button id="presentation-from-pictures-btn" type="button" class="tool-button" aria-label="Create presentation from pictures">
+                <img src="../../assets/sample-icons/Pictures/PresentationFromPictures_n.png" alt="" />
+                <span class="tooltip"><span class="tooltip-title">Create presentation from pictures</span><span class="tooltip-copy">Choose images and build a new local presentation with one fitted picture per slide.</span></span>
+              </button>
             </div>
           </div>
         </section>
