@@ -498,6 +498,9 @@ const INSERTED_ARROW_WIDTH = 164;
 const INSERTED_ARROW_HEIGHT = 80;
 const INSERTED_LINE_WIDTH = 160;
 const INSERTED_LINE_HEIGHT = 48;
+const INSERTED_SYMBOL_BOX_WIDTH = 64;
+const INSERTED_SYMBOL_BOX_HEIGHT = 64;
+const INSERTED_SYMBOL_FONT_SIZE = 28;
 const STACK_GAP = 12;
 const DISTRIBUTE_RESIZE_GAP = 12;
 const OUTLINE_WEIGHT_PRESETS = [0.75, 1.5, 2.25, 3];
@@ -767,6 +770,35 @@ async function insertLineShape(
 
     return selectShapeAndReport(context, slide, shape, successMessage);
   });
+}
+
+async function insertSymbolTextBox(
+  context: PowerPoint.RequestContext,
+  symbol: string,
+  label?: string,
+): Promise<ActionResult> {
+  const slide = await getCurrentSlide(context);
+  if (!slide) {
+    return { type: "error", message: "Could not determine the current slide." };
+  }
+
+  const position = centerPosition(INSERTED_SYMBOL_BOX_WIDTH, INSERTED_SYMBOL_BOX_HEIGHT);
+  const shape = slide.shapes.addTextBox(symbol, {
+    left: position.left,
+    top: position.top,
+    width: INSERTED_SYMBOL_BOX_WIDTH,
+    height: INSERTED_SYMBOL_BOX_HEIGHT,
+  });
+
+  applyDefaultTextContainerStyle(shape, {
+    clearFill: true,
+    clearOutline: true,
+  });
+  shape.textFrame.textRange.font.size = INSERTED_SYMBOL_FONT_SIZE;
+  shape.textFrame.textRange.paragraphFormat.horizontalAlignment = PowerPoint.ParagraphHorizontalAlignment.center;
+
+  const thing = label ? `${label} symbol` : "symbol";
+  return selectShapeAndReport(context, slide, shape, `Inserted a centered ${thing}.`);
 }
 
 function getNextPresetValue<T>(
@@ -1780,6 +1812,41 @@ export async function insertElbowLine(): Promise<ActionResult> {
   );
 }
 
+export type SymbolInsertParams = {
+  symbol: string;
+  label?: string;
+};
+
+export async function insertSymbol(params: SymbolInsertParams): Promise<ActionResult> {
+  const symbol = params.symbol?.trim();
+  if (!symbol) {
+    return {
+      type: "warning",
+      message: "Choose a symbol to insert.",
+    };
+  }
+
+  return PowerPoint.run(async (context) => {
+    const selectedTextRange = context.presentation.getSelectedTextRangeOrNullObject();
+    selectedTextRange.load("isNullObject");
+    await context.sync();
+
+    if (!selectedTextRange.isNullObject) {
+      selectedTextRange.text = symbol;
+      await context.sync();
+
+      return {
+        type: "success",
+        message: params.label
+          ? `Inserted ${params.label} into the active text selection.`
+          : "Inserted the chosen symbol into the active text selection.",
+      };
+    }
+
+    return insertSymbolTextBox(context, symbol, params.label);
+  });
+}
+
 export async function cycleOutlineWeight(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const shapes = await getSelectedShapes(context);
@@ -2750,6 +2817,18 @@ export async function openGridDialog(): Promise<ActionResult> {
   const params = await openDialog<GridParams>("dialogs/grid-builder.html");
   if (!params) return { type: "info", message: "Grid creation cancelled." };
   return createGrid(params);
+}
+
+export async function openSymbolPickerDialog(): Promise<ActionResult> {
+  const params = await openDialog<SymbolInsertParams>("dialogs/symbol-picker.html", {
+    height: 70,
+    width: 44,
+  });
+  if (!params) {
+    return { type: "info", message: "Symbol picker closed." };
+  }
+
+  return insertSymbol(params);
 }
 
 export type WeekdayRangeParams = {

@@ -42,6 +42,7 @@ import {
   insertElbowLine,
   insertOval,
   insertRectangle,
+  openSymbolPickerDialog,
   stretchToLeftEdge,
   stretchToRightEdge,
   stretchToTopEdge,
@@ -170,6 +171,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "insert-oval-btn": insertOval,
   "insert-line-btn": insertStraightLine,
   "insert-elbow-line-btn": insertElbowLine,
+  "insert-symbol-btn": openSymbolPickerDialog,
   "create-center-sticker-btn": createCenterSticker,
   "insert-rounded-rectangle-btn": insertRoundedRectangle,
   // Layout Builders

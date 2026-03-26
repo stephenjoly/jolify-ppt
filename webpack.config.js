@@ -130,6 +130,12 @@ module.exports = async (env, options) => {
         template: "./src/dialogs/weekday-range-dialog.html",
         chunks: ["polyfill", "weekdayRangeDialog"],
       }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/symbol-picker.html",
+        template: "./src/dialogs/symbol-picker.html",
+        chunks: [],
+        inject: false,
+      }),
     ],
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" },
