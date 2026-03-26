@@ -3226,15 +3226,15 @@ export function openCleanupDialog(): Promise<ActionResult> {
 
 export async function openJolifyWebsite(): Promise<ActionResult> {
   try {
-    Office.context.ui.openBrowserWindow("https://stephenjoly.github.io/jolify-ppt/");
+    Office.context.ui.openBrowserWindow("https://stephenjoly.github.io/jolify-ppt/guide.html");
     return {
       type: "success",
-      message: "Opened the Jolify website.",
+      message: "Opened the Jolify guide.",
     };
   } catch {
     return {
       type: "error",
-      message: "Could not open the Jolify website.",
+      message: "Could not open the Jolify guide.",
     };
   }
 }

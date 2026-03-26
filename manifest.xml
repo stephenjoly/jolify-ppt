@@ -49,6 +49,46 @@
 
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="jolify.Tab">
+              <Group id="jolify.Start">
+                <Label resid="Group.Start.Label" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16" />
+                  <bt:Image size="32" resid="Icon.32x32" />
+                  <bt:Image size="80" resid="Icon.80x80" />
+                </Icon>
+                <Control xsi:type="Button" id="btn.openTaskpane">
+                  <Label resid="Btn.OpenTaskpane.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenTaskpane.Label" />
+                    <Description resid="Btn.OpenTaskpane.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.openTaskpane.16" />
+                    <bt:Image size="32" resid="Icon.openTaskpane.32" />
+                    <bt:Image size="80" resid="Icon.openTaskpane.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>JolifyTaskpane</TaskpaneId>
+                    <SourceLocation resid="taskpanePage" />
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="btn.openJolifyWebsite">
+                  <Label resid="Btn.OpenJolifyWebsite.Label" />
+                  <Supertip>
+                    <Title resid="Btn.OpenJolifyWebsite.Label" />
+                    <Description resid="Btn.OpenJolifyWebsite.Desc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.openJolifyWebsite.16" />
+                    <bt:Image size="32" resid="Icon.openJolifyWebsite.32" />
+                    <bt:Image size="80" resid="Icon.openJolifyWebsite.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openJolifyWebsite</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+
               <Group id="jolify.Position">
                 <Label resid="Group.Position.Label" />
                 <Icon>
@@ -806,37 +846,6 @@
                     <FunctionName>openWeekdayRangeDialog</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="btn.openTaskpane">
-                  <Label resid="Btn.OpenTaskpane.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenTaskpane.Label" />
-                    <Description resid="Btn.OpenTaskpane.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openTaskpane.16" />
-                    <bt:Image size="32" resid="Icon.openTaskpane.32" />
-                    <bt:Image size="80" resid="Icon.openTaskpane.80" />
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>JolifyTaskpane</TaskpaneId>
-                    <SourceLocation resid="taskpanePage" />
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="btn.openJolifyWebsite">
-                  <Label resid="Btn.OpenJolifyWebsite.Label" />
-                  <Supertip>
-                    <Title resid="Btn.OpenJolifyWebsite.Label" />
-                    <Description resid="Btn.OpenJolifyWebsite.Desc" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.openJolifyWebsite.16" />
-                    <bt:Image size="32" resid="Icon.openJolifyWebsite.32" />
-                    <bt:Image size="80" resid="Icon.openJolifyWebsite.80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>openJolifyWebsite</FunctionName>
-                  </Action>
-                </Control>
               </Group>
 
               <Label resid="Tab.Label" />
@@ -981,6 +990,7 @@
 
       <bt:ShortStrings>
         <bt:String id="Tab.Label" DefaultValue="Jolify" />
+        <bt:String id="Group.Start.Label" DefaultValue="Jolify" />
         <bt:String id="Group.NativeText.Label" DefaultValue="Text" />
         <bt:String id="Group.Position.Label" DefaultValue="Clipboard" />
         <bt:String id="Group.Order.Label" DefaultValue="Order" />
@@ -1080,7 +1090,7 @@
         <bt:String id="Btn.OpenGridDialog.Desc" DefaultValue="Open the grid builder dialog to create a shape grid." />
         <bt:String id="Btn.OpenWeekdayRangeDialog.Desc" DefaultValue="Generate a list of matching weekdays between two dates for easy table pasting." />
         <bt:String id="Btn.OpenTaskpane.Desc" DefaultValue="Open the Jolify task pane for troubleshooting and secondary actions." />
-        <bt:String id="Btn.OpenJolifyWebsite.Desc" DefaultValue="Open the Jolify website in your browser." />
+        <bt:String id="Btn.OpenJolifyWebsite.Desc" DefaultValue="Open the Jolify user guide in your browser." />
         <bt:String id="Btn.MoveToUnusedSection.Desc" DefaultValue="Move selected slides to an Unused section." />
         <bt:String id="Btn.OpenSelectedDeckDialog.Desc" DefaultValue="Open a dialog to create a new presentation from the selected slides." />
       </bt:LongStrings>

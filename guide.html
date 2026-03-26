@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jolify User Guide</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="alternate icon" href="./assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="./assets/icon-128.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #fafaf9;
+      color: #1a1a1a;
+      line-height: 1.7;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .paper { max-width: 900px; margin: 0 auto; }
+    header {
+      text-align: center;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid #d6d2cb;
+      margin-bottom: 2.5rem;
+    }
+    .eyebrow, h2, h3, th, .toc a, .pill {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8d887f;
+      margin-bottom: 0.8rem;
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: normal;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.65rem;
+    }
+    .lede {
+      max-width: 680px;
+      margin: 0 auto;
+      color: #53514c;
+      font-size: 1.05rem;
+    }
+    .top-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+    .top-links a, .guide-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      color: #1f1f1c;
+      border: 1px solid #d6d2cb;
+      background: #fff;
+      padding: 0.7rem 1rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .top-links a:hover, .guide-link:hover { border-color: #1f1f1c; }
+    section {
+      margin-bottom: 2.75rem;
+      padding-top: 2.75rem;
+      border-top: 1px solid #e7e3dc;
+    }
+    section:first-of-type { border-top: 0; padding-top: 0; }
+    h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8d887f;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #21201d;
+      margin-bottom: 0.7rem;
+      margin-top: 1.35rem;
+    }
+    p {
+      font-size: 0.98rem;
+      color: #353430;
+      margin-bottom: 0.9rem;
+    }
+    ul, ol {
+      margin: 0.8rem 0 1rem 1.25rem;
+      color: #3b3935;
+    }
+    li + li { margin-top: 0.45rem; }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.87em;
+      background: #f1efeb;
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+    .toc a {
+      text-decoration: none;
+      color: #2d2b27;
+      background: #fff;
+      border: 1px solid #ddd8cf;
+      padding: 0.8rem 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .toc a:hover { border-color: #1f1f1c; }
+    .note, .callout {
+      background: #fff;
+      border: 1px solid #ddd8cf;
+      padding: 1rem 1.1rem;
+      margin: 1rem 0 1.2rem;
+    }
+    .callout {
+      border-left: 4px solid #2f76d0;
+    }
+    .pill-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6f6a61;
+      background: #fff;
+      border: 1px solid #ddd8cf;
+      padding: 0.45rem 0.65rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.9rem;
+      margin-bottom: 1.5rem;
+      background: #fff;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid #ece8e1;
+      padding: 0.85rem 0.9rem;
+      font-size: 0.93rem;
+    }
+    th {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #817b71;
+      background: #fbfaf8;
+    }
+    .small { color: #69645a; font-size: 0.88rem; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid #d6d2cb;
+      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: #8d887f;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    footer a { color: #6a655c; text-decoration: none; }
+    footer a:hover { color: #1f1f1c; }
+    @media (max-width: 720px) {
+      body { padding: 2.5rem 1rem 4rem; }
+      h1 { font-size: 2.15rem; }
+      th, td { padding: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="paper">
+    <header>
+      <div class="eyebrow">Jolify for PowerPoint</div>
+      <h1>User Guide</h1>
+      <p class="lede">
+        Jolify adds a ribbon tab and an optional task pane for shape layout, style transfer, text cleanup,
+        slide utilities, exports, and sharing workflows inside PowerPoint for Mac.
+      </p>
+      <div class="top-links">
+        <a href="./">Back to Home</a>
+        <a href="manifest.xml" download>Download Manifest</a>
+        <a href="https://github.com/stephenjoly/jolify-ppt">GitHub</a>
+      </div>
+    </header>
+
+    <section id="contents">
+      <h2>Contents</h2>
+      <div class="toc">
+        <a href="#quick-start">Quick Start</a>
+        <a href="#how-jolify-works">Selection Rules</a>
+        <a href="#ribbon-guide">Ribbon Guide</a>
+        <a href="#taskpane-guide">Task Pane Guide</a>
+        <a href="#colors">Color Palette</a>
+        <a href="#exports">Exports &amp; Cleanup</a>
+      </div>
+    </section>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <div class="pill-row">
+        <span class="pill">Ribbon First</span>
+        <span class="pill">Task Pane Optional</span>
+        <span class="pill">PowerPoint for Mac</span>
+      </div>
+      <p>
+        After installation, PowerPoint shows a <code>Jolify</code> tab in the ribbon. The fastest way to get
+        oriented is to use the first ribbon group:
+      </p>
+      <ul>
+        <li><code>Open Task Pane</code> opens the side panel with Jolify’s broader toolset and theme color palette.</li>
+        <li><code>About Jolify</code> opens this guide in your browser.</li>
+      </ul>
+      <p>
+        Most everyday work can stay in the ribbon. The task pane is best for deeper utilities like style clipboards,
+        text presets, image deck creation, cleanup, and exports.
+      </p>
+    </section>
+
+    <section id="how-jolify-works">
+      <h2>Selection Rules</h2>
+      <p>Many Jolify tools follow one of a few selection models. Once you know these, the whole add-in becomes much easier to use.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>How to Use It</th>
+            <th>Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Reference shape</strong></td>
+            <td>Select the source shape first, then the target shapes. Jolify uses the first selected shape as the reference.</td>
+            <td><code>Match Width</code>, <code>Match Height</code>, <code>Match Fill</code>, <code>Match Style</code>, edge matching</td>
+          </tr>
+          <tr>
+            <td><strong>Clipboard action</strong></td>
+            <td>Run a <code>Copy</code> action once, then run the matching <code>Paste</code> action on a new selection.</td>
+            <td><code>Copy Position</code>, <code>Paste Size</code>, <code>Copy Fill</code>, <code>Paste Style</code></td>
+          </tr>
+          <tr>
+            <td><strong>Multi-shape layout</strong></td>
+            <td>Select two or more shapes, then align, distribute, stack, or group them.</td>
+            <td><code>Align Left</code>, <code>Distribute H</code>, <code>Stack Vertically</code>, compound group actions</td>
+          </tr>
+          <tr>
+            <td><strong>Exactly two objects</strong></td>
+            <td>Select exactly two shapes or text boxes.</td>
+            <td><code>Swap Positions</code>, <code>Swap X</code>, <code>Swap Y</code>, <code>Swap Text</code></td>
+          </tr>
+          <tr>
+            <td><strong>Slide selection</strong></td>
+            <td>Select slides in the left thumbnail pane, then run the slide-level command.</td>
+            <td><code>Move to Unused</code>, <code>Save Selected Deck</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <p><strong>Important:</strong> “Match” and “Copy/Paste” are different ideas in Jolify. <code>Match</code> applies directly from the first selected shape. <code>Copy/Paste</code> stores a setting for later use.</p>
+      </div>
+    </section>
+
+    <section id="ribbon-guide">
+      <h2>Ribbon Guide</h2>
+      <p>The ribbon is the fastest surface for repetitive shape work. It mixes Jolify custom actions with a few native PowerPoint controls where the host behavior is reliable.</p>
+
+      <h3>Jolify</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Open Task Pane</code></td><td>Opens Jolify’s side panel with the broader toolset, export tools, and color palette.</td></tr>
+          <tr><td><code>About Jolify</code></td><td>Opens the hosted Jolify guide website in your browser.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Clipboard</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Copy Position &amp; Size</code></td><td>Stores both geometry coordinates and dimensions from the first selected shape.</td></tr>
+          <tr><td><code>Copy Position</code></td><td>Stores only <code>left</code> and <code>top</code>.</td></tr>
+          <tr><td><code>Copy Size</code></td><td>Stores only width and height.</td></tr>
+          <tr><td><code>Paste Position &amp; Size</code></td><td>Applies full stored geometry to the current selection.</td></tr>
+          <tr><td><code>Paste Position</code></td><td>Moves the current selection to the stored coordinates.</td></tr>
+          <tr><td><code>Paste Size</code></td><td>Applies the stored width and height.</td></tr>
+          <tr><td><code>Swap Positions</code></td><td>Exchanges the positions of exactly two selected shapes.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Order</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Bring to Front</code></td><td>Moves the selection to the top of the z-order.</td></tr>
+          <tr><td><code>Send to Back</code></td><td>Moves the selection behind other shapes.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Resize</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Match H+W</code></td><td>Matches both height and width from the first selected shape.</td></tr>
+          <tr><td><code>Match Width</code></td><td>Matches width only.</td></tr>
+          <tr><td><code>Match Height</code></td><td>Matches height only.</td></tr>
+          <tr><td><code>Match Left / Right / Top / Bottom Edge</code></td><td>Stretches the target shapes so the chosen edge matches the reference edge while the opposite edge stays fixed.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Align &amp; Distribute</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Align Left / Center / Right</code></td><td>Aligns shapes along a common vertical alignment line.</td></tr>
+          <tr><td><code>Align Top / Middle / Bottom</code></td><td>Aligns shapes along a common horizontal alignment line.</td></tr>
+          <tr><td><code>Distribute H / V</code></td><td>Evenly spaces shapes horizontally or vertically.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Arrange</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Center + Group</code></td><td>Center-aligns the selection, then groups it.</td></tr>
+          <tr><td><code>Middle + Group</code></td><td>Middle-aligns the selection, then groups it.</td></tr>
+          <tr><td><code>Center+Mid+Group</code></td><td>Aligns both axes, then groups.</td></tr>
+          <tr><td><code>Dist H + Group</code></td><td>Distributes horizontally, then groups.</td></tr>
+          <tr><td><code>Dist V + Group</code></td><td>Distributes vertically, then groups.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Text</h3>
+      <p class="small">This group contains native PowerPoint text controls.</p>
+      <table>
+        <thead><tr><th>Control</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Font</code>, <code>Font Size</code>, <code>Text Highlight</code></td><td>Native PowerPoint text formatting controls.</td></tr>
+          <tr><td><code>Bold</code>, <code>Italic</code>, <code>Underline</code>, <code>Strikethrough</code></td><td>Native inline emphasis controls.</td></tr>
+          <tr><td><code>Bullets</code>, <code>Numbering</code>, <code>Line Spacing</code></td><td>Native paragraph formatting controls.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Match Style</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Font Color</code>, <code>Shape Fill</code>, <code>Shape Outline</code></td><td>Native PowerPoint color pickers.</td></tr>
+          <tr><td><code>Match Outline</code></td><td>Applies the first selected shape’s outline style to the rest.</td></tr>
+          <tr><td><code>Match Fill</code></td><td>Applies the first selected shape’s fill to the rest.</td></tr>
+          <tr><td><code>Match Style</code></td><td>Applies fill, outline, and text style from the first selected shape to the rest.</td></tr>
+          <tr><td><code>No Fill</code>, <code>No Outline</code></td><td>Removes fill or outlines from the selection.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Insert</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Shapes</code></td><td>Opens PowerPoint’s native shapes gallery.</td></tr>
+          <tr><td><code>Create Grid</code></td><td>Opens Jolify’s grid builder dialog.</td></tr>
+          <tr><td><code>Create Center Sticker</code></td><td>Creates Jolify’s default centered sticker text box.</td></tr>
+          <tr><td><code>Merge Text Boxes</code></td><td>Combines selected text boxes into one.</td></tr>
+          <tr><td><code>Split Text Box</code></td><td>Splits a multi-line text box into separate text boxes.</td></tr>
+          <tr><td><code>Remove Text Margins</code></td><td>Removes text margins from selected text boxes.</td></tr>
+          <tr><td><code>AutoFit Off</code></td><td>Disables text autofit for selected text boxes.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Slides</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Layout</code></td><td>Opens the native slide layout gallery.</td></tr>
+          <tr><td><code>Slide Number</code></td><td>Uses the native slide number control.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Deck</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Move to Unused</code></td><td>Moves the selected slides into Jolify’s unused area.</td></tr>
+          <tr><td><code>Save Selected Deck</code></td><td>Exports the selected slides into a new presentation.</td></tr>
+          <tr><td><code>Toggle Draft Sticker</code></td><td>Adds or removes Jolify’s draft sticker across the deck.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Utilities</h3>
+      <table>
+        <thead><tr><th>Button</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>Weekday Range</code></td><td>Creates a clean list of weekdays between two dates.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="taskpane-guide">
+      <h2>Task Pane Guide</h2>
+      <p>The task pane exposes Jolify’s broader toolset. It mirrors many ribbon actions, but also includes extra clipboard actions, shape insertion tools, cleanup, export, and the deck color palette.</p>
+
+      <h3>Insert</h3>
+      <p>You can insert text boxes, rectangles, rounded rectangles, arrows, ovals, lines, elbow lines, symbols, Harvey balls, center stickers, and shape grids. Jolify inserts these centered on the current slide. Text-capable insertions use Jolify’s default text-box formatting.</p>
+
+      <h3>Outline + Style</h3>
+      <p>Use the <code>Outline</code> tools to cycle outline weight and dash presets or normalize selected lines to horizontal or vertical. Use <code>Style Clipboard</code> when you want a saved fill, outline, or full style you can paste later. Use <code>Apply / Clear</code> when you want to take the first selected shape and push its style directly onto the rest without storing anything.</p>
+
+      <h3>Align</h3>
+      <p>The task pane includes the core align and distribute tools plus resize-aware distribution and stack tools. <code>Distribute with resize</code> equalizes spacing and size together. <code>Stack</code> lays shapes out in one direction using Jolify’s fixed default gap.</p>
+
+      <h3>Size</h3>
+      <p>Use <code>Match Size</code> to copy dimensions from the first selected shape, <code>Size Clipboard</code> to save dimensions for later, and <code>Match Edges</code> to stretch shapes to a common left, right, top, or bottom boundary.</p>
+
+      <h3>Arrange</h3>
+      <p>The task pane adds the full order stack, group/ungroup, position clipboard actions, and compound align/distribute-plus-group actions.</p>
+
+      <h3>Rotate</h3>
+      <p><code>Rotate Right 90</code> and <code>Rotate Left 90</code> rotate the current selection by exact quarter turns.</p>
+
+      <h3>Swap</h3>
+      <p><code>Swap Positions</code>, <code>Swap X</code>, and <code>Swap Y</code> all require exactly two selected shapes.</p>
+
+      <h3>Text</h3>
+      <p>The text section holds Jolify-specific text-box actions:</p>
+      <ul>
+        <li><code>Apply Default Textbox Format</code></li>
+        <li><code>Toggle Word Wrap</code></li>
+        <li><code>Merge Text Boxes</code></li>
+        <li><code>Split Text Box by Lines</code></li>
+        <li><code>Swap Text</code></li>
+        <li>Margin presets: <code>None</code>, <code>Tight</code>, <code>Roomy</code></li>
+        <li>Auto-size presets: <code>Off</code>, <code>Shrink text to fit</code>, <code>Resize shape to fit text</code></li>
+      </ul>
+
+      <h3>Other</h3>
+      <p>The <code>Geometry Clipboard</code> lets you save and paste both position and size together. Utilities include:</p>
+      <ul>
+        <li><code>Move to Unused</code></li>
+        <li><code>Weekday Range</code></li>
+        <li><code>Toggle Draft Sticker</code></li>
+      </ul>
+
+      <h3>Picture</h3>
+      <p><code>Create Presentation from Pictures</code> creates a new deck with one fitted image per slide. This is intended for local mode and image-driven workflows.</p>
+
+      <h3>Share</h3>
+      <p>The share section is Jolify’s publishing/export area:</p>
+      <ul>
+        <li><code>Save Presentation as PPTX</code></li>
+        <li><code>Save Presentation as PDF</code></li>
+        <li><code>Save Selected Deck</code></li>
+        <li><code>Clean-up</code></li>
+      </ul>
+    </section>
+
+    <section id="colors">
+      <h2>Color Palette</h2>
+      <p>The task pane’s right-hand color rail shows three columns:</p>
+      <ul>
+        <li><strong>Font</strong> applies text color</li>
+        <li><strong>Outline</strong> applies line/outline color</li>
+        <li><strong>Fill</strong> applies shape fill color</li>
+      </ul>
+      <p>
+        Jolify tries to read the current deck’s theme colors first. If that works, the badge shows <code>Deck theme</code>.
+        If not, Jolify falls back to a generic palette.
+      </p>
+      <div class="note">
+        <p><strong>PowerPoint behavior note:</strong> applying a color can drop focus from active text editing. If you were editing text inside a shape, you may need to re-enter the text cursor after changing color.</p>
+      </div>
+    </section>
+
+    <section id="exports">
+      <h2>Exports &amp; Cleanup</h2>
+      <h3>Save Presentation as PPTX / PDF</h3>
+      <p>These save a copy of the full current presentation. In local mode, Jolify can use the local bridge for a more native save/open flow. In hosted mode, Jolify downloads the exported file.</p>
+
+      <h3>Save Selected Deck</h3>
+      <p>Select slides in the thumbnail pane, then use <code>Save Selected Deck</code> to create a new presentation containing only those slides.</p>
+
+      <h3>Clean-up</h3>
+      <p><code>Clean-up</code> creates a new shareable copy of the deck. It does not modify the current open file. The cleanup dialog can remove:</p>
+      <ul>
+        <li>slide comments</li>
+        <li>speaker notes</li>
+        <li>hidden slides</li>
+        <li>the Jolify unused-slides area</li>
+        <li>PowerPoint section metadata</li>
+      </ul>
+      <p>Use this before sending client-ready decks or when you want a cleaner external version of a working file.</p>
+
+      <h3>Local-mode only notes</h3>
+      <p class="small">
+        Some workflows are richer in local mode because Jolify can hand files to the local bridge. The most obvious examples are picture-driven deck creation and some export/open flows.
+      </p>
+    </section>
+
+    <footer>
+      <a href="./">Home</a> ·
+      <a href="https://github.com/stephenjoly/jolify-ppt">GitHub</a> ·
+      Stephen Joly · MIT License
+    </footer>
+  </div>
+</body>
+</html>
