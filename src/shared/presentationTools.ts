@@ -14,6 +14,11 @@ const PptRelationship = {
 } as const;
 
 type SlideExportMode = "download" | "local-save";
+type CleanupMode = "comments" | "notes";
+type CleanupOptions = {
+  removeComments: boolean;
+  removeNotes: boolean;
+};
 
 type SlidePartInfo = {
   id: string;
@@ -665,8 +670,8 @@ function removeContentTypeOverrides(contentTypesDoc: XMLDocument, partNames: str
 
 async function buildCleanedPresentationBase64(
   bytes: Uint8Array,
-  mode: "comments" | "notes",
-): Promise<{ base64: string; removedCount: number }> {
+  options: CleanupOptions,
+): Promise<{ base64: string; removedCounts: Record<CleanupMode, number> }> {
   const zip = await JSZip.loadAsync(bytes);
   const contentTypesXml = await readZipText(zip, "[Content_Types].xml");
   if (!contentTypesXml) {
@@ -675,7 +680,14 @@ async function buildCleanedPresentationBase64(
   const contentTypesDoc = parseXml(contentTypesXml);
   const structure = await getPresentationStructure(zip);
   const removedParts = new Set<string>();
-  let removedCount = 0;
+  const removedCounts: Record<CleanupMode, number> = {
+    comments: 0,
+    notes: 0,
+  };
+  const relationshipTargets: Record<CleanupMode, readonly string[]> = {
+    comments: [PptRelationship.comments],
+    notes: [PptRelationship.notesSlide],
+  };
 
   for (const slide of structure.slides) {
     const slideRelsPath = `${dirname(slide.target)}/_rels/${fileNameWithoutExtension(slide.target)}.xml.rels`;
@@ -685,28 +697,30 @@ async function buildCleanedPresentationBase64(
     }
 
     const slideRelsDoc = parseXml(slideRelsXml);
-    const removedTargets = removeRelationshipsBySuffix(
-      slideRelsDoc,
-      mode === "comments" ? [PptRelationship.comments] : [PptRelationship.notesSlide],
-    );
-
-    if (removedTargets.length === 0) {
-      continue;
-    }
-
-    removedCount += removedTargets.length;
-    removedTargets.forEach((target) => {
-      const resolvedTarget = resolvePartPath(slide.target, target);
-      removedParts.add(resolvedTarget);
-      if (resolvedTarget.includes("/notesSlides/")) {
-        removedParts.add(`${dirname(resolvedTarget)}/_rels/${fileNameWithoutExtension(resolvedTarget)}.xml.rels`);
+    (Object.keys(relationshipTargets) as CleanupMode[]).forEach((mode) => {
+      if (!options[mode === "comments" ? "removeComments" : "removeNotes"]) {
+        return;
       }
+
+      const removedTargets = removeRelationshipsBySuffix(slideRelsDoc, relationshipTargets[mode]);
+      if (removedTargets.length === 0) {
+        return;
+      }
+
+      removedCounts[mode] += removedTargets.length;
+      removedTargets.forEach((target) => {
+        const resolvedTarget = resolvePartPath(slide.target, target);
+        removedParts.add(resolvedTarget);
+        if (resolvedTarget.includes("/notesSlides/")) {
+          removedParts.add(`${dirname(resolvedTarget)}/_rels/${fileNameWithoutExtension(resolvedTarget)}.xml.rels`);
+        }
+      });
     });
 
     zip.file(slideRelsPath, serializeXml(slideRelsDoc));
   }
 
-  if (mode === "comments") {
+  if (options.removeComments) {
     const presentationRelsPath = "ppt/_rels/presentation.xml.rels";
     const presentationRelsXml = await readZipText(zip, presentationRelsPath);
     if (presentationRelsXml) {
@@ -722,7 +736,7 @@ async function buildCleanedPresentationBase64(
 
   removedParts.forEach((part) => zip.remove(part));
   const base64 = await zip.generateAsync({ type: "base64" });
-  return { base64, removedCount };
+  return { base64, removedCounts };
 }
 
 async function getSelectedSlideIndexes(): Promise<{ indexes: number[]; baseName: string }> {
@@ -870,10 +884,75 @@ async function exportMarkdown(kind: "comments" | "notes"): Promise<{ markdown: s
 
 async function cleanDeck(kind: "comments" | "notes"): Promise<{ base64: string; removedCount: number; baseName: string }> {
   const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
-  const cleaned = await buildCleanedPresentationBase64(bytes, kind);
+  const cleaned = await buildCleanedPresentationBase64(bytes, {
+    removeComments: kind === "comments",
+    removeNotes: kind === "notes",
+  });
   return {
-    ...cleaned,
+    base64: cleaned.base64,
+    removedCount: cleaned.removedCounts[kind],
     baseName: getBaseNameFromUrl(fileProps.url),
+  };
+}
+
+function describeCleanupCounts(removedCounts: Record<CleanupMode, number>, options: CleanupOptions): string {
+  const parts: string[] = [];
+
+  if (options.removeComments) {
+    parts.push(`${removedCounts.comments} comment part${removedCounts.comments === 1 ? "" : "s"}`);
+  }
+
+  if (options.removeNotes) {
+    parts.push(`${removedCounts.notes} notes part${removedCounts.notes === 1 ? "" : "s"}`);
+  }
+
+  return parts.join(" and ");
+}
+
+export async function cleanPresentationDeck(options: CleanupOptions): Promise<ActionResult> {
+  if (!options.removeComments && !options.removeNotes) {
+    return {
+      type: "warning",
+      message: "Choose at least one cleanup target before creating a cleaned copy.",
+    };
+  }
+
+  const [bytes, fileProps] = await Promise.all([getDocumentBytes(), getFileProperties()]);
+  const cleaned = await buildCleanedPresentationBase64(bytes, options);
+  const baseName = getBaseNameFromUrl(fileProps.url);
+  const totalRemoved = cleaned.removedCounts.comments + cleaned.removedCounts.notes;
+
+  if (totalRemoved === 0) {
+    return {
+      type: "info",
+      message: "No comments or speaker notes were found for the selected cleanup options.",
+    };
+  }
+
+  const filename = `${sanitizeFilename(baseName)} - cleaned.pptx`;
+  const removedSummary = describeCleanupCounts(cleaned.removedCounts, options);
+
+  if (await isLocalBridgeAvailable()) {
+    await postLocalBridge<{ savedPath: string }>("/native/save-file", {
+      base64File: cleaned.base64,
+      suggestedFilename: filename,
+      openInPowerPoint: true,
+    });
+
+    return {
+      type: "success",
+      message: `Saved and opened a cleaned copy with ${removedSummary} removed.`,
+    };
+  }
+
+  downloadFile(
+    filename,
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    Uint8Array.from(atob(cleaned.base64), (c) => c.charCodeAt(0)),
+  );
+  return {
+    type: "warning",
+    message: `Downloaded a cleaned copy with ${removedSummary} removed. Local mode is required to save and reopen it automatically.`,
   };
 }
 

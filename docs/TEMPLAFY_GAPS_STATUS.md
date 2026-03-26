@@ -82,7 +82,7 @@ These are not blocked by a single missing API, but they are bigger workflows and
 - `Make PowerShape`
   - Needs a full reusable-shape definition workflow.
 
-- `Clean-up`
+- `Clean-up` (partially built: comments + speaker notes only)
   - Feasible, but should be designed as a bounded redaction/export workflow rather than a single command.
 
 - `Email presentation as PPTX`
@@ -124,6 +124,7 @@ These are not blocked in principle, but they were lower priority than the recent
 If we continue closing gaps, the best remaining non-blocked items are:
 
 1. `Clean-up`
+   Current Jolify scope is bounded to comments and speaker notes removal in a new cleaned copy. Still deferred: metadata stripping, dummy-text replacement/redaction, and destructive in-place cleanup.
 2. `Email presentation as PPTX`
 3. `Insert flow`
 4. `Split table to text boxes`

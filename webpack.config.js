@@ -19,6 +19,7 @@ module.exports = async (env, options) => {
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       commands: "./src/commands/commands.ts",
+      cleanupDeckDialog: "./src/dialogs/cleanup-deck-dialog.ts",
       selectedDeckDialog: "./src/dialogs/selected-deck-dialog.ts",
       weekdayRangeDialog: "./src/dialogs/weekday-range-dialog.ts",
       taskpane: "./src/taskpane/taskpane.ts",
@@ -119,6 +120,11 @@ module.exports = async (env, options) => {
         template: "./src/dialogs/grid-builder.html",
         chunks: [],
         inject: false,
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialogs/cleanup-deck.html",
+        template: "./src/dialogs/cleanup-deck-dialog.html",
+        chunks: ["polyfill", "cleanupDeckDialog"],
       }),
       new HtmlWebpackPlugin({
         filename: "dialogs/selected-deck.html",

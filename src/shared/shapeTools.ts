@@ -3123,6 +3123,95 @@ export function openSelectedDeckDialog(): Promise<ActionResult> {
   });
 }
 
+export function openCleanupDialog(): Promise<ActionResult> {
+  return new Promise((resolve) => {
+    const url = `${window.location.origin}${window.location.pathname.replace(/\/[^/]+$/, "/")}dialogs/cleanup-deck.html?v=${Date.now()}`;
+    let settled = false;
+
+    Office.context.ui.displayDialogAsync(
+      url,
+      {
+        height: 58,
+        width: 34,
+        displayInIframe: true,
+      },
+      (result) => {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          settled = true;
+          resolve({
+            type: "error",
+            message: result.error.message || "Could not open the Clean-up dialog.",
+          });
+          return;
+        }
+
+        const dialog = result.value;
+
+        dialog.addEventHandler(Office.EventType.DialogMessageReceived, async (args: { message: string }) => {
+          let payload:
+            | { type?: string; options?: { removeComments?: boolean; removeNotes?: boolean } }
+            | null = null;
+          try {
+            payload = JSON.parse(args.message) as typeof payload;
+          } catch {
+            payload = null;
+          }
+
+          if (!payload?.type) {
+            return;
+          }
+
+          if (payload.type === "close") {
+            dialog.close();
+            if (!settled) {
+              settled = true;
+              resolve({ type: "info", message: "Clean-up cancelled." });
+            }
+            return;
+          }
+
+          if (payload.type !== "run" || !payload.options) {
+            return;
+          }
+
+          try {
+            const presentationTools = await import("./presentationTools");
+            const actionResult = await presentationTools.cleanPresentationDeck({
+              removeComments: !!payload.options.removeComments,
+              removeNotes: !!payload.options.removeNotes,
+            });
+
+            if (typeof dialog.messageChild === "function") {
+              dialog.messageChild(JSON.stringify({ type: "result", result: actionResult }));
+            }
+          } catch (error) {
+            const failureResult: ActionResult = {
+              type: "error",
+              message: error instanceof Error ? error.message : "Something went wrong.",
+            };
+
+            if (typeof dialog.messageChild === "function") {
+              dialog.messageChild(JSON.stringify({ type: "result", result: failureResult }));
+            }
+          }
+        });
+
+        dialog.addEventHandler(Office.EventType.DialogEventReceived, () => {
+          if (!settled) {
+            settled = true;
+            resolve({ type: "info", message: "Clean-up closed." });
+          }
+        });
+
+        resolve({
+          type: "info",
+          message: "Opened the Clean-up dialog.",
+        });
+      },
+    );
+  });
+}
+
 export async function openJolifyWebsite(): Promise<ActionResult> {
   try {
     Office.context.ui.openBrowserWindow("https://stephenjoly.github.io/jolify-ppt/");

@@ -122,7 +122,7 @@ Checkbox legend:
 | Templafy | Make PowerShape | Create custom PowerShape | ☐ | ☑ | No Jolify equivalent. |
 | Jolify | Weekday range | Generate dates for a weekday across a range | ☑ | ☐ | Jolify-specific utility. |
 | **Group** | **Share** | Templafy section divider | — | — | Original Templafy grouping |
-| Templafy | Clean-up | Cleanup workflow before sharing | ☐ | ☑ | No Jolify equivalent today. |
+| Templafy | Clean-up | Cleanup workflow before sharing | ◐ | ☑ | Jolify v1 creates a cleaned copy that removes comments and speaker notes; metadata stripping and dummy-text replacement are still missing. |
 | Templafy | Presentation as PPTX | Save full deck as PPTX | ☑ | ☑ | Jolify now exposes a direct full-deck PPTX export in the Share section. |
 | Templafy | Presentation as PDF | Save full deck as PDF | ☑ | ☑ | Jolify now exposes a direct full-deck PDF export in the Share section. |
 | Both | Selected slides as PPTX | Export selected slides as deck | ☑ | ☑ | Jolify `Save Selected Deck` overlaps this strongly. |

@@ -86,6 +86,7 @@ import {
   distributeVAndGroup,
   // Phase 2 — dialog wrappers
   openGridDialog,
+  openCleanupDialog,
   openWeekdayRangeDialog,
   openSelectedDeckDialog,
   moveToUnusedSection,
@@ -183,6 +184,7 @@ const ACTIONS: Record<string, ActionRunner> = {
   "save-presentation-pptx-btn": exportPresentationAsPptx,
   "save-presentation-pdf-btn": exportPresentationAsPdf,
   "save-selected-deck-btn": openSelectedDeckDialog,
+  "cleanup-deck-btn": openCleanupDialog,
   "move-to-unused-btn": moveToUnusedSection,
 };
 
