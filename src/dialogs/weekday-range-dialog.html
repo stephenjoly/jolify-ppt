@@ -9,15 +9,18 @@
       body {
         font-family: "Segoe UI", sans-serif;
         margin: 0;
-        padding: 20px;
+        padding: 16px;
         background: #f3f2f1;
         color: #201f1e;
+        box-sizing: border-box;
       }
 
       .dialog-shell {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
+        max-width: 560px;
+        margin: 0 auto;
       }
 
       h1 {
@@ -35,7 +38,7 @@
 
       .field-grid {
         display: grid;
-        gap: 12px;
+        gap: 10px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -70,7 +73,7 @@
       }
 
       textarea {
-        min-height: 180px;
+        min-height: 140px;
         resize: vertical;
         font-family: SFMono-Regular, Consolas, monospace;
         font-size: 12px;
@@ -82,7 +85,7 @@
         border: 1px solid #e1dfdd;
         border-left: 4px solid #0078d4;
         border-radius: 6px;
-        padding: 12px 14px;
+        padding: 10px 12px;
         display: flex;
         flex-direction: column;
         gap: 4px;
@@ -118,7 +121,7 @@
 
       button {
         flex: 1;
-        padding: 10px 12px;
+        padding: 9px 12px;
         border: none;
         border-radius: 4px;
         font-size: 13px;

@@ -5,8 +5,9 @@
     <title>Grid Builder</title>
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
     <style>
-      body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; background: #f3f2f1; }
-      h2 { font-size: 15px; margin: 0 0 16px; color: #201f1e; }
+      body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 16px; background: #f3f2f1; box-sizing: border-box; }
+      .dialog-shell { max-width: 360px; margin: 0 auto; }
+      h2 { font-size: 15px; margin: 0 0 14px; color: #201f1e; }
       label { display: block; font-size: 13px; margin-bottom: 4px; color: #323130; }
       input[type="number"], select {
         width: 100%; padding: 6px 8px; border: 1px solid #c8c6c4;
@@ -26,6 +27,7 @@
     </style>
   </head>
   <body>
+    <main class="dialog-shell">
     <h2 id="title">Grid Builder</h2>
 
     <div id="rows-field">
@@ -61,6 +63,7 @@
 
     <button id="submit">Create</button>
     <button class="cancel" id="cancel">Cancel</button>
+    </main>
 
     <script>
       const params = new URLSearchParams(window.location.search);

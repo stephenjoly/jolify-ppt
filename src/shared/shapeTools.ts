@@ -2728,8 +2728,8 @@ export function openDialog<T>(
     Office.context.ui.displayDialogAsync(
       url,
       {
-        height: dialogOptions?.height ?? 50,
-        width: dialogOptions?.width ?? 40,
+        height: dialogOptions?.height ?? 34,
+        width: dialogOptions?.width ?? 26,
         displayInIframe: true,
       },
       (result) => {
@@ -2857,8 +2857,8 @@ export async function openGridDialog(): Promise<ActionResult> {
 
 export async function openSymbolPickerDialog(): Promise<ActionResult> {
   const params = await openDialog<SymbolInsertParams>("dialogs/symbol-picker.html", {
-    height: 70,
-    width: 44,
+    height: 58,
+    width: 36,
   });
   if (!params) {
     return { type: "info", message: "Symbol picker closed." };
@@ -2977,8 +2977,8 @@ export function openWeekdayRangeDialog(): Promise<ActionResult> {
     Office.context.ui.displayDialogAsync(
       url,
       {
-        height: 66,
-        width: 42,
+        height: 54,
+        width: 36,
         displayInIframe: true,
       },
       (result) => {
@@ -3047,8 +3047,8 @@ export function openSelectedDeckDialog(): Promise<ActionResult> {
     Office.context.ui.displayDialogAsync(
       url,
       {
-        height: 52,
-        width: 34,
+        height: 32,
+        width: 24,
         displayInIframe: true,
       },
       (result) => {
@@ -3131,8 +3131,8 @@ export function openCleanupDialog(): Promise<ActionResult> {
     Office.context.ui.displayDialogAsync(
       url,
       {
-        height: 58,
-        width: 34,
+        height: 42,
+        width: 28,
         displayInIframe: true,
       },
       (result) => {
