@@ -334,24 +334,32 @@ function renderPaletteColumn(
 }
 
 async function setupPalette() {
-  const palette = await getCurrentPresentationThemePalette();
   const sourceBadge = document.getElementById("palette-source");
-  if (sourceBadge) {
-    sourceBadge.textContent = palette.source === "deck" ? "Deck theme" : "Fallback palette";
-  }
+  try {
+    const palette = await getCurrentPresentationThemePalette();
+    if (sourceBadge) {
+      sourceBadge.textContent = palette.source === "deck" ? "Deck theme" : "Fallback palette";
+    }
 
-  renderPaletteColumn("font-palette", "font", palette.colors, palette.rowSize, "Font", "A", "Apply a color to the selected text.");
-  renderPaletteColumn("outline-palette", "outline", palette.colors, palette.rowSize, "Outline", "O", "Apply a color to shape outlines.");
-  renderPaletteColumn("fill-palette", "fill", palette.colors, palette.rowSize, "Fill", "F", "Apply a color to shape fills.");
+    renderPaletteColumn("font-palette", "font", palette.colors, palette.rowSize, "Font", "A", "Apply a color to the selected text.");
+    renderPaletteColumn("outline-palette", "outline", palette.colors, palette.rowSize, "Outline", "O", "Apply a color to shape outlines.");
+    renderPaletteColumn("fill-palette", "fill", palette.colors, palette.rowSize, "Fill", "F", "Apply a color to shape fills.");
+  } catch (error) {
+    console.error("Could not load taskpane palette.", error);
+    if (sourceBadge) {
+      sourceBadge.textContent = "Palette unavailable";
+    }
+  }
 }
 
 Office.onReady(async () => {
-  await setupPalette();
   applyNativeTooltips();
 
   Object.entries(ACTIONS).forEach(([id, runner]) => {
     wireAction(id, runner);
   });
+
+  await setupPalette();
 
   setStatus({
     type: "info",
