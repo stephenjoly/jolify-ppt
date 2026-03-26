@@ -116,61 +116,83 @@ def draw_shape(
     )
 
 
+def draw_clipboard(
+    draw: ImageDraw.ImageDraw,
+    *,
+    box: tuple[int, int, int, int],
+    inset: str | None = None,
+    inset_outline: bool = False,
+) -> None:
+    x0, y0, x1, y1 = box
+    rounded_box(draw, box, fill=PANEL, outline=STROKE, width=12, radius=18)
+    clip_w = (x1 - x0) // 2
+    clip_x0 = x0 + ((x1 - x0) - clip_w) // 2
+    clip_x1 = clip_x0 + clip_w
+    clip_y0 = y0 - px(4)
+    clip_y1 = y0 + px(4)
+    rounded_box(draw, (clip_x0, clip_y0, clip_x1, clip_y1), fill=PANEL, outline=STROKE, width=10, radius=10)
+    inset_box = (x0 + px(7), y0 + px(9), x1 - px(7), y1 - px(8))
+    if inset is not None:
+        draw_shape(draw, box=inset_box, fill=(inset == BLUE), outline=True)
+        if inset_outline:
+            draw_shape(draw, box=inset_box, fill=False, outline=True)
+
+
 def copy_fill() -> Image.Image:
     image, draw = make_canvas()
-    draw_shape(draw, box=(px(16), px(38), px(40), px(62)), fill=True)
-    rounded_box(draw, (px(55), px(20), px(78), px(44)), fill=PANEL, outline=STROKE, width=10, radius=16)
-    right_arrow(draw, px(43), px(56), px(50))
+    draw_shape(draw, box=(px(10), px(34), px(34), px(58)), fill=True)
+    draw_clipboard(draw, box=(px(56), px(20), px(84), px(62)), inset=BLUE)
+    right_arrow(draw, px(38), px(52), px(46), width=16)
     return image
 
 
 def paste_fill() -> Image.Image:
     image, draw = make_canvas()
-    rounded_box(draw, (px(18), px(20), px(41), px(44)), fill=PANEL, outline=STROKE, width=10, radius=16)
-    draw_shape(draw, box=(px(58), px(38), px(82), px(62)), fill=True)
-    right_arrow(draw, px(43), px(56), px(50))
+    draw_clipboard(draw, box=(px(16), px(20), px(44), px(62)), inset=BLUE)
+    draw_shape(draw, box=(px(66), px(34), px(90), px(58)), fill=True)
+    right_arrow(draw, px(48), px(62), px(46), width=16)
     return image
 
 
 def copy_outline() -> Image.Image:
     image, draw = make_canvas()
-    draw_shape(draw, box=(px(16), px(38), px(40), px(62)), fill=False)
-    rounded_box(draw, (px(55), px(20), px(78), px(44)), fill=PANEL, outline=STROKE, width=10, radius=16)
-    right_arrow(draw, px(43), px(56), px(50))
+    draw_shape(draw, box=(px(10), px(34), px(34), px(58)), fill=False)
+    draw_clipboard(draw, box=(px(56), px(20), px(84), px(62)), inset=PANEL, inset_outline=True)
+    right_arrow(draw, px(38), px(52), px(46), width=16)
     return image
 
 
 def paste_outline() -> Image.Image:
     image, draw = make_canvas()
-    rounded_box(draw, (px(18), px(20), px(41), px(44)), fill=PANEL, outline=STROKE, width=10, radius=16)
-    draw_shape(draw, box=(px(58), px(38), px(82), px(62)), fill=False)
-    right_arrow(draw, px(43), px(56), px(50))
+    draw_clipboard(draw, box=(px(16), px(20), px(44), px(62)), inset=PANEL, inset_outline=True)
+    draw_shape(draw, box=(px(66), px(34), px(90), px(58)), fill=False)
+    right_arrow(draw, px(48), px(62), px(46), width=16)
     return image
 
 
 def match_fill() -> Image.Image:
     image, draw = make_canvas()
-    draw_shape(draw, box=(px(12), px(38), px(33), px(59)), fill=True)
-    draw_shape(draw, box=(px(67), px(38), px(88), px(59)), fill=True)
-    right_arrow(draw, px(39), px(60), px(49))
+    draw_shape(draw, box=(px(8), px(34), px(31), px(57)), fill=True)
+    draw_shape(draw, box=(px(69), px(34), px(92), px(57)), fill=True)
+    right_arrow(draw, px(37), px(62), px(46), width=16)
     return image
 
 
 def match_outline() -> Image.Image:
     image, draw = make_canvas()
-    draw_shape(draw, box=(px(12), px(38), px(33), px(59)), fill=False)
-    draw_shape(draw, box=(px(67), px(38), px(88), px(59)), fill=False)
-    right_arrow(draw, px(39), px(60), px(49))
+    draw_shape(draw, box=(px(8), px(34), px(31), px(57)), fill=False)
+    draw_shape(draw, box=(px(69), px(34), px(92), px(57)), fill=False)
+    right_arrow(draw, px(37), px(62), px(46), width=16)
     return image
 
 
 def match_style() -> Image.Image:
     image, draw = make_canvas()
-    draw_shape(draw, box=(px(12), px(34), px(33), px(58)), fill=True)
-    draw.line((px(15), px(65), px(31), px(65)), fill=STROKE, width=10)
-    draw_shape(draw, box=(px(67), px(34), px(88), px(58)), fill=True)
-    draw.line((px(70), px(65), px(86), px(65)), fill=STROKE, width=10)
-    right_arrow(draw, px(39), px(60), px(47))
+    draw_shape(draw, box=(px(8), px(30), px(31), px(53)), fill=True)
+    draw.line((px(10), px(62), px(29), px(62)), fill=STROKE, width=10)
+    draw_shape(draw, box=(px(69), px(30), px(92), px(53)), fill=True)
+    draw.line((px(71), px(62), px(90), px(62)), fill=STROKE, width=10)
+    right_arrow(draw, px(37), px(62), px(42), width=16)
     return image
 
 
