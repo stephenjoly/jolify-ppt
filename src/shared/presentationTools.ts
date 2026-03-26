@@ -859,6 +859,31 @@ async function cleanDeck(kind: "comments" | "notes"): Promise<{ base64: string; 
   };
 }
 
+export async function exportPresentationAsPptx(): Promise<ActionResult> {
+  const [bytes, fileProps] = await Promise.all([getPresentationBytes(), getFileProperties()]);
+  const baseName = getBaseNameFromUrl(fileProps.url);
+  const filename = `${sanitizeFilename(baseName)}.pptx`;
+
+  if (await isLocalBridgeAvailable()) {
+    await postLocalBridge<{ savedPath: string }>("/native/save-file", {
+      base64File: toBase64(bytes),
+      suggestedFilename: filename,
+      openInPowerPoint: false,
+    });
+
+    return {
+      type: "success",
+      message: "Saved a PPTX copy of the current presentation through the local Jolify bridge.",
+    };
+  }
+
+  downloadFile(filename, "application/vnd.openxmlformats-officedocument.presentationml.presentation", bytes);
+  return {
+    type: "success",
+    message: "Downloaded a PPTX copy of the current presentation.",
+  };
+}
+
 export async function copyCommentsToClipboard(): Promise<ActionResult> {
   const { markdown, count } = await exportMarkdown("comments");
   if (!markdown || count === 0) {
