@@ -502,10 +502,10 @@ const STACK_GAP = 12;
 const DISTRIBUTE_RESIZE_GAP = 12;
 const OUTLINE_WEIGHT_PRESETS = [0.75, 1.5, 2.25, 3];
 const OUTLINE_DASH_PRESETS: Array<PowerPoint.ShapeLineDashStyle | "Solid" | "Dash" | "LongDash" | "DashDot"> = [
-  PowerPoint.ShapeLineDashStyle.solid,
-  PowerPoint.ShapeLineDashStyle.dash,
-  PowerPoint.ShapeLineDashStyle.longDash,
-  PowerPoint.ShapeLineDashStyle.dashDot,
+  "Solid",
+  "Dash",
+  "LongDash",
+  "DashDot",
 ];
 const TEXT_MARGIN_PRESETS = {
   none: 0,
