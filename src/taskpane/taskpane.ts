@@ -61,6 +61,8 @@ import {
   setTextMarginsNone,
   setTextMarginsRoomy,
   setTextMarginsTight,
+  rotateLeft90,
+  rotateRight90,
   splitTextBoxByLines,
   stackHorizontal,
   stackVertical,
@@ -141,6 +143,8 @@ const ACTIONS: Record<string, ActionRunner> = {
   "send-backward-btn": sendShapesBackward,
   "group-btn": groupSelectedShapes,
   "ungroup-btn": ungroupSelectedShapes,
+  "rotate-right-btn": rotateRight90,
+  "rotate-left-btn": rotateLeft90,
   // Align & Group
   "align-center-group-btn":  alignCenterHAndGroup,
   "align-middle-group-btn":  alignMiddleVAndGroup,

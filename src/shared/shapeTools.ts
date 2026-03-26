@@ -2115,6 +2115,41 @@ async function swapAxisPosition(axis: "x" | "y"): Promise<ActionResult> {
 export const swapXPositions = (): Promise<ActionResult> => swapAxisPosition("x");
 export const swapYPositions = (): Promise<ActionResult> => swapAxisPosition("y");
 
+function normalizeRotation(rotation: number): number {
+  const normalized = rotation % 360;
+  return normalized < 0 ? normalized + 360 : normalized;
+}
+
+async function rotateSelectedShapes(increment: number, label: string): Promise<ActionResult> {
+  return PowerPoint.run(async (context) => {
+    const shapes = await getSelectedShapes(context);
+    if (shapes.length < 1) {
+      return {
+        type: "warning",
+        message: `Select at least one shape before using ${label}.`,
+      };
+    }
+
+    shapes.forEach((shape) => {
+      shape.load("rotation");
+    });
+    await context.sync();
+
+    shapes.forEach((shape) => {
+      shape.rotation = normalizeRotation((shape.rotation ?? 0) + increment);
+    });
+    await context.sync();
+
+    return {
+      type: "success",
+      message: `${label} applied to ${shapes.length} shape${shapes.length !== 1 ? "s" : ""}.`,
+    };
+  });
+}
+
+export const rotateRight90 = (): Promise<ActionResult> => rotateSelectedShapes(90, "Rotate Right 90");
+export const rotateLeft90 = (): Promise<ActionResult> => rotateSelectedShapes(-90, "Rotate Left 90");
+
 export async function applyDefaultTextboxFormat(): Promise<ActionResult> {
   return PowerPoint.run(async (context) => {
     const selected = await getSelectedTextShapes(

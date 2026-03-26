@@ -69,8 +69,8 @@ Checkbox legend:
 | Templafy | Send backward | Move one layer back | ☑ | ☑ | Jolify now exposes Send Backward in the taskpane. |
 | Templafy | Bring forward | Move one layer forward | ☑ | ☑ | Jolify now exposes Bring Forward in the taskpane. |
 | **Group** | **Rotate** | Templafy section divider | — | — | Original Templafy grouping |
-| Templafy | Rotate right 90 | Rotate object right 90 degrees | ☐ | ☑ | No Jolify equivalent. |
-| Templafy | Rotate left 90 | Rotate object left 90 degrees | ☐ | ☑ | No Jolify equivalent. |
+| Templafy | Rotate right 90 | Rotate object right 90 degrees | ☑ | ☑ | Jolify now exposes Rotate Right 90 in the taskpane. |
+| Templafy | Rotate left 90 | Rotate object left 90 degrees | ☑ | ☑ | Jolify now exposes Rotate Left 90 in the taskpane. |
 | Templafy | Flip vertically | Vertical flip | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | Flip horizontally | Horizontal flip | ☐ | ☑ | No Jolify equivalent. |
 | Templafy | More rotation options | Open rotation options | ☐ | ☑ | No Jolify equivalent. |
