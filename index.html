@@ -203,20 +203,6 @@
       gap: 1.35rem;
     }
 
-    .release-list {
-      list-style: none;
-      display: grid;
-      gap: 0.7rem;
-      margin: 1.1rem 0 1.25rem;
-      font-size: 0.93rem;
-      color: #444;
-    }
-
-    .release-list li::before {
-      content: "→ ";
-      color: #999;
-    }
-
     .doc-link {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 0.82rem;
@@ -429,27 +415,9 @@
       </p>
     </section>
 
-    <section>
-      <h2>Release Flow</h2>
-      <p>
-        Jolify has a three-stage release path: build in <em>Jolify Dev</em>, publish to GitHub Pages, then reinstall stable mode only when the stable manifest or local runtime changed.
-      </p>
-      <ul class="release-list">
-        <li>Test the change in <code>Jolify Dev</code> with <code>npm start</code> and a full PowerPoint restart after manifest edits.</li>
-        <li>Run <code>xmllint --noout manifest.xml</code>, <code>xmllint --noout dev/manifest.xml</code>, and <code>npm run build</code>.</li>
-        <li>Push to <code>main</code> to trigger the GitHub Pages deployment.</li>
-        <li>Hosted installs pick up asset updates from the website, but manifest changes still require rerunning <code>install.sh</code>.</li>
-        <li>Local stable installs require rerunning <code>install-local.sh</code> whenever the packaged runtime changes.</li>
-      </ul>
-      <p>
-        <a class="doc-link" href="https://github.com/stephenjoly/jolify-ppt/blob/main/docs/DEPLOYMENT.md">Full Deployment Checklist</a>
-      </p>
-    </section>
-
     <footer>
       <span><a href="https://github.com/stephenjoly/jolify-ppt">GitHub</a></span>
       <span><a href="guide.html">User Guide</a></span>
-      <span><a href="https://github.com/stephenjoly/jolify-ppt/blob/main/docs/DEPLOYMENT.md">Deployment</a></span>
       <span>Stephen Joly</span>
       <span>MIT License</span>
     </footer>
