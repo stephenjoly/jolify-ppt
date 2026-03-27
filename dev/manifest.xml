@@ -975,9 +975,9 @@
         <bt:Image id="Icon.openWeekdayRangeDialog.16" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_16.png" />
         <bt:Image id="Icon.openWeekdayRangeDialog.32" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_32.png" />
         <bt:Image id="Icon.openWeekdayRangeDialog.80" DefaultValue="https://localhost:3300/assets/icons/openWeekdayRangeDialog_80.png" />
-        <bt:Image id="Icon.openTaskpane.16" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_16.png?v=logo-refresh-20260326" />
-        <bt:Image id="Icon.openTaskpane.32" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_32.png?v=logo-refresh-20260326" />
-        <bt:Image id="Icon.openTaskpane.80" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_80.png?v=logo-refresh-20260326" />
+        <bt:Image id="Icon.openTaskpane.16" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_16.png?v=logo-transparent-20260326" />
+        <bt:Image id="Icon.openTaskpane.32" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_32.png?v=logo-transparent-20260326" />
+        <bt:Image id="Icon.openTaskpane.80" DefaultValue="https://localhost:3300/assets/icons/openTaskpane_80.png?v=logo-transparent-20260326" />
         <bt:Image id="Icon.moveToUnusedSection.16" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_16.png" />
         <bt:Image id="Icon.moveToUnusedSection.32" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_32.png" />
         <bt:Image id="Icon.moveToUnusedSection.80" DefaultValue="https://localhost:3300/assets/icons/moveToUnusedSection_80.png" />
