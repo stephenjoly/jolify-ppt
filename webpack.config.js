@@ -68,6 +68,10 @@ module.exports = async (env, options) => {
             to: "index.html",
           },
           {
+            from: "guide.html",
+            to: "guide.html",
+          },
+          {
             from: "install/install.sh",
             to: "install.sh",
           },

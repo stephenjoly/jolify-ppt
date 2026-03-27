@@ -3226,7 +3226,8 @@ export function openCleanupDialog(): Promise<ActionResult> {
 
 export async function openJolifyWebsite(): Promise<ActionResult> {
   try {
-    Office.context.ui.openBrowserWindow("https://stephenjoly.github.io/jolify-ppt/guide.html");
+    const guideUrl = new URL("./guide.html", window.location.href).toString();
+    Office.context.ui.openBrowserWindow(guideUrl);
     return {
       type: "success",
       message: "Opened the Jolify guide.",
