@@ -9,10 +9,6 @@ import tempfile
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-from PIL import Image
-from pptx import Presentation
-from pptx.util import Emu
-
 WIDESCREEN_WIDTH_EMU = 12192000
 WIDESCREEN_HEIGHT_EMU = 6858000
 
@@ -69,6 +65,16 @@ end tell
 def create_presentation_from_pictures(images: list[dict], suggested_filename: str) -> str:
     if not images:
         raise RuntimeError("At least one image is required.")
+
+    try:
+        from PIL import Image
+        from pptx import Presentation
+        from pptx.util import Emu
+    except ImportError as error:
+        raise RuntimeError(
+            "Picture deck creation requires Jolify local Python dependencies. "
+            "Please rerun install-local.sh to repair the local runtime."
+        ) from error
 
     with tempfile.TemporaryDirectory(prefix="jolify-pictures-") as temp_dir:
         prs = Presentation()

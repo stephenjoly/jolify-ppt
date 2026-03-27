@@ -13,8 +13,11 @@ INSTALL_ROOT="$HOME/Library/Application Support/JolifyLocal"
 RUNTIME_DIR="$INSTALL_ROOT/runtime"
 CERT_DIR="$INSTALL_ROOT/certs"
 LOG_DIR="$INSTALL_ROOT/logs"
+VENV_DIR="$INSTALL_ROOT/venv"
+VENV_PYTHON="$VENV_DIR/bin/python"
 PLIST_PATH="$HOME/Library/LaunchAgents/$SERVICE_LABEL.plist"
 MANIFEST_PATH="$RUNTIME_DIR/manifest.xml"
+REQUIREMENTS_PATH="$RUNTIME_DIR/requirements.txt"
 PYTHON_BIN="$(command -v python3 || true)"
 
 echo ""
@@ -72,6 +75,17 @@ echo "  → Installing runtime to $INSTALL_ROOT"
 rm -rf "$RUNTIME_DIR"
 mkdir -p "$RUNTIME_DIR" "$CERT_DIR" "$LOG_DIR" "$(dirname "$PLIST_PATH")"
 tar -xzf "$TMP_DIR/jolify-local-bundle.tar.gz" -C "$RUNTIME_DIR"
+
+if [ ! -f "$REQUIREMENTS_PATH" ]; then
+  echo "  ✗  Local runtime bundle is missing Python requirements metadata."
+  exit 1
+fi
+
+echo "  → Installing local Python environment..."
+rm -rf "$VENV_DIR"
+"$PYTHON_BIN" -m venv "$VENV_DIR"
+"$VENV_PYTHON" -m pip install --upgrade pip >/dev/null
+"$VENV_PYTHON" -m pip install --quiet -r "$REQUIREMENTS_PATH"
 
 remove_existing_cert() {
   local hashes
@@ -134,7 +148,7 @@ cat > "$PLIST_PATH" <<EOF
   <string>$SERVICE_LABEL</string>
   <key>ProgramArguments</key>
   <array>
-    <string>$PYTHON_BIN</string>
+    <string>$VENV_PYTHON</string>
     <string>$RUNTIME_DIR/local-server.py</string>
     <string>--root</string>
     <string>$RUNTIME_DIR/web</string>

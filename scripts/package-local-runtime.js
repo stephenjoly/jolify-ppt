@@ -10,6 +10,7 @@ const webDir = path.join(bundleDir, "web");
 const bundleArchive = path.join(distDir, "jolify-local-bundle.tar.gz");
 const sourceManifestPath = path.join(repoRoot, "manifest.xml");
 const localServerPath = path.join(repoRoot, "scripts", "local_server.py");
+const localRequirementsPath = path.join(repoRoot, "scripts", "local_runtime_requirements.txt");
 const LOCAL_BASE_URL = "https://127.0.0.1:38443/";
 const LOCAL_APP_DOMAIN = "https://127.0.0.1:38443";
 
@@ -40,6 +41,7 @@ function buildLocalManifest() {
 function main() {
   ensureExists(distDir);
   ensureExists(localServerPath);
+  ensureExists(localRequirementsPath);
 
   fs.rmSync(stagingRoot, { recursive: true, force: true });
   fs.rmSync(bundleArchive, { force: true });
@@ -68,6 +70,7 @@ function main() {
   fs.writeFileSync(path.join(distDir, "manifest.local.xml"), localManifest);
   fs.writeFileSync(path.join(bundleDir, "manifest.xml"), localManifest);
   fs.copyFileSync(localServerPath, path.join(bundleDir, "local-server.py"));
+  fs.copyFileSync(localRequirementsPath, path.join(bundleDir, "requirements.txt"));
   fs.writeFileSync(
     path.join(bundleDir, "version.json"),
     JSON.stringify({ builtAt: new Date().toISOString() }, null, 2),
